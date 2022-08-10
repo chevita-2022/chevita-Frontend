@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Text, Alert, SafeAreaView, Button, Platform} from 'react-native';
 import { NaverLogin, getProfile } from "@react-native-seoul/naver-login";
+import KakaoLogin from './components/KakaoLogin';
 
 const iosKeys = {
   kConsumerKey: "DHjT1zinlPR3aGq0LB1c",
@@ -61,6 +62,8 @@ const App = () => {
       {!!naverToken && (
         <Button title="회원정보 가져오기" onPress={getUserProfile} />
       )}
+
+      <KakaoLogin/>
     </SafeAreaView>
   );
 };
