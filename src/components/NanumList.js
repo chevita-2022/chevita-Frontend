@@ -10,9 +10,9 @@ const Stack = createNativeStackNavigator();
 
 const NanumiScreen=()=>{
     return(
-        <ScrollView>
+        <View>
             <Text>List</Text>
-        </ScrollView>
+        </View>
     )
 }
 
