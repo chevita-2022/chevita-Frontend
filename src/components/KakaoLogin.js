@@ -37,8 +37,7 @@ const signInWithKakao = async () => {
     <TouchableOpacity onPress={signInWithKakao}>
         <Image
           source={require("../assets/images/kakaoStart.png")}
-          style={{ top: 150 }}
-        />
+          style={{ top: 150 }} />
     </TouchableOpacity>
   )
 

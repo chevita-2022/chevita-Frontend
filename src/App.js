@@ -2,6 +2,10 @@ import React from 'react';
 import {View, StyleSheet, Text, Alert, SafeAreaView, Button, Platform} from 'react-native';
 import { NaverLogin, getProfile } from "@react-native-seoul/naver-login";
 import KakaoLogin from './components/KakaoLogin';
+import NanumList from './components/NanumList';
+import StackScreen from './components/NanumList';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const iosKeys = {
   kConsumerKey: "DHjT1zinlPR3aGq0LB1c",
@@ -51,7 +55,7 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+   /* <SafeAreaView style={styles.container}>
       <Button
         title="네이버 아이디로 로그인하기"
         onPress={() => naverLogin(initials)}
@@ -64,7 +68,8 @@ const App = () => {
       )}
 
       <KakaoLogin/>
-    </SafeAreaView>
+      </SafeAreaView> */
+      <NanumList/>
   );
 };
 
