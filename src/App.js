@@ -67,9 +67,9 @@ const App = () => {
         <Button title="회원정보 가져오기" onPress={getUserProfile} />
       )}
 
-      <KakaoLogin/>
-      </SafeAreaView> */
-      <NanumList/>
+      <KakaoLogin/> 
+     </SafeAreaView> */
+     <NanumList/>
   );
 };
 
