@@ -59,3 +59,6 @@ buck-out/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
+
+
+/Users/jiwon/Desktop/chevita-Frontend/node_modules/@react-native-seoul/naver-login/android/build.gradle
