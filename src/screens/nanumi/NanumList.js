@@ -1,16 +1,9 @@
 import React, {useEffect, useState} from "react";
 import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable, Button} from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Nanumitem from "./NanumItem";
+import Nanumitem from "../../components/NanumItem";
 import DropDownPicker from 'react-native-dropdown-picker';
 
-
-const Stack = createNativeStackNavigator();
-
-//screen으로 옮김 확인 후 이 파일을 삭제 가능
-
-const NanumiScreen=()=>{
+const NanumList = ({navigation}) => {
 
     const [open,setOpen]=useState(false);
     const [value,setValue]=useState(null);
@@ -43,40 +36,12 @@ const NanumiScreen=()=>{
             <ScrollView style={{backgroundColor:'#fff'}}>
                 <Nanumitem />
             </ScrollView>
-            <Pressable style={{paddingBottom:10,alignItems:'center',backgroundColor:'transparent'}}>
+            <Pressable style={{paddingBottom:10,alignItems:'center',backgroundColor:'transparent'}} onPress={()=>{navigation.navigate('WriteNanum')}}>
                     <Text style={styles.write}>나누미 글 작성하기</Text>
             </Pressable>
         </SafeAreaView>
     )
-}
 
-const NanumList=({navigation})=>{
-
-    return (
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen
-                    name="Nanumi"
-                    component={NanumiScreen}
-                    options={{
-                        title:'나누미',
-                        headerStyle:{
-                            backgroundColor:'#fff',
-                        },
-                        headerTintColor:'#374957',
-                        headerTitleStyle:{
-                            fontWeight:'900',
-                            fontSize:16,
-                            fontFamily:'Noto Sans KR',
-                        },
-                        headerTitleAlign:'center',
-                        headerRight:()=>{
-                            <Button title="음"/>
-                        }
-                    }}/>
-            </Stack.Navigator>
-        </NavigationContainer>
-    );
 }
 
 const styles=StyleSheet.create({
