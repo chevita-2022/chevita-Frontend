@@ -79,6 +79,6 @@ const styles = StyleSheet.create({
     button: {
       backgroundColor: 'red',
     }
-  });
+});
 
 export default Login;

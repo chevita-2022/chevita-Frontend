@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from "react";
 import { Text, TextInput, View, StyleSheet} from "react-native";
-import { FlipInEasyX } from "react-native-reanimated";
+import { PureComponent } from "react/cjs/react.production.min";
+import { widthPercentage, heightPercentage, fontPercentage } from "../ResponsiveSize";
 
-
-const InputStyle1 = ({title, placeholder}) => {
+const InputStyle1 = (props) => {
+    const {name, label, placeholder, value, onChangeText, star} = props;
     return(
-        <View>
-            <View style={styles.style1.titleView}>
-                <Text>{title}</Text>
-                <Text style={styles.style1.star}>*</Text>
+        <View style={styles.style1.container}>
+            <View style={styles.style1.labelView}>
+                <Text style={styles.style1.labelText}>{label}</Text>
+                {star && <Text style={styles.style1.star}>*</Text>}
             </View>
-            <TextInput placeholder={placeholder} style={styles.style1.input}/>
+            <TextInput style={styles.style1.input} placeholderTextColor='#D8D8D8' placeholder={placeholder} value={value} onChangeText={(value) => onChangeText(name, value)}/>
         </View>
     )
 }
@@ -19,16 +20,29 @@ export {InputStyle1};
 
 const styles = StyleSheet.create({
     style1:{
-        titleView:{
-            flexDirection: 'row'
+        container: {
+            width: widthPercentage(317),
+        },
+        labelView:{
+            flexDirection: 'row',
+            paddingLeft: 2,
+        },
+        labelText:{
+            fontSize: fontPercentage(16),
+            fontWeight: "bold"
         },
         star:{
+            position: "relative",
+            top: -4,
+            left: 3,
+            fontSize: fontPercentage(12),
             color: 'red'
         },
         input: {
-            width: '80%',
+            height: heightPercentage(20),
             borderBottomWidth: 2,
-            borderBottomColor: 'grey',
+            borderBottomColor: '#D9D9D9',
+            color: 'blue',
         }
     }
 })
