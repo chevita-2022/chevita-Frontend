@@ -20,8 +20,10 @@ const NanumiScreen=()=>{
     ]);
 
     return(
-        <SafeAreaView style={{backgroundColor:'#fff',flex:1}} 
+        <SafeAreaView style={{backgroundColor:'#fff',flex:1,}} 
         >
+            <View style={{flexDirection:'row'}}>
+            <Text style={{color:'#374957',fontWeight:'bold',fontSize:18, width:'64%',paddingTop:22,paddingLeft:11}}>김탁구님 주변 인기 나눔글</Text>
             <DropDownPicker
                 open={open}
                 value={value}
@@ -33,12 +35,15 @@ const NanumiScreen=()=>{
                 style={{borderColor:'#fff'}} textStyle={{color:'#374957',textAlign:'center'}}
                 containerStyle={{
                     width:95,
-                    paddingTop:6,
+                    paddingTop:9,
                     left:'70%',
                 }} 
                 dropDownContainerStyle={{borderRadius:17,borderColor:'lightgray',shadowOffset:{height:2,width:2},shadowOpacity:0.25}}
                 labelStyle={{color:'#374957',textAlign:'center',fontWeight:'bold',}}
                 />
+                {//open===true?
+                }
+                </View>
             <ScrollView style={{backgroundColor:'#fff'}}>
                 <Nanumitem />
             </ScrollView>

@@ -41,7 +41,7 @@ const Nanumitem=()=>{
     return(
         <SafeAreaView>
             {item.map((i)=>(
-                <View key={i.key} style={{paddingLeft:11,paddingRight:11,paddingBottom:7}}>
+                <View key={i.key} style={{paddingLeft:11,paddingRight:11,paddingBottom:8,borderBottomWidth:1, borderBottomColor:'#D9D9D9'}}>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
                     <Text style={styles.title}>
                         {i.title}
