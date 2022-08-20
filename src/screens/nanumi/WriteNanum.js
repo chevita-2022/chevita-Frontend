@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Text, StyleSheet, ScrollView, SafeAreaView,View, Pressable, Button} from "react-native";
 import { InputStyle1 } from "../../components/Input";
 
 const WriteNanum = () => {
+
+    const [isMounted, setIsMounted] = useState(false);
 
     const [values, setValues] = useState({
         title: '',
@@ -10,6 +12,7 @@ const WriteNanum = () => {
 
     const onChangeText = (name, value) => {
         console.log(name)
+        setIsMounted(true);
         setValues({
           ...values, // 기존의 input 객체를 복사한 뒤
           [name]: value // name 키를 가진 값을 value 로 설정
@@ -17,6 +20,10 @@ const WriteNanum = () => {
 
         console.log(value)
     };
+
+    useEffect(() => {
+        return () => setIsMounted(false);
+    },[])
 
     return (
         <SafeAreaView style={styles.container}>

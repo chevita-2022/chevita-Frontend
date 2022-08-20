@@ -32,92 +32,41 @@ const Header = (props) => {
 
 const HomeStackScreen = () => {
     return (
-      <Stack.Navigator 
-        screenOptions={{
-          headerStyle:{
-              backgroundColor:'#fff',
-          },
-          headerTintColor:'#374957',
-          headerTitleStyle:{
-              fontWeight:'900',
-              fontSize:16,
-              fontFamily:'Noto Sans KR',
-          },
-          headerTitleAlign:'center',
-        }}>
-        <HomeStack.Screen name="Home" component={Home} />
+      <Stack.Navigator>
+        <HomeStack.Screen name="Home" component={Home} options={{header:()=>(<Header title='홈' shadow={true}/>)}}/>
       </Stack.Navigator>
     );
 };
 
 const NanumiStackScreen = () => {
     return (
-      <Stack.Navigator 
-        screenOptions={{
-          headerStyle:{
-              height: 0,
-              backgroundColor:'#ffffff',
-          },
-          headerTintColor:'#374957',
-          headerTitleStyle:{
-              fontWeight:'900',
-              fontSize:16,
-              fontFamily:'Noto Sans KR',
-          },
-          headerTitleAlign:'center',
-        }} >
-        <NanumiStack.Screen name="Nanumi" component={NanumList} options={{title:'나누미'}}/>
-        <NanumiStack.Screen name="WriteNanum" component={WriteNanum} options={{title:'나누미 글 작성'}}/>
+      <Stack.Navigator>
+        <NanumiStack.Screen name="Nanumi" component={NanumList} options={{header:()=>(<Header title='나누미' shadow={true}/>)}}/>
+        <NanumiStack.Screen name="WriteNanum" component={WriteNanum} options={{header:()=>(<Header title='나누미 글 작성' shadow={false}/>)}}/>
       </Stack.Navigator>
     );
 };
 
 const MapStackScreen = () => {
     return (
-      <Stack.Navigator 
-        screenOptions={({name}) => ({       
-        })}>
-        <MapStack.Screen name="Map" component={Map} options={{header:()=>(<Header title='지도' shadow={true}/>)}}/>
+      <Stack.Navigator>
+        <MapStack.Screen name="Map" component={Map} options={{header:()=>(<Header title='지도' shadow={false}/>)}}/>
       </Stack.Navigator>
     );
 };
 
 const ChattingStackScreen = () => {
     return (
-      <Stack.Navigator 
-        screenOptions={{
-          headerStyle:{
-              backgroundColor:'#fff',
-          },
-          headerTintColor:'#374957',
-          headerTitleStyle:{
-              fontWeight:'900',
-              fontSize:16,
-              fontFamily:'Noto Sans KR',
-          },
-          headerTitleAlign:'center',
-        }}>
-        <ChattingStack.Screen name="ChattingList" component={ChattingList} />
+      <Stack.Navigator>
+        <ChattingStack.Screen name="ChattingList" component={ChattingList} options={{header:()=>(<Header title='채팅' shadow={true}/>)}}/>
       </Stack.Navigator>
     );
 };
 
 const MyPageStackScreen = () => {
     return (
-      <Stack.Navigator 
-        screenOptions={{
-          headerStyle:{
-              backgroundColor:'#fff',
-          },
-          headerTintColor:'#374957',
-          headerTitleStyle:{
-              fontWeight:'900',
-              fontSize:16,
-              fontFamily:'Noto Sans KR',
-          },
-          headerTitleAlign:'center',
-        }}>
-        <MyPageStack.Screen name="MyPage" component={MyPage} options={{headerStyle:{height:30}}}/>
+      <Stack.Navigator>
+        <MyPageStack.Screen name="MyPage" component={MyPage} options={{header:()=>(<Header title='마이페이지' shadow={true}/>)}}/>
       </Stack.Navigator>
     );
 };
@@ -128,7 +77,6 @@ const MainScreen = () => {
       initialRouteName="HomeStack"
       screenOptions={{
         headerShown:false,
-        tabBarActiveTintColor: '#374957',
         tabBarShowLabel: false,
       }}>
       <Tab.Screen
@@ -148,7 +96,6 @@ const MainScreen = () => {
         name="NanumiStack"
         component={NanumiStackScreen}
         options={{
-          title: '나누미',
           tabBarIcon: ({focused}) => (
             focused ? 
             <Image source={require('../assets/images/focused_nanumi.png')} style={styles().tabBarIcon}/>
@@ -204,7 +151,7 @@ const MainScreen = () => {
 const styles = (shadow) => StyleSheet.create({
   header: {
     height: 45, 
-    marginBottom: 3,
+    marginBottom: shadow ? 3 : 0,
     backgroundColor: '#ffffff', 
     alignItems: 'center',
     justifyContent: 'center',
