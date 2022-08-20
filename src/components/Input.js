@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import { Text, TextInput, View, StyleSheet} from "react-native";
-import { PureComponent } from "react/cjs/react.production.min";
 import { widthPercentage, heightPercentage, fontPercentage } from "../ResponsiveSize";
 
 const InputStyle1 = (props) => {
@@ -39,10 +38,12 @@ const styles = StyleSheet.create({
             color: 'red'
         },
         input: {
-            height: heightPercentage(20),
+            height: heightPercentage(30),
+            padding:0,
+            margin:0,
             borderBottomWidth: 2,
             borderBottomColor: '#D9D9D9',
-            color: 'blue',
+            color: 'black',
         }
     }
 })
