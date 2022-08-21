@@ -2,7 +2,6 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {View, Image, Text, StyleSheet, Platform} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import Home from './Home';
 import NanumList from './nanumi/NanumList';
 import WriteNanum from './nanumi/WriteNanum';
