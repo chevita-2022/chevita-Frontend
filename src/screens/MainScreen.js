@@ -6,6 +6,7 @@ import Home from './Home';
 import NanumList from './nanumi/NanumList';
 import WriteNanum from './nanumi/WriteNanum';
 import Map from './Map';
+import ChattingBubble from './chatting/ChattingBubble';
 import ChattingList from './chatting/ChattingList';
 import MyPage from './mypage/MyPage';
 import { BackBtn } from '../components/Button';
@@ -56,8 +57,23 @@ const MapStackScreen = () => {
 
 const ChattingStackScreen = () => {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator 
+        screenOptions={{
+          tabBarActiveTintColor: '#fb8c00',
+          tabBarShowLabel: false,
+          headerStyle:{
+              backgroundColor:'#fff',
+          },
+          headerTintColor:'#374957',
+          headerTitleStyle:{
+              fontWeight:'900',
+              fontSize:16,
+              fontFamily:'Noto Sans KR',
+          },
+          headerTitleAlign:'center',
+        }}>
         <ChattingStack.Screen name="ChattingList" component={ChattingList} options={{header:()=>(<Header title='채팅' shadow={true}/>)}}/>
+        <ChattingStack.Screen name="ChattingBubble" component={ChattingBubble} options={{header:()=>(<Header title='채팅창' shadow={true}/>)}} />
       </Stack.Navigator>
     );
 };
