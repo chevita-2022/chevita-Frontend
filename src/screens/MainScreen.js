@@ -74,6 +74,7 @@ const ChattingStackScreen = () => {
         }}>
         <ChattingStack.Screen name="ChattingList" component={ChattingList} options={{header:()=>(<Header title='채팅' shadow={true}/>)}}/>
         <ChattingStack.Screen name="ChattingBubble" component={ChattingBubble} options={{header:()=>(<Header title='채팅창' shadow={true}/>)}} />
+
       </Stack.Navigator>
     );
 };
