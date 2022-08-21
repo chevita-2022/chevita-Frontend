@@ -5,7 +5,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Nanumitem from "./NanumItem";
 import DropDownPicker from 'react-native-dropdown-picker';
 
-
 const Stack = createNativeStackNavigator();
 
 //screen으로 옮김 확인 후 이 파일을 삭제 가능

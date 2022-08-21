@@ -12,8 +12,6 @@ const AuthStackScreen = () => {
     return (
       <Stack.Navigator 
         screenOptions={{
-          tabBarActiveTintColor: '#fb8c00',
-          tabBarShowLabel: false,
           headerStyle:{
               backgroundColor:'#fff',
           },
