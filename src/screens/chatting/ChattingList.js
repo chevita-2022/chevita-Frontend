@@ -1,10 +1,16 @@
-import React, {useEffect, useState} from "react";
-import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable, Button} from "react-native";
+import React from "react";
+import { Pressable, SafeAreaView, ScrollView, Text } from "react-native";
+import PersonalChatting from "../../components/PersonalChatting";
 
-
-const ChattingList = () => {
-    return (
-        <Text>Chatting</Text>
+const ChattingList=({navigation})=>{
+    return(
+        <SafeAreaView style={{paddingTop:10,height:'100%',backgroundColor:'#FFFFFF'}}>
+            <ScrollView style={{backgroundColor:'#FFFFFF'}}>
+            <Pressable onPress={()=>{navigation.navigate('ChattingBubble')}}>
+                <PersonalChatting/>
+            </Pressable>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 

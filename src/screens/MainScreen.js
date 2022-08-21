@@ -7,6 +7,7 @@ import Home from './Home';
 import NanumList from './nanumi/NanumList';
 import WriteNanum from './nanumi/WriteNanum';
 import Map from './Map';
+import ChattingBubble from './chatting/ChattingBubble';
 import ChattingList from './chatting/ChattingList';
 import MyPage from './mypage/MyPage';
 import { BackBtn } from '../components/Button';
@@ -105,7 +106,8 @@ const ChattingStackScreen = () => {
           },
           headerTitleAlign:'center',
         }}>
-        <ChattingStack.Screen name="ChattingList" component={ChattingList} />
+        <ChattingStack.Screen name="ChattingList" component={ChattingList} options={{title:'채팅'}} />
+        <ChattingStack.Screen name="ChattingBubble" component={ChattingBubble} options={{title:'채팅창'}} />
       </Stack.Navigator>
     );
 };
