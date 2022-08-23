@@ -11,6 +11,7 @@ import ChattingList from './chatting/ChattingList';
 import MyPage from './mypage/MyPage';
 import { BackBtn } from '../components/Button';
 import { widthPercentage, heightPercentage, fontPercentage } from '../ResponsiveSize';
+import NanumDetail from './nanumi/NanumDetail';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -43,6 +44,7 @@ const NanumiStackScreen = () => {
       <Stack.Navigator>
         <NanumiStack.Screen name="Nanumi" component={NanumList} options={{header:()=>(<Header title='나누미' shadow={true}/>)}}/>
         <NanumiStack.Screen name="WriteNanum" component={WriteNanum} options={{header:()=>(<Header title='나누미 글 작성' shadow={false}/>)}}/>
+        <NanumiStack.Screen name="NanumDetail" component={NanumDetail} options={{header:()=>(<Header title='나누미글 상세페이지' shadow={false}/>)}}/>
       </Stack.Navigator>
     );
 };
