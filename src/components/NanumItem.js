@@ -4,8 +4,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const Nanumitem=({title,place,createdTime,hastag,like})=>{
     return(
-        <SafeAreaView style={{flex:1}} >
-                <View style={{paddingLeft:11,paddingRight:11,paddingBottom:8,borderBottomWidth:1, borderBottomColor:'#D9D9D9'}}>
+        <SafeAreaView style={{flex:1,marginLeft:10,marginRight:10}} >
+                <View style={{paddingBottom:8,borderBottomWidth:1, borderBottomColor:'#D9D9D9'}}>
                     <View style={{flexDirection:'row'}}>
                     <Text style={styles.title}>
                         {title}
