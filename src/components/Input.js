@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, TextInput, View, TouchableOpacity,StyleSheet, ScrollView, Platform} from "react-native";
+import { Text, TextInput, View, TouchableOpacity, StyleSheet, ScrollView, Platform, Image} from "react-native";
 import { widthPercentage, heightPercentage, fontPercentage } from "../ResponsiveSize";
 import { ProgressBarForDate } from "./ProgressBar";
 
@@ -68,8 +68,6 @@ const InputType2 = (props) => {
 const InputType3 = (props) => {
     const {name, label, placeholder, value, handleChange, star, guide} = props;
 
-    console.log(value)
-
     const onChangeDate = (name, data, type) => {
         const temp = {...value, [type]: parseInt(data)}
         console.log(temp);
@@ -107,7 +105,46 @@ const InputType4 = (props) => {
     )
 }
 
-export {InputType1, InputType2, InputType3, InputType4};
+const DropDownInput = (props) => {
+    const {name, label, value, star, handleChange} = props;
+    const etc = false;
+    const [open, setOpen] = useState(false);
+
+    return (
+        <View style={DropDownStyles.container}>
+            <Label label={label} star={star}/>
+            <TouchableOpacity style={DropDownStyles.trigger.container} onPress={() => setOpen(true)}>
+                    <View style={DropDownStyles.trigger.current}>
+                        <Text style={DropDownStyles.trigger.text}>상온 보관</Text>
+                        <Image source={require('../assets/images/arrow.png')} style={DropDownStyles.trigger.image}/>
+                    </View>
+                    {etc && <TextInput placeholder="보관 방법을 상세하게 적어주세요" style={DropDownStyles.trigger.input}/>}
+                </TouchableOpacity>
+            { open &&
+                <View style={DropDownStyles.wrapper.container}>
+                    <TouchableOpacity style={DropDownStyles.wrapper.item} onPress={() => setOpen(false)} >
+                        <Text style={DropDownStyles.wrapper.text}>상온 보관</Text>
+                    </TouchableOpacity>
+                    <View style={DropDownStyles.wrapper.partition}/>
+                    <TouchableOpacity style={DropDownStyles.wrapper.item}>
+                        <Text style={DropDownStyles.wrapper.text}>냉장 보관</Text>
+                    </TouchableOpacity>
+                    <View style={DropDownStyles.wrapper.partition}/>
+                    <TouchableOpacity style={DropDownStyles.wrapper.item}>
+                        <Text style={DropDownStyles.wrapper.text}>냉동 보관</Text>
+                    </TouchableOpacity>
+                    <View style={DropDownStyles.wrapper.partition}/>
+                    <TouchableOpacity style={DropDownStyles.wrapper.item}>
+                        <Text style={DropDownStyles.wrapper.text}>기타</Text>
+                    </TouchableOpacity>
+
+                </View>
+            }
+        </View>
+    )
+}
+
+export {InputType1, InputType2, InputType3, InputType4, DropDownInput};
 
 const LabelStyles = StyleSheet.create({
     labelView:{
@@ -170,7 +207,7 @@ const InputType2Styles = (focused) => StyleSheet.create({
         marginHorizontal: widthPercentage(7.5),
         backgroundColor: focused ? "FFD6005E" :"#ffffff",
         borderColor: focused ? "FFD6005E" :"#ffffff",
-        borderRadius: 15,
+        borderRadius: 12,
         ...Platform.select({
             ios: {
                 shadowColor: "#000000",
@@ -225,4 +262,75 @@ const InputType4Styles = StyleSheet.create({
         height: heightPercentage(100),
         marginBottom: heightPercentage(22),
     }
+})
+
+const DropDownStyles = StyleSheet.create({
+    container: {
+        width: widthPercentage(319),
+        marginBottom: heightPercentage(22),
+    },
+    trigger:{
+        container:{
+            justifyContent: 'center',
+            width: '100%',
+            minHeight: heightPercentage(43),
+            maxHeight: heightPercentage(86),
+            paddingHorizontal: widthPercentage(15),
+            borderWidth: 2,
+            borderColor: "#D9D9D9",
+            borderRadius: 12,
+        },
+        current:{
+            width: '100%',
+            height: heightPercentage(43),
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+        },
+        image:{
+            width: widthPercentage(14),
+            height: heightPercentage(7.17),
+            resizeMode: 'stretch'
+        },
+        text: {
+            fontSize: fontPercentage(12),
+            color: '#374957'
+        },
+        input:{
+            width: widthPercentage(200),
+            height: heightPercentage(29),
+            padding: 0,
+            marginHorizontal:0,
+            marginBottom: 14,
+            borderBottomWidth: 2,
+            borderBottomColor: "#D9D9D9",
+            fontSize: fontPercentage(12)
+        }
+    },
+    wrapper: {
+        container:{
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            borderWidth: 2,
+            borderColor: "#D9D9D9",
+            borderRadius: 12,
+        },
+        item:{
+            width: '100%',
+            height: heightPercentage(43),
+            alignItems: 'center',
+            justifyContent: 'center'
+        },
+        text:{
+            fontSize: fontPercentage(12),
+            color: '#374957'
+        },
+        partition:{
+            width: '90%',
+            height: heightPercentage(0.5),
+            backgroundColor: '#374957'
+        }
+    }
+    
 })
