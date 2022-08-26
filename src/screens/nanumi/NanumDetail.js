@@ -112,7 +112,7 @@ const NanumDetail=({navigation})=>{
                 </View>
                 </View>   
             </ScrollView>
-            <ChooseTime/>
+            <ChooseTime appointment={appointment}/>
         </SafeAreaView>
     )
 }
