@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
-import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable,TouchableWithoutFeedback, Platform} from "react-native";
+import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable,Image, Platform} from "react-native";
 import Nanumitem from "../../components/NanumItem";
 import DropDownPicker from 'react-native-dropdown-picker';
+import { heightPercentage,widthPercentage,fontPercentage } from "../../ResponsiveSize";
 
 const item=[
     {
@@ -83,29 +84,30 @@ const NanumList = ({navigation}) => {
                     </Pressable>
             </ScrollView>
             <Pressable 
-                    style={{position:'absolute',top:620,paddingBottom:10,alignItems:'center',backgroundColor:'transparent',width:132,left:122,
+                style={{position:'absolute',top:620,paddingBottom:10,alignItems:'center',backgroundColor:'#FFF0A1',height:heightPercentage(43),width:widthPercentage(152),left:122,flexDirection:'row',borderRadius:21.5,
                     ...Platform.select({android:{elevation:3}})}} 
                     onPress={()=>{navigation.navigate('WriteNanum')}}>
-                        <Text style={styles.write}>글 작성</Text>
-                    </Pressable>
+                <Image source={require('../../assets/images/pen.png')} style={{width:widthPercentage(21),height:heightPercentage(20),marginLeft:27,marginRight:-15,marginTop:9}} />
+                <Text style={textstyle.write}>나눔글 작성</Text>
+            </Pressable>
         </SafeAreaView>
     )
 
 }
 
-const styles=StyleSheet.create({
+const textstyle=StyleSheet.create({
     write:{
         textAlign:'center',
-        height:43,
-        width:142,
-        backgroundColor:'#FFF0A1',
-        borderRadius:21.5,
+        height: heightPercentage(43),
+        width:widthPercentage(142),
         paddingTop:10,
-        fontSize:16,
+        fontSize:fontPercentage(13),
         fontWeight:'700',
         color:'#374957',
         fontFamily:'Noto Sans KR',
         fontStyle:'normal',
+        marginLeft:-13,
+        marginTop:11
     }
 })
 

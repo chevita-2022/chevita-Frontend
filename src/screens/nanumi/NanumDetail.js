@@ -1,21 +1,34 @@
-import React from "react";
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View,Platform } from "react-native";
+import React, { useState } from "react";
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View,Platform, Pressable} from "react-native";
 import { widthPercentage, heightPercentage, fontPercentage } from "../../ResponsiveSize";
 import { Table,Col} from "react-native-table-component";
 import { ProgressBarForDate } from '../../components/ProgressBar';
 import Nanumitem from "../../components/NanumItem";
+import ChooseTime from "./Modal_ChooseTime";
 
-const NanumDetail=()=>{
+//let backgroundColor='#ffffff';
+//let ContainerOpacity=1;
+
+const NanumDetail=({navigation})=>{
 
     const col1=['식품 구매일자','개봉일자'];
     const col2=['2022.08.19','2022.08.19'];
     const col3=['유통기한','보관방식'];
     const col4=['2022.09.23','상온보관'];
     const appointment=['8월 26일 7시 나눔초등학교', '8월 29일 18시 나눔초등학교','9월 15일 2시 나눔초등학교'];
-    
+
+    const [backgroundColor,setBackgroundColor]=useState('#ffffff');
+    const [opacity,setOpacity]=useState(1);
+
+    const PressedReserve=()=>{
+        setBackgroundColor('rgba(0,0,0,0.6)');
+        setOpacity(0.5);
+        //ContainerOpacity=0.5;
+    }
+
     return(
-        <SafeAreaView style={{backgroundColor:'#ffffff', flex:1}}>
-            <ScrollView>
+        <SafeAreaView style={{backgroundColor:backgroundColor, flex:1}}>
+            <ScrollView style={{opacity:opacity}}>
                 <View>
                 <Image source={require('../../assets/images/back-btn-navy.png')} style={{marginLeft: 10, width: 22, height: 22,position:'absolute',top:13}} />
                 <Image source={require('../../assets/images/test.jpeg')} style={{width:widthPercentage(375),height:heightPercentage(300)}} />
@@ -24,7 +37,7 @@ const NanumDetail=()=>{
         
                     {/*제목*/}
                     <View style={{flexDirection:'row'}}>
-                        <Image source={require("../../assets/images/carrotEx1.jpeg")} style={{width:40,height:40,borderRadius:100,borderWidth:1,borderColor:'gray'}} />
+                        <Image source={require("../../assets/images/carrotEx1.jpeg")} style={{width:40,height:40,borderRadius:100,borderWidth:1,borderColor:'gray',opacity:opacity}} />
                         <Text style={{fontFamily:'Noto Sans KR',fontSize:13,fontWeight:'500',color:'#374957',padding:5}}>식빵빵</Text>
                     </View>
                         <Text style={{top:-17,left:46,fontFamily:'Noto Sans KR',fontSize:11,fontWeight:'400',color:'#7D7D7D'}}>아현동</Text>
@@ -62,14 +75,14 @@ const NanumDetail=()=>{
                         <Image source={require('../../assets/images/clock.png')} style={{width:widthPercentage(20),height:heightPercentage(20)}} />
                         <Text  style={{paddingLeft:5,fontFamily:'Noto Sans KR',fontWeight:'700',fontSize:fontPercentage(13),color:'#374957'}}>소비기한</Text>
                     </View>
-                    <ProgressBarForDate />
+                    <ProgressBarForDate/>
                     <Text style={{borderTopWidth:1,borderRadius:0.5,marginTop:25, borderColor:'#D9D9D9'}}> &nbsp; </Text>
                     
                     {/*본문*/}
                     <Text style={{color:'#181818',fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(12)}}>식빵 반봉지 나눔합니다.{'\n'} 제빵왕 김탁구가 만든거라 아주 맛있읍니다.{'\n'} 냠냠굿~</Text>
                     
                     {/*나눔시간*/}
-                    <View style={{padding:7,borderWidth:1,borderColor:'#F3F3F3',borderRadius:17,marginTop:100,backgroundColor:'#F3F3F3'}}>
+                    <View style={{padding:7,borderWidth:1,borderColor:'#F3F3F3',borderRadius:17,marginTop:100,backgroundColor:'#F3F3F3',opacity:opacity}}>
                         {/*<Table >
                             <Row data={appointmentHeader} style={{padding:3}} textStyle={{fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'700',color:'#374957'}} />
                             <Row data={appointment} style={{padding:3}}/>
@@ -77,7 +90,7 @@ const NanumDetail=()=>{
                         <Text style={{fontFamily:'Noto Sans KR',padding:5,fontSize:fontPercentage(11),fontWeight:'700',color:'#374957'}}>나눔 예약을 눌러 기타시간대도 요청해보세요!</Text>
                         <View style={{flexDirection:'row'}}>
                             {appointment.map(i=>(
-                                <View style={{width:widthPercentage(110),flexDirection:'row',paddingTop:5}}>
+                                <View style={{width:widthPercentage(110),flexDirection:'row',paddingTop:5,paddingBottom:5}}>
                                 <Image source={require('../../assets/images/location.png')} style={{width:widthPercentage(16),height:heightPercentage(17),marginTop:3}} />
                                 <Text style={{width:widthPercentage(90),paddingLeft:5,fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'400',color:'#374957'}}>{i}</Text>
                                 </View>
@@ -96,10 +109,10 @@ const NanumDetail=()=>{
                     <Text style={{borderTopWidth:1,borderRadius:0.5,marginTop:13, borderColor:'#D9D9D9'}}> &nbsp; </Text>
                     <Nanumitem/>
                     <Nanumitem/>
-
                 </View>
                 </View>   
             </ScrollView>
+            <ChooseTime/>
         </SafeAreaView>
     )
 }
@@ -113,7 +126,7 @@ const BoxStyle=StyleSheet.create({
         marginVertical: 2,
         marginHorizontal: widthPercentage(4),
         backgroundColor: '#ffffff',
-        borderColor :"#ffffff",
+        borderColor : '#ffffff',
         borderRadius: 15,
         flexDirection:'row',
         ...Platform.select({
@@ -136,7 +149,7 @@ const BoxStyle=StyleSheet.create({
         fontWeight: '700',
         fontFamily:'Noto Sans KR',
         color:'#374957',
-        padding:3
+        padding:3,
     },
     img:{
         height:heightPercentage(19),
@@ -151,7 +164,7 @@ const InfoText=StyleSheet.create({
         fontStyle:'normal',
         fontWeight:'400',
         color:'#7D7D7D',
-        padding:2
+        padding:2,
     },
     detail:{
         fontSize:fontPercentage(12),
@@ -159,7 +172,7 @@ const InfoText=StyleSheet.create({
         fontStyle:'normal',
         fontWeight:'700',
         color:'#374957',
-        padding:1
+        padding:1,
     }
 })
 
