@@ -11,7 +11,7 @@ const ProgressBarForDate = (props) =>{
             <View style={barStyles().dateBar.barGroup}>
                 <View style={barStyles().dateBar.startCircle}/>
                 <View style={barStyles().dateBar.bar}>
-                    <View style={barStyles(10).dateBar.currentBar}>
+                    <View style={barStyles(23).dateBar.currentBar}>
                         <View style={barStyles().dateBar.currentCircle}>
                             <View style={barStyles().dateBar.textBallon.container}>
                                 <Image source={require('../assets/images/ballon.png')} style={barStyles().dateBar.textBallon.ballon}/>
