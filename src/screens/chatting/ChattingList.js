@@ -1,6 +1,6 @@
 import React from "react";
 import { Pressable, SafeAreaView, ScrollView, Text } from "react-native";
-import PersonalChatting from "./PersonalChatting";
+import PersonalChatting from "../../components/PersonalChatting";
 
 const List = [
     {

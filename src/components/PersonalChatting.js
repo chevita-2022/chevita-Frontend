@@ -7,7 +7,7 @@ const PersonalChatting=({title,time,message,key})=>{
 
     return(
         <SafeAreaView style={{flexDirection:'row', paddingLeft:15,paddingRight:15,paddingVertical:7}}>
-            <Image source={require("../../assets/images/carrotEx1.jpeg")}
+            <Image source={require("../assets/images/carrotEx1.jpeg")}
              style={{width:60, height:60,borderRadius:12,borderColor:'gray',borderWidth:1}} />
             <View style={{flexDirection:'column',paddingLeft:10}}>
                 <View style={{flexDirection:'row'}}>

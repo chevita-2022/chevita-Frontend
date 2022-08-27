@@ -4,7 +4,7 @@ import { widthPercentage, heightPercentage, fontPercentage } from "../../Respons
 import { Table,Col} from "react-native-table-component";
 import { ProgressBarForDate } from '../../components/ProgressBar';
 import Nanumitem from "../../components/NanumItem";
-import ChooseTime from "./Modal_ChooseTime";
+import ChooseTime from "../../components/modal/Modal_ChooseTime";
 
 //let backgroundColor='#ffffff';
 //let ContainerOpacity=1;

@@ -24,7 +24,7 @@ const ProgressBarForDate = (props) =>{
             </View>
             <View style={barStyles().dateBar.textGroup}>
                 <Text style={barStyles().dateBar.text}>1일</Text>
-                <Text style={barStyles().dateBar.text}>30일</Text>
+                <Text style={barStyles().dateBar.text}>30일+</Text>
             </View>
         </View>
     )
