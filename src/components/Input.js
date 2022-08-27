@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { Text, TextInput, View, TouchableOpacity, StyleSheet, ScrollView, Platform, Image} from "react-native";
 import { widthPercentage, heightPercentage, fontPercentage } from "../ResponsiveSize";
+import { ImagePicker } from "./ImagePicker";
 import { ProgressBarForDate } from "./ProgressBar";
 
 const Label = (props) => {
-    const {label, star, guide} = props;
+    const {label, star, guide, type} = props;
     return(
-        <View style={LabelStyles.labelView}>
-            <Text style={LabelStyles.labelText}>{label}</Text>
-            {star && <Text style={LabelStyles.star}>*</Text>}
-            {guide && <Text style={LabelStyles.guide}>{guide}</Text>}
+        <View style={LabelStyles(type).labelView}>
+            <View style={{flexDirection: 'row'}}>
+                <Text style={LabelStyles().labelText}>{label}</Text>
+                {star && <Text style={LabelStyles().star}>*</Text>}
+            </View>
+            {guide && <Text style={LabelStyles(type).guide}>{guide}</Text>}
         </View>
     )
 }
@@ -99,7 +102,7 @@ const InputType4 = (props) => {
 
     return(
         <View style={InputType4Styles.container}>
-            <Label label={label} star={star} guide={guide}/>
+            <Label label={label} star={star} guide={guide} />
             <ProgressBarForDate/>
         </View>
     )
@@ -144,13 +147,62 @@ const DropDownInput = (props) => {
     )
 }
 
-export {InputType1, InputType2, InputType3, InputType4, DropDownInput};
+const ImageInput1 = (props) => {
+    const {name, label, placeholder, value, handleChange, star, guide} = props;
+    return(
+        <View style={ImageInput1Styles.container}>
+            <Label label={label} star={star} guide={guide} type={2}/>
+            <View style={ImageInput1Styles.inputs}>
+                <TouchableOpacity style={ImageInput1Styles.input} onPress={() => ImagePicker()}>
+                    <Text style={ImageInput1Styles.text}>대표사진</Text>
+                    <Text style={ImageInput1Styles.plus}>+</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={ImageInput1Styles.input} onPress={() => ImagePicker()}>
+                    <Text style={ImageInput1Styles.text}>상세사진</Text>
+                    <Text style={ImageInput1Styles.plus}>+</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={ImageInput1Styles.input} onPress={() => ImagePicker()}>
+                    <Text style={ImageInput1Styles.text}>상세사진</Text>
+                    <Text style={ImageInput1Styles.plus}>+</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    )
+} 
 
-const LabelStyles = StyleSheet.create({
+const ImageInput2 = (props) => {
+    const {name, label, placeholder, value, handleChange, star, guide} = props;
+    return(
+        <View style={ImageInput2Styles.container}>
+            <Label label={label} star={star} guide={guide} type={2}/>
+            <TouchableOpacity style={ImageInput2Styles.input} onPress={() => ImagePicker()}>
+                <Text style={ImageInput2Styles.text}>영수증 사진</Text>
+                <Text style={ImageInput2Styles.plus}>+</Text>
+            </TouchableOpacity>
+        </View>
+    )
+}
+
+const InputType5 = (props) => {
+    const {name, label, placeholder, value, handleChange, star,} = props;
+    return(
+        <View style={InputType5Styles.container}>
+            <Label label={label} star={star}/>
+            <View style={InputType5Styles.inputBox}>
+                <TextInput style={InputType5Styles.input} placeholderTextColor="#D8D8D8" placeholder={placeholder} value={value} onChangeText={(value) => handleChange(name, value)}/>
+            </View>
+        </View>
+    )
+}
+
+export {InputType1, InputType2, InputType3, InputType4, DropDownInput, ImageInput1, ImageInput2, InputType5};
+
+const LabelStyles = (type) => StyleSheet.create({
     labelView:{
-        flexDirection: "row",
+        flexDirection: type != 2 ? "row" : "column",
         width: widthPercentage(317),
-        height: heightPercentage(20),
+        minHeight: heightPercentage(20),
+        maxHeight: heightPercentage(37),
         paddingLeft: 2,
         marginBottom: heightPercentage(10)
     },
@@ -168,7 +220,7 @@ const LabelStyles = StyleSheet.create({
     },
     guide:{
         textAlignVertical: 'bottom',
-        paddingLeft: widthPercentage(7),
+        paddingLeft: type != 2 ? widthPercentage(7): 0,
         fontSize: fontPercentage(10),
         color: '#374957'
     }
@@ -333,4 +385,123 @@ const DropDownStyles = StyleSheet.create({
         }
     }
     
+})
+
+const ImageInput1Styles = StyleSheet.create({
+    container:{
+        width: widthPercentage(327),
+        marginBottom: heightPercentage(22),
+    },
+    inputs:{
+        flexDirection: 'row',
+        alignItems: "center",
+    },
+    input:{
+        flex:1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: heightPercentage(133),
+        marginHorizontal: widthPercentage(5),
+        backgroundColor: '#FAFAFA',
+        borderColor: "#FAFAFA",
+        borderRadius: 12,
+        ...Platform.select({
+            ios: {
+                shadowColor: "#000000",
+                shadowOffset: {
+                    width: 1,
+                    height: 1,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 6,
+            },
+            android: {
+                elevation: 3,
+            },
+        }),
+    },
+    text:{
+        fontSize: fontPercentage(12),
+        color: '#374957',
+    },
+    plus:{
+        marginTop: heightPercentage(2),
+        fontSize: fontPercentage(16),
+        color: '#374957',
+    }
+})
+
+const ImageInput2Styles = StyleSheet.create({
+    container:{
+        width: widthPercentage(317),
+        marginBottom: heightPercentage(22),
+    },
+    input:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: heightPercentage(79),
+        backgroundColor: '#FAFAFA',
+        borderColor: "#FAFAFA",
+        borderRadius: 12,
+        ...Platform.select({
+            ios: {
+                shadowColor: "#000000",
+                shadowOffset: {
+                    width: 1,
+                    height: 1,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 6,
+            },
+            android: {
+                elevation: 3,
+            },
+        }),
+    },
+    text:{
+        fontSize: fontPercentage(12),
+        color: '#374957',
+    },
+    plus:{
+        marginTop: heightPercentage(2),
+        fontSize: fontPercentage(16),
+        color: '#374957',
+    }
+})
+
+const InputType5Styles = StyleSheet.create({
+    container: {
+        width: widthPercentage(317),
+        marginBottom: heightPercentage(22),
+    },
+    inputBox:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        paddingVertical: heightPercentage(5),
+        backgroundColor: '#FAFAFA',
+        borderColor: "#FAFAFA",
+        borderRadius: 12,
+        ...Platform.select({
+            ios: {
+                shadowColor: "#000000",
+                shadowOffset: {
+                    width: 1,
+                    height: 1,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 6,
+            },
+            android: {
+                elevation: 3,
+            },
+        }),
+    },
+    input: {
+        width: widthPercentage(307),
+        minHeight: heightPercentage(144),
+        padding:0,
+        margin:0,
+    }
 })

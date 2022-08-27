@@ -13,6 +13,7 @@ import ChattingList from './chatting/ChattingList';
 import MyPage from './mypage/MyPage';
 import { BackBtn, SearchBtn, RightBtns, HeartBtn } from '../components/Button';
 import { widthPercentage, heightPercentage, fontPercentage } from '../ResponsiveSize';
+import NanumDetail from './nanumi/NanumDetail';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,15 +26,34 @@ const MyPageStack = createNativeStackNavigator();
 
 
 const Header = (props) => {
-  const {title, shadow, type, navigation, before, transparent} = props;
+  const {title, shadow, type, navigation, before} = props;
 
   const goBack = () => navigation.navigate(before);
+
+  const LeftIcon = () => {
+    if(type == 1)
+      return <SearchBtn/>
+    else if(type == 2)
+      return <BackBtn goBack={goBack} color='navy'/>
+    else if(type == 3)
+      return <BackBtn goBack={goBack} color='white'/>
+    else
+      return <></>
+  }
+
+  const RightIcon = () => {
+    return(
+      (type == 1 || type == 4) ? <RightBtns/> : (type == 3 ? <HeartBtn/> : <></>)
+    )
+  }
+
+  const transparent = (type == 3 ? true : false)
   
   return (
-    <View style={styles(shadow).header.container}>
-      {type == 1 ? <SearchBtn/> : ( type == 2 && <BackBtn goBack={goBack}/>)}
-      <Text style={styles().header.title}>{title}</Text>
-      {(type == 1 || type == 4) ? <RightBtns/> : (type == 3 && <HeartBtn/>)}
+    <View style={ styles(shadow, transparent).header.container}>
+      <LeftIcon/>
+      <Text style={styles(shadow).header.title}>{title}</Text>
+      <RightIcon/>
     </View>);
 }
 
@@ -64,6 +84,7 @@ const NanumiStackScreen = ({navigation, route}) => {
         <NanumiStack.Screen name="Nanumi" component={NanumList} options={{header:()=>(<Header title='나누미' shadow={true} type={1} navigation={navigation}/> )}}/>
         <NanumiStack.Screen name="WriteNanum" component={WriteNanum} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='Nanumi'/>)}}/>
         <NanumiStack.Screen name="WriteNanum2" component={WriteNanum2} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='WriteNanum'/>)}}/>
+        <NanumiStack.Screen name="NanumDetail" component={NanumDetail} options={{header:()=>(<Header title='' shadow={false} type={3} navigation={navigation} before='Nanumi'/>)}}/>
       </Stack.Navigator>
     );
 };
@@ -78,21 +99,7 @@ const MapStackScreen = () => {
 
 const ChattingStackScreen = () => {
     return (
-      <Stack.Navigator 
-        screenOptions={{
-          tabBarActiveTintColor: '#fb8c00',
-          tabBarShowLabel: false,
-          headerStyle:{
-              backgroundColor:'#fff',
-          },
-          headerTintColor:'#374957',
-          headerTitleStyle:{
-              fontWeight:'900',
-              fontSize:16,
-              fontFamily:'Noto Sans KR',
-          },
-          headerTitleAlign:'center',
-        }}>
+      <Stack.Navigator>
         <ChattingStack.Screen name="ChattingList" component={ChattingList} options={{header:()=>(<Header title='채팅' shadow={true} type={4}/>)}}/>
         <ChattingStack.Screen name="ChattingBubble" component={ChattingBubble} options={{header:()=>(<Header title='채팅창' shadow={true} type={4}/>)}} />
       </Stack.Navigator>
@@ -185,13 +192,14 @@ const MainScreen = () => {
   );
 }
 
-const styles = (shadow) => StyleSheet.create({
+const styles = (shadow, transparent) => StyleSheet.create({
   header:{
     container: {
       width: '100%',
       height: 50, 
       marginBottom: shadow ? 3 : 0,
-      backgroundColor: '#ffffff',
+      backgroundColor: !transparent ? '#ffffff' : 'transparent',
+      borderBottomWidth: 0,
       flexDirection:'row', 
       alignItems: 'center',
       justifyContent: 'center',

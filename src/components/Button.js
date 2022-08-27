@@ -2,10 +2,11 @@ import React from 'react';
 import {Image, TouchableOpacity, StyleSheet, View} from 'react-native';
 import { widthPercentage, heightPercentage, fontPercentage } from '../ResponsiveSize';
 
-const BackBtn = ({goBack}) => {
+const BackBtn = ({goBack, color}) => {
+  const image = (color === 'navy' ? require('../assets/images/back-btn-navy.png') : require('../assets/images/back-btn-white.png'))
     return (
       <TouchableOpacity style={styles.backBtn.container} onPress={() => goBack()}>
-        <Image source={require('../assets/images/back-btn.png')} style={styles.backBtn.image}/>
+        <Image source={image} style={styles.backBtn.image}/>
       </TouchableOpacity>
     );
 }
@@ -33,8 +34,8 @@ const RightBtns = () => {
 
 const HeartBtn = () => {
   return (
-    <TouchableOpacity style={styles.searchBtn.container} onPress={() => goBack()}>
-      <Image source={require('../assets/images/heart.png')} style={styles.searchBtn.image}/>
+    <TouchableOpacity style={styles.heartBtn.container} onPress={() => goBack()}>
+      <Image source={require('../assets/images/heart.png')} style={styles.heartBtn.image}/>
     </TouchableOpacity>
   );
 }
@@ -88,7 +89,6 @@ const styles = StyleSheet.create({
       right: widthPercentage(18),
     },
     image:{
-      alignSelf:'flex-start',
       width: widthPercentage(24),
       height: heightPercentage(25.6),
       resizeMode: 'stretch'
