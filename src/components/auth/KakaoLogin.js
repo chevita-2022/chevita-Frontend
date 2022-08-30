@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable ,TouchableOpacity,Image} from "react-native";
+import { Pressable ,TouchableOpacity,Image,Text} from "react-native";
 import {
   KakaoOAuthToken,
   KakaoProfile,
@@ -8,6 +8,7 @@ import {
   logout,
   unlink,
 } from "@react-native-seoul/kakao-login";
+import { fontPercentage, heightPercentage, widthPercentage } from "../../ResponsiveSize";
 
 const signInWithKakao = async () => {
     const token = await login();
@@ -36,8 +37,8 @@ const signInWithKakao = async () => {
   const KakaoLogin=()=>(
     <TouchableOpacity onPress={signInWithKakao}>
         <Image
-          source={require("../assets/images/kakaoStart.png")}
-          style={{ top: 150 }} />
+          source={require("../../assets/images/auth/KakaoLogin.png")}
+          style={{ top: 190,width:widthPercentage(263),height:heightPercentage(40),top:423,alignSelf:'center' }} />
     </TouchableOpacity>
   )
 

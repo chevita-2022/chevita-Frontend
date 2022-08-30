@@ -109,6 +109,14 @@ const InputType4 = (props) => {
     )
 }
 
+const NicknameInput = ({ value, handleChange}) => {
+    return(
+        <View>
+            <TextInput maxLength={12} style={{width: '100%', padding:0,margin:0, borderBottomWidth: 2, borderBottomColor: "#767676", color: "black",}}  value={value} onChangeText={(value) => handleChange(value)} />
+        </View>
+    )
+}
+
 const DropDownInput = (props) => {
     const {name, label, value, star, handleChange} = props;
     const etc = false;
@@ -210,7 +218,7 @@ const CalendarInput = (props) => {
     )
 }
 
-export {InputType1, InputType2, InputType3, InputType4, DropDownInput, ImageInput1, ImageInput2, InputType5, CalendarInput};
+export {InputType1, InputType2, InputType3, InputType4,NicknameInput, DropDownInput, ImageInput1, ImageInput2, InputType5, CalendarInput};
 
 const LabelStyles = (type) => StyleSheet.create({
     labelView:{
