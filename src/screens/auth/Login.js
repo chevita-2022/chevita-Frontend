@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable, Button} from "react-native";
+import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable, Button, TouchableOpacity,Image} from "react-native";
 import { NaverLogin, getProfile } from "@react-native-seoul/naver-login";
-import KakaoLogin from "../../components/KakaoLogin";
+import { heightPercentage, widthPercentage } from "../../ResponsiveSize";
 
 const iosKeys = {
     kConsumerKey: "DHjT1zinlPR3aGq0LB1c",
@@ -17,7 +17,6 @@ const androidKeys = {
 };
   
 const initials = Platform.OS === 'ios' ? iosKeys : androidKeys;
-
 
 const Login = () => {
 
@@ -51,22 +50,19 @@ const Login = () => {
       }
       console.log('profileResult', profileResult);
     };
-
+g
     return(
-        <SafeAreaView style={styles.container}>
-            <Button
-                title="네이버 아이디로 로그인하기"
-                onPress={() => naverLogin(initials)}
-                styles={styles.button}
-            />
-            {!!naverToken && <Button title="로그아웃하기" onPress={naverLogout} />}
+      <View>
+        <TouchableOpacity onPress={()=>naverLogin(initials)}>
+          <Image source={require('../../assets/images/auth/NaverLogin.png')}
+                  style={{width:widthPercentage(253),height:heightPercentage(40),top:438,alignSelf:'center'}} />
+        </TouchableOpacity>
+            {!!naverToken && <Button title="로그아웃하기" onPress={naverLoout} />}
 
             {!!naverToken && (
                 <Button title="회원정보 가져오기" onPress={getUserProfile} />
             )}
-
-            <KakaoLogin/> 
-        </SafeAreaView>
+      </View>
     )
 }
 

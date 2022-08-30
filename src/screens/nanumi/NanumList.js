@@ -56,7 +56,7 @@ const NanumList = ({navigation}) => {
     return(
         <SafeAreaView style={{backgroundColor:'#fff',flex:1}} 
         >
-            <Text style={{fontFamily:'Noto Sans KR',fontSize:17,fontWeight:'700',color:'#374957',paddingLeft:11,paddingVertical:0,top:23,height:60,}}>김탁구님 주변 인기 나눔글</Text>
+            <Text style={{fontFamily:'Noto Sans KR',fontSize:fontPercentage(17),fontWeight:'700',color:'#374957',paddingLeft:11,paddingVertical:0,top:23,height:heightPercentage(60),}}>김탁구님 주변 인기 나눔글</Text>
             <DropDownPicker
                 open={open}
                 value={value}
@@ -64,17 +64,17 @@ const NanumList = ({navigation}) => {
                 setOpen={setOpen}
                 setValue={setValue}
                 setItems={setItems}
-                placeholder="인기순" placeholderStyle={{color:'#374957',fontWeight:'bold',textAlign:'right',fontSize:13}}
+                placeholder="인기순" placeholderStyle={{color:'#374957',fontWeight:'bold',textAlign:'right',fontSize:fontPercentage(13)}}
                 style={{borderColor:'#fff',}} textStyle={{color:'#374957',textAlign:'center'}}
                 containerStyle={{
                     position:'absolute',
-                    width:130,
-                    height:50,
+                    width:widthPercentage(130),
+                    height:heightPercentage(50),
                     right:5,
                     top:10,
                 }} 
-                dropDownContainerStyle={{borderRadius:17,borderColor:'lightgray',width:125,right:5,shadowOffset:{height:2,width:2},shadowOpacity:0.25}}
-                labelStyle={{color:'#374957',textAlign:'right',fontWeight:'bold',fontSize:13}}
+                dropDownContainerStyle={{borderRadius:17,borderColor:'lightgray',width:widthPercentage(125),right:5,shadowOffset:{height:heightPercentage(2),width:widthPercentage(2)},shadowOpacity:0.25}}
+                labelStyle={{color:'#374957',textAlign:'right',fontWeight:'bold',fontSize:fontPercentage(13)}}
                 />
             <ScrollView>
                     <Pressable onPress={()=>{navigation.navigate('NanumDetail')}}>

@@ -6,9 +6,6 @@ import { ProgressBarForDate } from '../../components/ProgressBar';
 import Nanumitem from "../../components/NanumItem";
 import ChooseTime from "../../components/modal/Modal_ChooseTime";
 
-//let backgroundColor='#ffffff';
-//let ContainerOpacity=1;
-
 const NanumDetail=({navigation})=>{
 
     const col1=['식품 구매일자','개봉일자'];
@@ -17,18 +14,9 @@ const NanumDetail=({navigation})=>{
     const col4=['2022.09.23','상온보관'];
     const appointment=['8월 26일 7시 나눔초등학교', '8월 29일 18시 나눔초등학교','9월 15일 2시 나눔초등학교'];
 
-    const [backgroundColor,setBackgroundColor]=useState('#ffffff');
-    const [opacity,setOpacity]=useState(1);
-
-    const PressedReserve=()=>{
-        setBackgroundColor('rgba(0,0,0,0.6)');
-        setOpacity(0.5);
-        //ContainerOpacity=0.5;
-    }
-
     return(
-        <SafeAreaView style={{backgroundColor:backgroundColor, flex:1}}>
-            <ScrollView style={{opacity:opacity}}>
+        <SafeAreaView style={{backgroundColor:'#ffffff', flex:1}}>
+            <ScrollView>
                 <View>
                 <Image source={require('../../assets/images/back-btn-navy.png')} style={{marginLeft: 10, width: 22, height: 22,position:'absolute',top:13}} />
                 <Image source={require('../../assets/images/test.jpeg')} style={{width:widthPercentage(375),height:heightPercentage(300)}} />
@@ -37,7 +25,7 @@ const NanumDetail=({navigation})=>{
         
                     {/*제목*/}
                     <View style={{flexDirection:'row'}}>
-                        <Image source={require("../../assets/images/carrotEx1.jpeg")} style={{width:40,height:40,borderRadius:100,borderWidth:1,borderColor:'gray',opacity:opacity}} />
+                        <Image source={require("../../assets/images/carrotEx1.jpeg")} style={{width:40,height:40,borderRadius:100,borderWidth:1,borderColor:'gray'}} />
                         <Text style={{fontFamily:'Noto Sans KR',fontSize:13,fontWeight:'500',color:'#374957',padding:5}}>식빵빵</Text>
                     </View>
                         <Text style={{top:-17,left:46,fontFamily:'Noto Sans KR',fontSize:11,fontWeight:'400',color:'#7D7D7D'}}>아현동</Text>
@@ -82,7 +70,7 @@ const NanumDetail=({navigation})=>{
                     <Text style={{color:'#181818',fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(12)}}>식빵 반봉지 나눔합니다.{'\n'} 제빵왕 김탁구가 만든거라 아주 맛있읍니다.{'\n'} 냠냠굿~</Text>
                     
                     {/*나눔시간*/}
-                    <View style={{padding:7,borderWidth:1,borderColor:'#F3F3F3',borderRadius:17,marginTop:100,backgroundColor:'#F3F3F3',opacity:opacity}}>
+                    <View style={{padding:7,borderWidth:1,borderColor:'#F3F3F3',borderRadius:17,marginTop:100,backgroundColor:'#F3F3F3'}}>
                         {/*<Table >
                             <Row data={appointmentHeader} style={{padding:3}} textStyle={{fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'700',color:'#374957'}} />
                             <Row data={appointment} style={{padding:3}}/>
