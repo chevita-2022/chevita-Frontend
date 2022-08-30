@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
-import { Text, StyleSheet, ScrollView, SafeAreaView,View, Pressable, Button, TouchableOpacity} from "react-native";
+import { Text, StyleSheet, ScrollView, SafeAreaView,View, Pressable, Image, TouchableOpacity} from "react-native";
 import { DropDownInput, ImageInput1, ImageInput2, InputType1, InputType2, InputType3, InputType4, InputType5 } from "../../components/Input";
+import { fontPercentage, heightPercentage, widthPercentage } from "../../ResponsiveSize";
 
 const WriteNanum = ({navigation}) => {
 
@@ -48,8 +49,9 @@ const WriteNanum = ({navigation}) => {
                 <ImageInput1 name="foodImg" label="사진" value={values.foodImg} handleChange={handleChange} star={true} guide="대표사진 포함 사진 3장을 필수로 업로드해주세요."/>
                 <ImageInput2 name="receiptImg" label="영수증 사진" value={values.receiptImg} handleChange={handleChange} star={false} guide="식품을 구입한 영수증 사진을 인증해주세요."/>
                 <InputType5 name="introduction" label="나눔 소개글" placeholder="나누고자 하는 식품에 대한 소개를 해주세요." value={values.introduction} handleChange={handleChange} star={true}/>
-                <TouchableOpacity onPress={()=> navigation.navigate('WriteNanum2')}>
-                    <Text>다음으로</Text>
+                <TouchableOpacity style={styles.next.container} onPress={()=> navigation.navigate('WriteNanum2')}>
+                    <Text style={styles.next.text}>다음으로</Text>
+                    <Image source={require('../../assets/images/arrow.png')} style={styles.next.image} />
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
@@ -65,6 +67,27 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#ffffff'
     },
+    next:{
+        container:{
+            width: widthPercentage(317),
+            height: heightPercentage(60),
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+        }, 
+        text:{
+            paddingRight: widthPercentage(7),
+            fontSize: fontPercentage(12),
+            color: '#151515'
+        },
+        image:{
+            width: widthPercentage(10),
+            height: heightPercentage(8),
+            resizeMode: 'stretch',
+            transform: [{ rotate: '270deg'}],
+
+        }
+    }
 });
 
 
