@@ -3,6 +3,7 @@ import { Text, TextInput, View, TouchableOpacity, StyleSheet, ScrollView, Platfo
 import { widthPercentage, heightPercentage, fontPercentage } from "../ResponsiveSize";
 import { ImagePicker } from "./ImagePicker";
 import { ProgressBarForDate } from "./ProgressBar";
+import { DayPicker, TimePicker } from "./CalendarPicker";
 
 const Label = (props) => {
     const {label, star, guide, type} = props;
@@ -189,25 +190,39 @@ const InputType5 = (props) => {
         <View style={InputType5Styles.container}>
             <Label label={label} star={star}/>
             <View style={InputType5Styles.inputBox}>
-                <TextInput style={InputType5Styles.input} placeholderTextColor="#D8D8D8" placeholder={placeholder} value={value} onChangeText={(value) => handleChange(name, value)}/>
+                <TextInput style={InputType5Styles.input} multiline={true} placeholderTextColor="#D8D8D8" placeholder={placeholder} value={value} onChangeText={(value) => handleChange(name, value)}/>
             </View>
         </View>
     )
 }
 
-export {InputType1, InputType2, InputType3, InputType4, DropDownInput, ImageInput1, ImageInput2, InputType5};
+const CalendarInput = (props) => {
+    const {name, label, placeholder, value, handleChange, star, guide} = props;
+    
+    const [state, setState] = useState();
+
+    return(
+        <View style={CalendarInputStyles().container}>
+            <Label label={label} star={star} guide={guide} type={2}/>
+            <DayPicker setState={setState}/>
+            <TimePicker state={state}/>
+        </View>
+    )
+}
+
+export {InputType1, InputType2, InputType3, InputType4, DropDownInput, ImageInput1, ImageInput2, InputType5, CalendarInput};
 
 const LabelStyles = (type) => StyleSheet.create({
     labelView:{
         flexDirection: type != 2 ? "row" : "column",
         width: widthPercentage(317),
         minHeight: heightPercentage(20),
-        maxHeight: heightPercentage(37),
+        maxHeight: heightPercentage(38),
         paddingLeft: 2,
         marginBottom: heightPercentage(10)
     },
     labelText:{
-        fontSize: fontPercentage(16),
+        fontSize: fontPercentage(14),
         fontWeight: "bold",
         color: '#374957'
     },
@@ -473,11 +488,9 @@ const ImageInput2Styles = StyleSheet.create({
 const InputType5Styles = StyleSheet.create({
     container: {
         width: widthPercentage(317),
-        marginBottom: heightPercentage(22),
     },
     inputBox:{
         alignItems: 'center',
-        justifyContent: 'center',
         width: '100%',
         paddingVertical: heightPercentage(5),
         backgroundColor: '#FAFAFA',
@@ -503,5 +516,14 @@ const InputType5Styles = StyleSheet.create({
         minHeight: heightPercentage(144),
         padding:0,
         margin:0,
+        textAlignVertical:"top",
     }
+})
+
+const CalendarInputStyles = (state, selected) => StyleSheet.create({
+    container:{
+        width: widthPercentage(317),
+        height: heightPercentage(441),
+    },
+    
 })

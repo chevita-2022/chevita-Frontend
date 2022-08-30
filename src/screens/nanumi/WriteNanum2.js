@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { Text, StyleSheet, ScrollView, SafeAreaView, View, Pressable, Button} from "react-native";
-import { InputType1, InputType2, InputType3, InputType4 } from "../../components/Input";
+import { CalendarInput, InputType1, InputType2, InputType3, InputType4 } from "../../components/Input";
 import { fontPercentage, heightPercentage, widthPercentage } from "../../ResponsiveSize";
 
 const WriteNanum2 = () => {
@@ -8,13 +8,7 @@ const WriteNanum2 = () => {
     const [isMounted, setIsMounted] = useState(false);
 
     const [values, setValues] = useState({
-        title: '',
-        type: '',
-        buyDate: {year: undefined, month: undefined, day: undefined},
-        openDate: {year: undefined, month: undefined, day: undefined},
-        expDate: {year: undefined, month: undefined, day: undefined},
-        useDate: 1,
-        place: '',
+        nanumDate: '',
     });
 
     const handleChange = (name, value) => {
@@ -34,6 +28,7 @@ const WriteNanum2 = () => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
+                <CalendarInput name="nanumDate" label="나눔 시간대" guide="나눔이 가능한 시간대를 모두 선택해주세요." value={values.nanumDate} handleChange={handleChange} star={true}/>
                 <Pressable style={styles.finishBtn.container}>
                     <Text style={styles.finishBtn.text}>글 작성 완료</Text>
                 </Pressable>
@@ -44,12 +39,10 @@ const WriteNanum2 = () => {
 
 const styles = StyleSheet.create({
     container:{
+        flex: 1,
         backgroundColor: '#ffffff',
-        alignItems: 'center',
-        justifyContent: 'center'
     },
     scrollView: {
-        flex:1,
         alignItems: 'center',
         backgroundColor: '#ffffff'
     },
