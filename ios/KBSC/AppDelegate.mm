@@ -13,7 +13,7 @@
 #import <React/RCTSurfacePresenter.h>
 #import <React/RCTSurfacePresenterBridgeAdapter.h>
 #import <ReactCommon/RCTTurboModuleManager.h>
-
+#import <GoogleMaps/GoogleMaps.h>
 #import <react/config/ReactNativeConfig.h>
 
 @interface AppDelegate () <RCTCxxBridgeDelegate, RCTTurboModuleManagerDelegate> {
@@ -58,6 +58,7 @@
   [[NaverThirdPartyLoginConnection getSharedInstance] setOnlyPortraitSupportInIphone:YES];
   [[NaverThirdPartyLoginConnection getSharedInstance] setIsInAppOauthEnable:YES];
 
+  [GMSServices provideAPIKey:@"AIzaSyBu793r3Sod25CMVQH051Tty1sdG44-Fes"]; // add this line using the api key obtained from Google Console
 
   return YES;
 }

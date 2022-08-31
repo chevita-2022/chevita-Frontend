@@ -2,6 +2,8 @@
   package="com.kbsc">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     
     <application
       android:name=".MainApplication"
@@ -38,5 +40,19 @@
         </intent-filter>
       </activity>
 
+      <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyB4M04Z0YdfkcBMLbzDI7mBxOAT0IavAJY"/>
+
+      <!-- You will also only need to add this uses-libray tag -->
+      <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
+      <!-- Foreground services in Q+ require type. -->
+      <service
+        android:name=".LocationUpdatesService"
+        android:enabled="true"
+        android:exported="true"
+        android:foregroundServiceType="location" />      
     </application>
+
 </manifest>
