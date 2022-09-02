@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from "react";
-import { SafeAreaView,Text,StyleSheet,Image,View,TouchableOpacity } from "react-native";
+import { SafeAreaView,Text,StyleSheet,Image,View,TouchableOpacity, Button } from "react-native";
 import { NicknameInput } from "../../components/Input";
 import { fontPercentage,widthPercentage,heightPercentage } from "../../ResponsiveSize";
 

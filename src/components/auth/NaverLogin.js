@@ -18,9 +18,9 @@ const androidKeys = {
   
 const initials = Platform.OS === 'ios' ? iosKeys : androidKeys;
 
-const Login = () => {
+const [naverToken, setNaverToken] = React.useState(null);
 
-    const [naverToken, setNaverToken] = React.useState(null);
+const Naver_Login = () => {
 
     const naverLogin = props => {
       return new Promise((resolve, reject) => {
@@ -37,32 +37,52 @@ const Login = () => {
       });
     };
   
-    const naverLogout = () => {
-      NaverLogin.logout();
-      setNaverToken(null);
-    };
-  
-    const getUserProfile = async () => {
-      const profileResult = await getProfile(naverToken.accessToken);
-      if (profileResult.resultcode === '024') {
-        Alert.alert('로그인 실패', profileResult.message);
-        return;
-      }
-      console.log('profileResult', profileResult);
-    };
-g
+
     return(
       <View>
         <TouchableOpacity onPress={()=>naverLogin(initials)}>
           <Image source={require('../../assets/images/auth/NaverLogin.png')}
                   style={{width:widthPercentage(253),height:heightPercentage(40),top:438,alignSelf:'center'}} />
         </TouchableOpacity>
-            {!!naverToken && <Button title="로그아웃하기" onPress={naverLoout} />}
-
-            {!!naverToken && (
-                <Button title="회원정보 가져오기" onPress={getUserProfile} />
-            )}
       </View>
+    )
+}
+
+const NaverLogout = () => {
+
+    const naverLogout = () => {
+        NaverLogin.logout();
+        setNaverToken(null);
+      };
+
+    return(
+        <View>
+            <TouchableOpacity>
+                {!!naverToken && <Button title="로그아웃하기" onPress={naverLogout} />}
+            </TouchableOpacity>
+        </View>
+    )
+}
+
+const getNaverProfile = () => {
+
+    const getUserProfile = async () => {
+        const profileResult = await getProfile(naverToken.accessToken);
+        if (profileResult.resultcode === '024') {
+          Alert.alert('로그인 실패', profileResult.message);
+          return;
+        }
+        console.log('profileResult', profileResult);
+      };
+
+    return(
+        <View>
+            <TouchableOpacity>
+                {!!naverToken && (
+                    <Button title="회원정보 가져오기" onPress={getUserProfile} />
+                )}
+            </TouchableOpacity>
+        </View>
     )
 }
 
@@ -77,4 +97,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Login;
+export {Naver_Login, NaverLogout, getNaverProfile};
