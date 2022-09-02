@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { launchImageLibrary } from "react-native-image-picker";
+import { launchImageLibrary, launchCamera } from "react-native-image-picker";
 
 const ImagePicker = () => {
     //launchImageLibrary : 사용자 앨범 접근

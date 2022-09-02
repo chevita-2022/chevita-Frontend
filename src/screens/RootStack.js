@@ -1,8 +1,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from "./auth/Login";
 import MainScreen from "./MainScreen";
+import InitialScreen from "./auth/InitialScreen"
+import Nickname from './auth/Nickname';
 
 const Stack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
@@ -23,7 +24,8 @@ const AuthStackScreen = () => {
           },
           headerTitleAlign:'center',
         }}>
-        <AuthStack.Screen name="Auth" component={Login} />
+        <AuthStack.Screen name="Initial" component={InitialScreen} />
+        <AuthStack.Screen name="Nickname" component={Nickname} />
       </Stack.Navigator>
     );
 };
@@ -31,7 +33,7 @@ const AuthStackScreen = () => {
 const RootStack = () => {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Main" screenOptions={{headerShown: false}}>
+        <Stack.Navigator initialRouteName="Auth" screenOptions={{headerShown: false}}>
           <Stack.Screen
             name="Auth"
             component={AuthStackScreen}
