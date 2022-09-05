@@ -14,6 +14,7 @@ import MyPage from './mypage/MyPage';
 import { BackBtn, SearchBtn, RightBtns, HeartBtn } from '../components/Button';
 import { widthPercentage, heightPercentage, fontPercentage } from '../ResponsiveSize';
 import NanumDetail from './nanumi/NanumDetail';
+import { HeaderBackground } from 'react-navigation-stack';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -84,7 +85,7 @@ const NanumiStackScreen = ({navigation, route}) => {
         <NanumiStack.Screen name="Nanumi" component={NanumList} options={{header:()=>(<Header title='나누미' shadow={true} type={1} navigation={navigation}/> )}}/>
         <NanumiStack.Screen name="WriteNanum" component={WriteNanum} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='Nanumi'/>)}}/>
         <NanumiStack.Screen name="WriteNanum2" component={WriteNanum2} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='WriteNanum'/>)}}/>
-        <NanumiStack.Screen name="NanumDetail" component={NanumDetail} options={{header:()=>(<Header title='' shadow={false} type={3} navigation={navigation} before='Nanumi'/>)}}/>
+        <NanumiStack.Screen name="NanumDetail" component={NanumDetail} options={{/*header:()=>(<Header title='' shadow={false} type={3} navigation={navigation} before='Nanumi'/>)*/ headerShown:false}}/>
       </Stack.Navigator>
     );
 };

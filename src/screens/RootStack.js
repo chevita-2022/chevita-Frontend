@@ -29,6 +29,7 @@ const AuthStackScreen = () => {
         <AuthStack.Screen name="Initial" component={InitialScreen}/>
         <AuthStack.Screen name="Nickname" component={Nickname} />
         <AuthStack.Screen name="Profile" component={Profile} />
+        <AuthStack.Screen name="MainScreen" component={MainScreen} />
       </Stack.Navigator>
     );
 };
