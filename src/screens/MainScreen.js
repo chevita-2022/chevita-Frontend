@@ -7,13 +7,15 @@ import Home from './Home';
 import NanumList from './nanumi/NanumList';
 import WriteNanum from './nanumi/WriteNanum';
 import WriteNanum2 from './nanumi/WriteNanum2';
+import WriteAdress from './nanumi/WriteAdress';
 import Map from './Map';
 import ChattingBubble from './chatting/ChattingBubble';
 import ChattingList from './chatting/ChattingList';
 import MyPage from './mypage/MyPage';
-import { BackBtn, SearchBtn, RightBtns, HeartBtn } from '../components/Button';
+import Header from '../components/Header';
 import { widthPercentage, heightPercentage, fontPercentage } from '../ResponsiveSize';
 import NanumDetail from './nanumi/NanumDetail';
+import NanumRecord from './mypage/NanumRecord';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,41 +27,8 @@ const ChattingStack = createNativeStackNavigator();
 const MyPageStack = createNativeStackNavigator();
 
 
-const Header = (props) => {
-  const {title, shadow, type, navigation, before} = props;
-
-  const goBack = () => navigation.navigate(before);
-
-  const LeftIcon = () => {
-    if(type == 1)
-      return <SearchBtn/>
-    else if(type == 2)
-      return <BackBtn goBack={goBack} color='navy'/>
-    else if(type == 3)
-      return <BackBtn goBack={goBack} color='white'/>
-    else
-      return <></>
-  }
-
-  const RightIcon = () => {
-    return(
-      (type == 1 || type == 4) ? <RightBtns/> : (type == 3 ? <HeartBtn/> : <></>)
-    )
-  }
-
-  const transparent = (type == 3 ? true : false)
-  
-  return (
-    <View style={ styles(shadow, transparent).header.container}>
-      <LeftIcon/>
-      <Text style={styles(shadow).header.title}>{title}</Text>
-      <RightIcon/>
-    </View>);
-}
-
-
 const hideTapBar = (navigation, route) => {
-  const arr = ['WriteNanum']
+  const arr = ['WriteAdress']
   const routeName = getFocusedRouteNameFromRoute(route);
   
   if (arr.includes(routeName)) { 
@@ -69,21 +38,14 @@ const hideTapBar = (navigation, route) => {
   }
 }
 
-
-const HomeStackScreen = ({navigation, route}) => {
-    return (
-      <Stack.Navigator>
-        <HomeStack.Screen name="Home" component={Home} options={{header:()=>(<Header title='홈' shadow={true} type={1}/>)}}/>
-      </Stack.Navigator>
-    );
-};
-
 const NanumiStackScreen = ({navigation, route}) => {
+
     return (
       <Stack.Navigator>
         <NanumiStack.Screen name="Nanumi" component={NanumList} options={{header:()=>(<Header title='나누미' shadow={true} type={1} navigation={navigation}/> )}}/>
         <NanumiStack.Screen name="WriteNanum" component={WriteNanum} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='Nanumi'/>)}}/>
         <NanumiStack.Screen name="WriteNanum2" component={WriteNanum2} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='WriteNanum'/>)}}/>
+        <NanumiStack.Screen name="WriteAdress" component={WriteAdress} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='WriteNanum2'/>)}}/>
         <NanumiStack.Screen name="NanumDetail" component={NanumDetail} options={{header:()=>(<Header title='' shadow={false} type={3} navigation={navigation} before='Nanumi'/>)}}/>
       </Stack.Navigator>
     );
@@ -110,6 +72,7 @@ const MyPageStackScreen = () => {
     return (
       <Stack.Navigator>
         <MyPageStack.Screen name="MyPage" component={MyPage} options={{header:()=>(<Header title='마이페이지' shadow={true} type={4}/>)}}/>
+        <MyPageStack.Screen name="NanumRecord" component={NanumRecord} options={{header:()=>(<Header title='나눔 기록' shadow={true} type={2}/>)}}/>
       </Stack.Navigator>
     );
 };
@@ -124,27 +87,14 @@ const MainScreen = () => {
         tabBarShowLabel: false,
       }} >
       <Tab.Screen
-        name="HomeStack"
-        component={HomeStackScreen}
-        options={{
-            title: '홈',
-            tabBarIcon: ({focused}) => (
-              focused ? 
-              <Image source={require('../assets/images/focused_home.png')} style={styles().tabBarIcon}/>
-              : 
-              <Image source={require('../assets/images/home.png')} style={styles().tabBarIcon}/>
-            )
-        }}
-      />
-      <Tab.Screen
         name="NanumiStack"
         component={NanumiStackScreen}
         options={{
           tabBarIcon: ({focused}) => (
             focused ? 
-            <Image source={require('../assets/images/focused_nanumi.png')} style={styles().tabBarIcon}/>
+            <Image source={require('../assets/images/focused_nanumi.png')} style={styles.tabBarIcon}/>
             : 
-            <Image source={require('../assets/images/nanumi.png')} style={styles().tabBarIcon}/>
+            <Image source={require('../assets/images/nanumi.png')} style={styles.tabBarIcon}/>
           )
         }}
       />
@@ -155,9 +105,9 @@ const MainScreen = () => {
           title: '지도',
           tabBarIcon: ({focused}) => (
             focused ? 
-            <Image source={require('../assets/images/focused_map.png')} style={styles().tabBarIcon}/>
+            <Image source={require('../assets/images/focused_map.png')} style={styles.tabBarIcon}/>
             : 
-            <Image source={require('../assets/images/map.png')} style={styles().tabBarIcon}/>
+            <Image source={require('../assets/images/map.png')} style={styles.tabBarIcon}/>
           )
         }}
       />
@@ -168,9 +118,9 @@ const MainScreen = () => {
           title: '채팅',
           tabBarIcon: ({focused}) => (
             focused ? 
-            <Image source={require('../assets/images/focused_chatting.png')} style={styles().tabBarIcon}/>
+            <Image source={require('../assets/images/focused_chatting.png')} style={styles.tabBarIcon}/>
             : 
-            <Image source={require('../assets/images/chatting.png')} style={styles().tabBarIcon}/>
+            <Image source={require('../assets/images/chatting.png')} style={styles.tabBarIcon}/>
           )
         }}
       />
@@ -181,9 +131,9 @@ const MainScreen = () => {
           title: '마이페이지',
           tabBarIcon: ({focused}) => (
             focused ? 
-            <Image source={require('../assets/images/focused_mypage.png')} style={styles().tabBarIcon}/>
+            <Image source={require('../assets/images/focused_mypage.png')} style={styles.tabBarIcon}/>
             : 
-            <Image source={require('../assets/images/mypage.png')} style={styles().tabBarIcon}/>
+            <Image source={require('../assets/images/mypage.png')} style={styles.tabBarIcon}/>
           )
         }}
       />
@@ -192,49 +142,8 @@ const MainScreen = () => {
   );
 }
 
-const styles = (shadow, transparent) => StyleSheet.create({
-  header:{
-    container: {
-      width: '100%',
-      height: 50, 
-      marginBottom: shadow ? 3 : 0,
-      backgroundColor: !transparent ? '#ffffff' : 'transparent',
-      borderBottomWidth: 0,
-      flexDirection:'row', 
-      alignItems: 'center',
-      justifyContent: 'center',
-      ...Platform.select({
-        ios: {
-            shadowColor: '#d8d8d8',
-            shadowOffset: {
-                width: 0,
-                height: shadow ? 10 : 0,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3,
-        },
-        android: {
-            elevation: shadow ? 3 : 0,
-        },
-      }),
-    },
-    title:{
-      color:'#374957',
-      fontWeight:'bold',
-      fontSize: fontPercentage(16),
-      fontFamily:'Noto Sans KR',
-    },
-    leftIcon:{
-      position: 'absolute',
-      left: widthPercentage(18),
-    },
-    backBtn:{
-      alignSelf:'flex-start',
-      width: widthPercentage(24),
-      height: heightPercentage(25.6),
-      resizeMode: 'stretch'
-    },
-  },
+const styles = StyleSheet.create({
+  
   tabBarIcon:{
     width: widthPercentage(28),
     height: heightPercentage(28),

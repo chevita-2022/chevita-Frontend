@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { Text, TextInput, View, TouchableOpacity, StyleSheet, ScrollView, Platform, Image} from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, TextInput, View, TouchableOpacity, StyleSheet, ScrollView, Platform, Image, Modal, Button, Pressable} from "react-native";
 import { widthPercentage, heightPercentage, fontPercentage } from "../ResponsiveSize";
 import { ImagePicker } from "./ImagePicker";
 import { ProgressBarForDate } from "./ProgressBar";
 import { DayPicker, TimePicker } from "./CalendarPicker";
+import Postcode from '@actbase/react-daum-postcode';
 
 const Label = (props) => {
     const {label, star, guide, type} = props;
@@ -31,39 +32,71 @@ const InputType1 = (props) => {
 const InputType2 = (props) => {
     const {name, label, value, star, handleChange} = props;
 
+    const typeArr = [
+        {
+            type: "veg",
+            label: "채소"
+        },
+        {
+            type: "fruit",
+            label: "과일"
+        },
+        {
+            type: "grain",
+            label: "쌀·잡곡"
+        },
+        {
+            type: "meat",
+            label: "정육·계란"
+        },
+        {
+            type: "backery",
+            label: "베이커리"
+        },
+        {
+            type: "diary",
+            label: "유제품"
+        },
+        {
+            type: "sauce",
+            label: "소스"
+        },
+        {
+            type: "side",
+            label: "김치·반찬"
+        },
+        {
+            type: "frz",
+            label: "가공·냉동"
+        },
+        {
+            type: "etc",
+            label: "기타"
+        }
+    ]
+    const TypeItem = (props) => {
+        const {name, obj} = props;
+        return(
+            <TouchableOpacity style={InputType2Styles(focused === obj.type).item} activeOpacity={0.6} onPress={() => onChangeType(name, obj.type)}>
+                <Text style={InputType2Styles().text}>{obj.label}</Text>
+            </TouchableOpacity>
+        )
+    }
     const [focused, setFocused] = useState("")
 
     const onChangeType = (name, type) =>{
         setFocused(type);
         handleChange(name, type);
-        console.log(focused === "veg")
+        console.log(focused)
     }
 
     return(
         <View style={InputType2Styles().container}>
             <Label label={label} star={star}/>
-            <ScrollView horizontal={true} showHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
-                <TouchableOpacity style={InputType2Styles(focused === "veg").item} activeOpacity={0.6} onPress={() => onChangeType(name, "veg")}>
-                    <Text style={InputType2Styles().text}>채소</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={InputType2Styles(focused === "fruit").item} onPress={() => onChangeType(name, "fruit")}>
-                    <Text style={InputType2Styles().text}>과일</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={InputType2Styles(focused === "diary").item} onPress={() => onChangeType(name, "diary")}>
-                    <Text style={InputType2Styles().text}>유제품</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={InputType2Styles(focused === "meat").item} onPress={() => onChangeType(name, "meat")}>
-                    <Text style={InputType2Styles().text}>육류/계란</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={InputType2Styles(focused === "frz").item} onPress={() => onChangeType(name, "frz")}>
-                    <Text style={InputType2Styles().text}>가공/냉동</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={InputType2Styles(focused === "sauce").item} onPress={() => onChangeType(name, "sauce")}>
-                    <Text style={InputType2Styles().text}>소스</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={InputType2Styles(focused === "etc").item} onPress={() => onChangeType(name, "etc")}>
-                    <Text style={InputType2Styles().text}>기타</Text>
-                </TouchableOpacity>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
+                {typeArr.map(item=>(
+                    <TypeItem name={name} obj={item}/>
+                ))}
             </ScrollView>
         </View>
     )
@@ -208,17 +241,40 @@ const CalendarInput = (props) => {
     const {name, label, placeholder, value, handleChange, star, guide} = props;
     
     const [state, setState] = useState();
+    
+    useEffect(()=>{
+        handleChange(name, [state?.year, state?.month, state?.day]);
+    },[state])
 
     return(
-        <View style={CalendarInputStyles().container}>
+        <View style={CalendarInputStyles.container}>
             <Label label={label} star={star} guide={guide} type={2}/>
             <DayPicker setState={setState}/>
-            <TimePicker state={state}/>
+            <TimePicker state={state} handleChange={handleChange}/>
         </View>
     )
 }
 
-export {InputType1, InputType2, InputType3, InputType4,NicknameInput, DropDownInput, ImageInput1, ImageInput2, InputType5, CalendarInput};
+const PlaceInput = (props) => {
+    const {name, label, placeholder, value, handleChange, star, guide, navigation} = props;
+
+    const [isModal, setModal] = useState(false);
+
+    const [detail, setDetail] = useState('');
+
+    return(
+        <View style={PlaceInputStyles.container}>
+            <Label label={label} star={star} type={1}/>
+            <TouchableOpacity style={PlaceInputStyles.btn.container} onPress={() => navigation.navigate('WriteAdress')}>
+                <Text style={PlaceInputStyles.btn.text}>{value != undefined ? value.address : '눌러서 주소를 입력해 주세요.'}</Text>
+                <Image source={require('../assets/images/search.png')} style={PlaceInputStyles.btn.image}/>
+            </TouchableOpacity>
+            {value != undefined && <TextInput style={PlaceInputStyles.input} placeholderTextColor="#D8D8D8" placeholder="상세 주소를 입력해주세요." value={detail} onChangeText={(value) => setDetail(value)}/>}
+        </View>
+    )
+}
+
+export {InputType1, InputType2, InputType3, InputType4,NicknameInput, DropDownInput, ImageInput1, ImageInput2, InputType5, CalendarInput, PlaceInput};
 
 const LabelStyles = (type) => StyleSheet.create({
     labelView:{
@@ -262,7 +318,7 @@ const InputType1Styles = StyleSheet.create({
         margin:0,
         borderBottomWidth: 2,
         borderBottomColor: "#D9D9D9",
-        color: "black",
+        color: "#151515",
     }
 })
 
@@ -280,8 +336,8 @@ const InputType2Styles = (focused) => StyleSheet.create({
         height: heightPercentage(45),
         marginVertical: 2,
         marginHorizontal: widthPercentage(7.5),
-        backgroundColor: focused ? "FFD6005E" :"#ffffff",
-        borderColor: focused ? "FFD6005E" :"#ffffff",
+        backgroundColor: focused === true ? "#FFEB82" :"#ffffff",
+        borderColor: focused === true ? "#FFEB82" :"#ffffff",
         borderRadius: 12,
         ...Platform.select({
             ios: {
@@ -528,10 +584,65 @@ const InputType5Styles = StyleSheet.create({
     }
 })
 
-const CalendarInputStyles = (state, selected) => StyleSheet.create({
+const CalendarInputStyles = StyleSheet.create({
     container:{
         width: widthPercentage(317),
-        height: heightPercentage(441),
+        marginBottom: heightPercentage(22),
     },
-    
+})
+
+const PlaceInputStyles = StyleSheet.create({
+    container:{
+        width: widthPercentage(317),
+        marginBottom: heightPercentage(22)
+    },
+    btn:{
+        container:{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            height: heightPercentage(43),
+            paddingHorizontal: widthPercentage(15),
+            marginBottom: heightPercentage(10),
+            borderRadius: 12,
+            backgroundColor: '#FAFAFA',
+            borderColor: "#FAFAFA",
+            borderRadius: 12,
+            ...Platform.select({
+                ios: {
+                    shadowColor: "#000000",
+                    shadowOffset: {
+                        width: 1,
+                        height: 1,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 6,
+                },
+                android: {
+                    elevation: 3,
+                },
+            }),
+        },
+        text:{
+            fontSize: fontPercentage(14),
+            color: '#151515'
+        },
+        image:{
+            width: widthPercentage(17),
+            height: heightPercentage(17),
+            resizeMode: 'stretch',
+        }
+    },
+    input:{
+        alignItems: 'center',
+        width: '100%',
+        height: heightPercentage(30),
+        paddingLeft: widthPercentage(15),
+        padding: 0,
+        margin:0,
+        borderBottomWidth: 2,
+        borderBottomColor: "#D9D9D9",
+        color: "#151515",
+    }
 })
