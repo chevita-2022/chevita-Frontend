@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MainScreen from "./MainScreen";
 import InitialScreen from "./auth/InitialScreen"
 import Nickname from './auth/Nickname';
+import Profile from './auth/Profile';
 
 const Stack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
@@ -23,9 +24,11 @@ const AuthStackScreen = () => {
               fontFamily:'Noto Sans KR',
           },
           headerTitleAlign:'center',
+          headerShown:false,
         }}>
-        <AuthStack.Screen name="Initial" component={InitialScreen} />
+        <AuthStack.Screen name="Initial" component={InitialScreen}/>
         <AuthStack.Screen name="Nickname" component={Nickname} />
+        <AuthStack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
     );
 };

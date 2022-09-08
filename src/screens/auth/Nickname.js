@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from "react";
-import { SafeAreaView,Text,StyleSheet,Image,View,TouchableOpacity, Button } from "react-native";
+import { SafeAreaView,Text,StyleSheet,Image,View,TouchableOpacity, Button,Pressable } from "react-native";
 import { NicknameInput } from "../../components/Input";
 import { fontPercentage,widthPercentage,heightPercentage } from "../../ResponsiveSize";
 
@@ -28,6 +28,9 @@ const Nickname=({navigation})=>{
                 <NicknameInput name='nickname' value={nickname} handleChange={handleChange}/>
                 <Text style={{right:-240,color:'#767676',fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(10),paddingTop:3}}>최대 12자</Text>
             </View>
+            <Pressable onPress={() => navigation.navigate("Profile")}>
+                <Text style={{position:'absolute',color:'#151515',fontFamily:'Noto Sans KR',fontWeight:'500',fontSize:fontPercentage(12),top:550,right:0}}>다음으로 {'>'}</Text>
+            </Pressable>
         </SafeAreaView>
     )
 }
