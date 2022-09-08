@@ -44,11 +44,6 @@ const TimePicker = (props) => {
     const arr = [...new Array(24)].map((_, i) => i+1);
 
     const [selected, setSelected] = useState([...new Array(24)].fill(false));
- 
-    console.log(arr)
-    //const [selected, setSelected] = useState([...arr].fill(false));
-
-    console.log(selected)
     
     const TimeItem = ({date}) => {
         const onPress = () => {
@@ -75,6 +70,18 @@ const TimePicker = (props) => {
 
     const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
+    const setAllTime = () => {
+        if(toggleCheckBox == true){
+            setToggleCheckBox(false);
+            setSelected([...new Array(24)].fill(false));
+            console.log(selected)
+        } else {
+            setToggleCheckBox(true);
+            setSelected([...new Array(24)].fill(true));
+            console.log(selected)
+        }
+    }
+
     return(
         (state ? 
             <View style={TimePickerStyles().container}>
@@ -89,14 +96,14 @@ const TimePicker = (props) => {
                 </ScrollView>
                 <View style={TimePickerStyles().option.container}>
                     <View style={TimePickerStyles().option.box}>
-                        <Pressable onPress={(prev) => setToggleCheckBox(!prev)}>
+                        <Pressable onPress={() => setAllTime()}>
                             <Text style={TimePickerStyles().option.text}>시간대 상관없음</Text>
                         </Pressable>
                         <View style={TimePickerStyles().option.checkBox}>
                             <CheckBox 
                                 disabled={false}
                                 value={toggleCheckBox} 
-                                onValueChange={(newValue) => setToggleCheckBox(newValue)} 
+                                onValueChange={() => setAllTime()} 
                                 tintColors={{ true: '#707070', false: '#707070'}} 
                             />
                         </View>

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { Text, StyleSheet, ScrollView, SafeAreaView, View, Pressable, Image, TouchableOpacity} from "react-native";
-import ProfileImage from "../../components/ProfileImage";
+import {ProfileImage} from "../../components/ProfileImage";
 import { ProgressBarForVital } from "../../components/ProgressBar";
 import { fontPercentage, heightPercentage, widthPercentage } from "../../ResponsiveSize";
 

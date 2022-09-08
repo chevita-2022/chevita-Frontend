@@ -68,11 +68,11 @@ const ChattingStackScreen = () => {
     );
 };
 
-const MyPageStackScreen = () => {
+const MyPageStackScreen = ({navigation}) => {
     return (
       <Stack.Navigator>
         <MyPageStack.Screen name="MyPage" component={MyPage} options={{header:()=>(<Header title='마이페이지' shadow={true} type={4}/>)}}/>
-        <MyPageStack.Screen name="NanumRecord" component={NanumRecord} options={{header:()=>(<Header title='나눔 기록' shadow={true} type={2}/>)}}/>
+        <MyPageStack.Screen name="NanumRecord" component={NanumRecord} options={{header:()=>(<Header title='나눔 기록' shadow={true} type={2} navigation={navigation} before="MyPage"/>)}}/>
       </Stack.Navigator>
     );
 };

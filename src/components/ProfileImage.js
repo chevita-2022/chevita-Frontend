@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export {ProfileImage,ProfileImage1};
+export {ProfileImage, ProfileImage1};
