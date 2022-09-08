@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable, Button} from "react-native";
+import { Text, StyleSheet, ScrollView, SafeAreaView,View, Pressable} from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";	
 import Geolocation from "react-native-geolocation-service";
 
@@ -41,24 +41,6 @@ const GoogleMap = () => {
             }
           });
         }, []);
-      출처: https://agilog.tistory.com/2 [애자일로그:티스토리]
-
-    useEffect(() => {
-            Geolocation.getCurrentPosition(
-            pos => {
-                setLocation(pos.coords);
-                console.log(pos.coords)
-            },
-            error => {
-                console.log(error);
-            },
-            {
-                enableHighAccuracy: true,
-                timeout: 3600,
-                maximumAge: 3600,
-            },
-            );
-    }, []);
 
     return(
         location ? 

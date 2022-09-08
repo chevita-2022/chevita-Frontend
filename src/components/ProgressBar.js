@@ -30,6 +30,27 @@ const ProgressBarForDate = (props) =>{
     )
 }
 
+const ProgressBarForVital = (props) =>{
+    const {vital} = props;
+    return(
+        <View style={barStyles().vitalBar.container}>
+            <View style={barStyles().vitalBar.label.container}>
+                <Image source={require('../assets/images/vital.png')} style={barStyles().vitalBar.label.image}/>
+                <Text style={barStyles().vitalBar.label.text}>바이탈</Text>
+            </View>
+            <View style={barStyles().vitalBar.barGroup}>
+                <View style={barStyles().vitalBar.bar}>
+                    <View style={barStyles(23).vitalBar.currentBar}>
+                        <View style={barStyles().vitalBar.currentCircle}>
+                            <Text style={barStyles().vitalBar.number}>{vital}%</Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        </View>
+    )
+}
+
 const barStyles = (current) => StyleSheet.create({
     dateBar:{
         container:{
@@ -104,6 +125,7 @@ const barStyles = (current) => StyleSheet.create({
             ballon:{
                 width: widthPercentage(65),
                 height: heightPercentage(41),
+                resizeMode: 'stretch'
             },
             text:{
                 position: 'absolute',
@@ -115,9 +137,82 @@ const barStyles = (current) => StyleSheet.create({
                 color: '#374957'
             }    
         }
-
-
+    },
+    vitalBar:{
+        container:{
+            width: widthPercentage(116),
+            height: heightPercentage(30)
+        },
+        label:{
+            container:{
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingBottom: heightPercentage(3),
+            },
+            image:{
+                width: widthPercentage(14),
+                height: heightPercentage(14),
+                resizeMode: 'stretch',
+            },
+            text:{
+                marginLeft: widthPercentage(2),
+                fontSize: fontPercentage(10),
+                color: '#7D7D7D'
+            }
+        },
+        barGroup:{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '98%',
+        },
+        bar:{
+            width: '100%',
+            height: heightPercentage(3),
+            borderRadius: 2,
+            backgroundColor: '#D9D9D9',
+        },
+        currentBar:{
+            justifyContent:'center',
+            width: (current/30*100)+'%',
+            height: heightPercentage(3),
+            paddingTop: heightPercentage(3),
+            borderRadius: 2,
+            backgroundColor: '#FFD600',
+        },
+        currentCircle:{
+            position: 'absolute',
+            right: 0,
+            width: widthPercentage(9),
+            height: heightPercentage(9),
+            backgroundColor: '#FFD600',
+            borderRadius: 90,
+            ...Platform.select({
+                ios: {
+                    shadowColor: "#000000",
+                    shadowOffset: {
+                        width: 1,
+                        height: 1,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 6,
+                },
+                android: {
+                    elevation: 3,
+                },
+            }),
+        },
+        number:{
+            position: 'absolute',
+            top: -heightPercentage(20),
+            right: -widthPercentage(15),
+            width: widthPercentage(31),
+            height: heightPercentage(17),
+            fontSize: fontPercentage(14),
+            fontWeight: 'bold',
+            color: '#FFB800'
+        }
     }
 })
 
-export {ProgressBarForDate};
+export {ProgressBarForDate, ProgressBarForVital};

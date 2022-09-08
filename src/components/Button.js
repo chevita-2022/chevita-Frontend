@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     container:{
       position: 'absolute',
       left: widthPercentage(18),
+      bottom: heightPercentage(20)
     },
     image:{
       alignSelf:'flex-start',
@@ -57,6 +58,7 @@ const styles = StyleSheet.create({
     container:{
       position: 'absolute',
       left: widthPercentage(18),
+      bottom: heightPercentage(20)
     },
     image:{
       alignSelf:'flex-start',
@@ -69,6 +71,7 @@ const styles = StyleSheet.create({
     container: {
       position: 'absolute',
       right: widthPercentage(18),
+      bottom: heightPercentage(20),
       width: widthPercentage(64),
       flexDirection: 'row',
       alignItems: 'center',
@@ -87,6 +90,7 @@ const styles = StyleSheet.create({
     container:{
       position: 'absolute',
       right: widthPercentage(18),
+      bottom: heightPercentage(20)
     },
     image:{
       width: widthPercentage(24),

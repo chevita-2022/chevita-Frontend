@@ -30,7 +30,7 @@ const ProfileImage1 = () => {
 const styles = StyleSheet.create({
     container:{
         width: widthPercentage(74),
-        height: heightPercentage(78),
+        height: heightPercentage(93),
         paddingTop: heightPercentage(15),
     },
     profile:{
@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export {ProfileImage,ProfileImage1};
+export {ProfileImage, ProfileImage1};
