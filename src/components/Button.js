@@ -93,8 +93,8 @@ const styles = StyleSheet.create({
       bottom: heightPercentage(20)
     },
     image:{
-      width: widthPercentage(24),
-      height: heightPercentage(25.6),
+      width: widthPercentage(15),
+      height: heightPercentage(15),
       resizeMode: 'stretch'
     },
   }

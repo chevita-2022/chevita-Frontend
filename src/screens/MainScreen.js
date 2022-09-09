@@ -3,7 +3,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import {View, Image, Text, StyleSheet, Platform, TouchableOpacity} from 'react-native';
-import Home from './Home';
 import NanumList from './nanumi/NanumList';
 import WriteNanum from './nanumi/WriteNanum';
 import WriteNanum2 from './nanumi/WriteNanum2';
