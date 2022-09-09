@@ -1,20 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { View,Text ,StyleSheet, SafeAreaView,Image,ScrollView,Platform, Pressable} from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { fontPercentage, heightPercentage, widthPercentage } from "../ResponsiveSize";
 
-const Nanumitem=({title,place,createdTime,hastag,like,d_day})=>{
+const Nanumitem=({title,place,createdTime,hastag,like,d_day,navigation})=>{
+
+    const [jjim,setJjim]=useState(false);
+
     return(
         <SafeAreaView style={{flex:1,marginLeft:10,marginRight:10}} >
                 <View style={{paddingBottom:8,borderBottomWidth:1, borderBottomColor:'#D9D9D9'}}>
                     <View style={{flexDirection:'row'}}>
+                
                     <Text style={styles.title}>
                         {title}
                     </Text>
+
                     <Text style={{position:'absolute',right:21,top:37.5,fontFamily:'Noto Sans KR',fontSize:13,fontWeight:'700',color:'#151515'}}>{like}</Text>
-                    <Pressable style={{position:'absolute', top:40,right:0}}>
-                        <Image source={require("../assets/images/like.png")} style={{width:15,height:15}} />
+                    
+                    {/* 찜 버튼 */}
+                    <Pressable style={{position:'absolute', top:40,right:0}} onPress={()=>setJjim(true)}>
+                        {
+                            console.log(jjim) &&
+                            jjim===false?
+                            <Image source={require("../assets/images/like.png")} style={{width:15,height:15}} />
+                            :
+                            <Image source={require("../assets/images/fullLike.png")} style={{width:15,height:15}} />
+                        }              
                     </Pressable>
+                    
                     </View>
                     <Text style={{fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:11,padding:1,color:'rgba(55, 73, 87, 0.5)'}}> {place} &nbsp; {createdTime } </Text> 
                     <Text style={styles.hastag}> {hastag}</Text>

@@ -82,11 +82,11 @@ const NanumList = ({navigation}) => {
                 />
             <ScrollView>
                 { value==='popular' ?
-                    <Pressable onPress={()=>{navigation.navigate('NanumDetail')}}>
+                    <View>
                         {item.map(item=>(
                             <Nanumitem title={item.title} place={item.location} createdTime={item.createdTime} hastag={item.hastag} appointment={item.time} like={item.like} d_day={item.d_day} />
                         ))}
-                    </Pressable>
+                    </View>
                 :
                 (
                     value==='default' ?
