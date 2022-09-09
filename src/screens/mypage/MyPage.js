@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { Text, StyleSheet, ScrollView, SafeAreaView, View, Pressable, Image, TouchableOpacity} from "react-native";
 import {ProfileImage} from "../../components/ProfileImage";
 import { ProgressBarForVital } from "../../components/ProgressBar";
+import { ReviewItem } from "../../components/Review";
 import { fontPercentage, heightPercentage, widthPercentage } from "../../ResponsiveSize";
 
 
@@ -42,6 +43,11 @@ const MyPage = ({navigation}) => {
                     </View>
                     <Text style={styles.recordButton.number}>{test.record}</Text>
                 </TouchableOpacity>
+                <View style={styles.subTitle.container}>
+                    <Image source={require('../../assets/images/logo_black.png')} style={styles.subTitle.image}/>
+                    <Text style={styles.subTitle.text}>김채비님의 나누미 후기</Text>
+                </View>
+                <ReviewItem/>
             </ScrollView>
         </SafeAreaView>
     )
@@ -141,7 +147,7 @@ const styles = StyleSheet.create({
             width: widthPercentage(319),
             height: heightPercentage(79),
             marginTop: heightPercentage(20),
-            marginBottom: 1,
+            marginBottom: heightPercentage(25),
             backgroundColor: '#FFF0A1',
             borderColor: '#FFF0A1',
             borderRadius: 14,
@@ -179,6 +185,28 @@ const styles = StyleSheet.create({
             fontWeight: 'bold',
             color: '#151515'
         }
+    },
+    subTitle:{
+        container:{
+            flexDirection: 'row',
+            alignItems: 'center',
+            width: widthPercentage(339),
+            paddingBottom: heightPercentage(8),
+            borderBottomWidth: 2,
+            botderColor: '#151515'
+        },
+        image:{
+            width: widthPercentage(20),
+            height: heightPercentage(19),
+            marginRight: widthPercentage(6),
+            resizeMode: 'stretch'
+        },
+        text:{
+            fontSize: fontPercentage(12),
+            fontWeight: 'bold',
+            color: '#151515'
+        }
+
     }
 })
 

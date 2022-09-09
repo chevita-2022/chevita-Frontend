@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Text, StyleSheet, ScrollView, SafeAreaView,View, Pressable} from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";	
+import { Platform, PermissionsAndroid } from "react-native";
 import Geolocation from "react-native-geolocation-service";
 
 const GoogleMap = () => {
@@ -14,7 +15,9 @@ const GoogleMap = () => {
           }
           // 안드로이드 위치 정보 수집 권한 요청
           if (Platform.OS === "android") {
-            return "granted"
+            return await PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            );
           }
         } catch (e) {
           console.log(e);

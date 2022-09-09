@@ -35,49 +35,62 @@ const InputType2 = (props) => {
     const typeArr = [
         {
             type: "veg",
-            label: "채소"
+            label: "채소",
+            img: require('../assets/images/veg.png')
         },
         {
             type: "fruit",
-            label: "과일"
+            label: "과일",
+            img: require('../assets/images/fruit.png')
         },
         {
             type: "grain",
-            label: "쌀·잡곡"
+            label: "쌀·잡곡",
+            img: require('../assets/images/grain.png')
         },
         {
             type: "meat",
-            label: "정육·계란"
+            label: "정육·계란",
+            img: require('../assets/images/meat.png')
         },
         {
             type: "backery",
-            label: "베이커리"
+            label: "베이커리",
+            img: require('../assets/images/backery.png')
         },
         {
             type: "diary",
-            label: "유제품"
+            label: "유제품",
+            img: require('../assets/images/diary.png')
         },
         {
             type: "sauce",
-            label: "소스"
+            label: "소스",
+            img: require('../assets/images/sauce.png')
         },
         {
             type: "side",
-            label: "김치·반찬"
+            label: "김치·반찬",
+            img: require('../assets/images/side.png')
         },
         {
             type: "frz",
-            label: "가공·냉동"
+            label: "가공·냉동",
+            img: require('../assets/images/frz.png')
         },
         {
             type: "etc",
-            label: "기타"
+            label: "기타",
+            img: require('../assets/images/etc.png')
         }
     ]
     const TypeItem = (props) => {
         const {name, obj} = props;
+        const imageUrl = '../assets/images/' + obj.type + '.png'
+        console.log(imageUrl)
         return(
             <TouchableOpacity style={InputType2Styles(focused === obj.type).item} activeOpacity={0.6} onPress={() => onChangeType(name, obj.type)}>
+                <Image source={obj.img} style={InputType2Styles("diary" === obj.type).image}/>
                 <Text style={InputType2Styles().text}>{obj.label}</Text>
             </TouchableOpacity>
         )
@@ -330,9 +343,10 @@ const InputType2Styles = (focused) => StyleSheet.create({
         marginBottom: heightPercentage(22),
     },
     item:{
+        flexDirection: 'row',
         alignItems: "center",
         justifyContent: "center",
-        width: widthPercentage(100),
+        width: widthPercentage(108),
         height: heightPercentage(45),
         marginVertical: 2,
         marginHorizontal: widthPercentage(7.5),
@@ -355,8 +369,15 @@ const InputType2Styles = (focused) => StyleSheet.create({
         }),
     },
     text: {
-        fontSize: fontPercentage(15),
-        fontWeight: "bold"
+        fontSize: fontPercentage(14),
+        fontWeight: "bold",
+        color: '#151515'
+    },
+    image:{
+        width: widthPercentage(focused ? 14 : 22),
+        height: heightPercentage(22),
+        resizeMode: 'stretch',
+        marginRight: widthPercentage(8)
     }
 })
 
