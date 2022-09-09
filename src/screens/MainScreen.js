@@ -3,7 +3,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import {View, Image, Text, StyleSheet, Platform, TouchableOpacity} from 'react-native';
-import Home from './Home';
 import NanumList from './nanumi/NanumList';
 import WriteNanum from './nanumi/WriteNanum';
 import WriteNanum2 from './nanumi/WriteNanum2';
@@ -45,7 +44,7 @@ const NanumiStackScreen = ({navigation, route}) => {
         <NanumiStack.Screen name="Nanumi" component={NanumList} options={{header:()=>(<Header title='나누미' shadow={true} type={1} navigation={navigation}/> )}}/>
         <NanumiStack.Screen name="WriteNanum" component={WriteNanum} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='Nanumi'/>)}}/>
         <NanumiStack.Screen name="WriteNanum2" component={WriteNanum2} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='WriteNanum'/>)}}/>
-        <NanumiStack.Screen name="WriteAdress" component={WriteAdress} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='WriteNanum2'/>)}}/>
+        <NanumiStack.Screen name="WriteAdress" component={WriteAdress} options={{header:()=>(<Header title='주소 검색' shadow={false} type={2} navigation={navigation} before='WriteNanum2'/>)}}/>
         <NanumiStack.Screen name="NanumDetail" component={NanumDetail} options={{header:()=>(<Header title='' shadow={false} type={3} navigation={navigation} before='Nanumi'/>)}}/>
       </Stack.Navigator>
     );

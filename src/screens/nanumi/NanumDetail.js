@@ -5,8 +5,11 @@ import { Table,Col} from "react-native-table-component";
 import { ProgressBarForDate } from '../../components/ProgressBar';
 import Nanumitem from "../../components/NanumItem";
 import ChooseTime from "../../components/modal/Modal_ChooseTime";
+import { BackBtn, HeartBtn } from "../../components/Button";
 
 const NanumDetail=({navigation})=>{
+
+    const goBackNanumi = () => navigation.navigate('Nanumi');
 
     const col1=['식품 구매일자','개봉일자'];
     const col2=['2022.08.19','2022.08.19'];
@@ -17,20 +20,27 @@ const NanumDetail=({navigation})=>{
     return(
         <SafeAreaView style={{backgroundColor:'#ffffff', flex:1}}>
             <ScrollView>
-                <View>
-                <Image source={require('../../assets/images/back-btn-navy.png')} style={{marginLeft: 10, width: 22, height: 22,position:'absolute',top:13}} />
                 <Image source={require('../../assets/images/test.jpeg')} style={{width:widthPercentage(375),height:heightPercentage(300)}} />
-               
+            
+                <Pressable style={{position:'absolute',top:10}}>
+                    <BackBtn color='white' goBack={goBackNanumi} />
+                </Pressable>
+                <Pressable style={{position:'absolute',right:0,top:17}}>
+                    <HeartBtn />
+                </Pressable>
+
                 <View style={{paddingLeft:10,paddingTop:20,paddingRight:10}}>
         
                     {/*제목*/}
                     <View style={{flexDirection:'row'}}>
-                        <Image source={require("../../assets/images/carrotEx1.jpeg")} style={{width:40,height:40,borderRadius:100,borderWidth:1,borderColor:'gray'}} />
-                        <Text style={{fontFamily:'Noto Sans KR',fontSize:13,fontWeight:'500',color:'#374957',padding:5}}>식빵빵</Text>
+                        <View style={{...Platform.select({android:{elevation:3}}),borderRadius:100}}>
+                            <Image source={require("../../assets/images/carrotEx1.jpeg")} style={{width:widthPercentage(40),height:heightPercentage(40),borderRadius:100}} />
+                       </View>
+                        <Text style={{fontFamily:'Noto Sans KR',fontSize:13,fontWeight:'500',color:'#151515',padding:5}}>식빵빵</Text>
                     </View>
-                        <Text style={{top:-17,left:46,fontFamily:'Noto Sans KR',fontSize:11,fontWeight:'400',color:'#7D7D7D'}}>아현동</Text>
-                    <Text style={{paddingTop:5,fontFamily:'Noto Sans KR',fontWeight:'700',fontSize:16,color:'#374957'}}>식빵 반봉지 나눔</Text>
-                    <Text style={{paddingTop:2,fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:11,color:'#7D7D7D'}}>13시간 전</Text>
+                        <Text style={{top:-17,left:widthPercentage(46),fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'400',color:'#7D7D7D'}}>아현동</Text>
+                    <Text style={{paddingTop:5,fontFamily:'Noto Sans KR',fontWeight:'700',fontSize:fontPercentage(16),color:'#151515'}}>식빵 반봉지 나눔</Text>
+                    <Text style={{paddingTop:2,fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(11),color:'#7D7D7D'}}>13시간 전</Text>
                     
                     {/*정보 박스*/}
                     <View style={{paddingTop:20,flexDirection:'row'}}>
@@ -61,7 +71,7 @@ const NanumDetail=({navigation})=>{
                     {/*소비기한*/}
                     <View style={{flexDirection:'row', paddingTop:30}}>
                         <Image source={require('../../assets/images/clock.png')} style={{width:widthPercentage(20),height:heightPercentage(20)}} />
-                        <Text  style={{paddingLeft:5,fontFamily:'Noto Sans KR',fontWeight:'700',fontSize:fontPercentage(13),color:'#374957'}}>소비기한</Text>
+                        <Text  style={{paddingLeft:5,fontFamily:'Noto Sans KR',fontWeight:'700',fontSize:fontPercentage(13),color:'#151515'}}>소비기한</Text>
                     </View>
                     <ProgressBarForDate/>
                     <Text style={{borderTopWidth:1,borderRadius:0.5,marginTop:25, borderColor:'#D9D9D9'}}> &nbsp; </Text>
@@ -72,33 +82,32 @@ const NanumDetail=({navigation})=>{
                     {/*나눔시간*/}
                     <View style={{padding:7,borderWidth:1,borderColor:'#F3F3F3',borderRadius:17,marginTop:100,backgroundColor:'#F3F3F3'}}>
                         {/*<Table >
-                            <Row data={appointmentHeader} style={{padding:3}} textStyle={{fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'700',color:'#374957'}} />
+                            <Row data={appointmentHeader} style={{padding:3}} textStyle={{fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'700',color:'#151515'}} />
                             <Row data={appointment} style={{padding:3}}/>
                          </Table>*/}
-                        <Text style={{fontFamily:'Noto Sans KR',padding:5,fontSize:fontPercentage(11),fontWeight:'700',color:'#374957'}}>나눔 예약을 눌러 기타시간대도 요청해보세요!</Text>
+                        <Text style={{fontFamily:'Noto Sans KR',padding:5,fontSize:fontPercentage(11),fontWeight:'700',color:'#151515'}}>나눔 예약을 눌러 기타시간대도 요청해보세요!</Text>
                         <View style={{flexDirection:'row'}}>
                             {appointment.map(i=>(
                                 <View style={{width:widthPercentage(110),flexDirection:'row',paddingTop:5,paddingBottom:5}}>
                                 <Image source={require('../../assets/images/location.png')} style={{width:widthPercentage(16),height:heightPercentage(17),marginTop:3}} />
-                                <Text style={{width:widthPercentage(90),paddingLeft:5,fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'400',color:'#374957'}}>{i}</Text>
+                                <Text style={{width:widthPercentage(90),paddingLeft:5,fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'400',color:'#151515'}}>{i}</Text>
                                 </View>
                             ))}
                         </View>
                     </View>
-                    
+    
                     {/*조회수*/}
                     <Text style={{width:widthPercentage(90),paddingLeft:5,paddingTop:10,fontFamily:'Noto Sans KR',fontSize:fontPercentage(10),fontWeight:'400',color:'#7D7D7D'}}>조회 18</Text> 
                     
                     {/*나눔 추천*/}
                     <View style={{flexDirection:'row',paddingTop:60}}>
                         <Image source={require('../../assets/images/location2.png')} style={{width:widthPercentage(19),height:heightPercentage(19)}} />
-                        <Text style={{paddingLeft:6,fontFamily:'Noto Sans KR',fontSize:fontPercentage(14),fontWeight:'700',color:'#374957'}}>김채비님 주변에 이런 나눔도 있어요!</Text>
+                        <Text style={{paddingLeft:6,fontFamily:'Noto Sans KR',fontSize:fontPercentage(14),fontWeight:'700',color:'#151515'}}>김채비님 주변에 이런 나눔도 있어요!</Text>
                     </View>
                     <Text style={{borderTopWidth:1,borderRadius:0.5,marginTop:13, borderColor:'#D9D9D9'}}> &nbsp; </Text>
                     <Nanumitem/>
                     <Nanumitem/>
                 </View>
-                </View>   
             </ScrollView>
             <ChooseTime appointment={appointment}/>
         </SafeAreaView>
@@ -136,7 +145,7 @@ const BoxStyle=StyleSheet.create({
         fontSize: fontPercentage(12),
         fontWeight: '700',
         fontFamily:'Noto Sans KR',
-        color:'#374957',
+        color:'#151515',
         padding:3,
     },
     img:{
@@ -159,7 +168,7 @@ const InfoText=StyleSheet.create({
         fontFamily:'Noto Sans KR',
         fontStyle:'normal',
         fontWeight:'700',
-        color:'#374957',
+        color:'#151515',
         padding:1,
     }
 })
