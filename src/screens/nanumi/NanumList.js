@@ -81,11 +81,28 @@ const NanumList = ({navigation}) => {
                 labelStyle={{color:'#151515',textAlign:'right',fontWeight:'bold',fontSize:fontPercentage(13)}}
                 />
             <ScrollView>
+                { value==='popular' ?
                     <Pressable onPress={()=>{navigation.navigate('NanumDetail')}}>
                         {item.map(item=>(
                             <Nanumitem title={item.title} place={item.location} createdTime={item.createdTime} hastag={item.hastag} appointment={item.time} like={item.like} d_day={item.d_day} />
                         ))}
                     </Pressable>
+                :
+                (
+                    value==='default' ?
+                    <Pressable onPress={()=>{navigation.navigate('NanumDetail')}}>
+                        {item.map(item=>(
+                            <Nanumitem title={item.title} place={item.location} createdTime={item.createdTime} hastag={item.hastag} appointment={item.time} like={item.like} d_day={item.d_day} />
+                        ))}
+                    </Pressable>
+                    :
+                    <Pressable onPress={()=>{navigation.navigate('NanumDetail')}}>
+                        {item.map(item=>(
+                            <Nanumitem title={item.title} place={item.location} createdTime={item.createdTime} hastag={item.hastag} appointment={item.time} like={item.like} d_day={item.d_day} />
+                        ))}
+                    </Pressable>
+                )
+                }   
             </ScrollView>
             <Pressable 
                 style={{position:'absolute',top:620,paddingBottom:10,alignItems:'center',backgroundColor:'#FFF0A1',height:heightPercentage(43),width:widthPercentage(152),left:122,flexDirection:'row',borderRadius:21.5,
