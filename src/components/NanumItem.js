@@ -7,14 +7,7 @@ const Nanumitem=({title,place,createdTime,hastag,like,d_day})=>{
 
     const [jjim,setJjim]=useState(false);
     const navigation = useNavigation(); 
-
-   // console.log(jjim);
-
     const likeImage=(jjim===false ? require('../assets/images/like.png') : require('../assets/images/fullLike.png'))
-
-    const Change=()=>{
-        setJjim(true);
-    }
 
     return(
         <SafeAreaView style={{flex:1,marginLeft:widthPercentage(10),marginRight:widthPercentage(10)}} >
@@ -29,7 +22,7 @@ const Nanumitem=({title,place,createdTime,hastag,like,d_day})=>{
                         </Text>
                     </Pressable>
                 
-                    <Text style={{position:'absolute',right:21,top:37.5,fontFamily:'Noto Sans KR',fontSize:fontPercentage(13),fontWeight:'700',color:'#151515'}}>{like}</Text>
+                    <Text style={{position:'absolute',right:21,top:37.5,fontFamily:'Noto Sans KR',fontSize:fontPercentage(12),fontWeight:'700',color:'#151515'}}>{like}</Text>
                     {/* 찜 버튼 */}
                     <Pressable style={{position:'absolute', top:40,right:0}} onPress={()=>setJjim((prev) => !prev)}>
                         <Image source={likeImage} style={{width:widthPercentage(15),height:heightPercentage(15)}} />              
@@ -37,7 +30,7 @@ const Nanumitem=({title,place,createdTime,hastag,like,d_day})=>{
                     </View>
 
                     {/* 올린 장소 및 시간 */}
-                    <Text style={{fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(11),padding:1,color:'rgba(55, 73, 87, 0.5)',width:widthPercentage(200)}}> {place} &nbsp; {createdTime } </Text> 
+                    <Text style={{fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(10),padding:1,color:'rgba(55, 73, 87, 0.5)',width:widthPercentage(200)}}> {place} &nbsp; {createdTime } </Text> 
 
                     {/* 해시태그 */}
                     <Text style={styles.hastag}> {hastag}</Text>
@@ -72,12 +65,12 @@ const styles = StyleSheet.create({
     title:{
         position: 'relative',
        //width: 152,
-        height: 33,
+        height: heightPercentage(33),
         left: 5,
         top: 10,
         fontFamily: 'Noto Sans KR',
         fontStyle:'normal',
-        fontSize: 15,
+        fontSize: fontPercentage(14),
         fontWeight:'900',
         color:'#151515'
     },
@@ -87,14 +80,14 @@ const styles = StyleSheet.create({
         fontFamily: 'Noto Sans KR',
         fontStyle: 'normal',
         fontWeight: '400',
-        fontSize:11,
+        fontSize:fontPercentage(10),
         padding:1,
         paddingBottom:4,
         width:widthPercentage(200)
     },
     imgbox:{
-        width:110, 
-        height:104,
+        width:widthPercentage(110), 
+        height:heightPercentage(104),
         borderRadius:15,
         overflow: 'hidden',
         marginRight:2
