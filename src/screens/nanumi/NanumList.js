@@ -6,7 +6,7 @@ import { heightPercentage,widthPercentage,fontPercentage } from "../../Responsiv
 
 const item=[
     {
-        id:1,
+        key:1,
         title:'세척 당근 반토막 나눔해요',
         location: '서대문구 연희동',
         createdTime:'15분전',
@@ -16,7 +16,7 @@ const item=[
         d_day:2,
     },
     {
-        id:2,
+        key:2,
         title:'식빵 반봉지 나눔해요',
         location: '서대문구 연희동',
         createdTime:'15분전',
@@ -26,7 +26,7 @@ const item=[
         d_day:17,
     },
     {
-        id:3,
+        key:3,
         title:'딸기잼이랑 누텔라 교환 원해요',
         location: '서대문구 북아현동',
         createdTime:'30분전',
@@ -36,7 +36,7 @@ const item=[
         d_day:29,
     },
     {
-        id:4,
+        key:4,
         title:'양파 반쪽 나눔합니다~',
         location: '서대문구 대현동',
         createdTime:'45분전',
@@ -90,22 +90,22 @@ const NanumList = ({navigation}) => {
                 :
                 (
                     value==='default' ?
-                    <Pressable onPress={()=>{navigation.navigate('NanumDetail')}}>
+                    <View>
                         {item.map(item=>(
                             <Nanumitem title={item.title} place={item.location} createdTime={item.createdTime} hastag={item.hastag} appointment={item.time} like={item.like} d_day={item.d_day} />
                         ))}
-                    </Pressable>
+                    </View>
                     :
-                    <Pressable onPress={()=>{navigation.navigate('NanumDetail')}}>
+                    <View>
                         {item.map(item=>(
                             <Nanumitem title={item.title} place={item.location} createdTime={item.createdTime} hastag={item.hastag} appointment={item.time} like={item.like} d_day={item.d_day} />
                         ))}
-                    </Pressable>
+                    </View>
                 )
                 }   
             </ScrollView>
             <Pressable 
-                style={{position:'absolute',top:620,paddingBottom:10,alignItems:'center',backgroundColor:'#FFF0A1',height:heightPercentage(43),width:widthPercentage(152),left:122,flexDirection:'row',borderRadius:21.5,
+                style={{position:'absolute',top:600,paddingBottom:10,alignItems:'center',backgroundColor:'#FFF0A1',height:heightPercentage(43),width:widthPercentage(152),left:122,flexDirection:'row',borderRadius:21.5,
                     ...Platform.select({android:{elevation:3}})}} 
                     onPress={()=>{navigation.navigate('WriteNanum')}}>
                 <Image source={require('../../assets/images/pen.png')} style={{width:widthPercentage(21),height:heightPercentage(20),marginLeft:27,marginRight:-15,marginTop:9}} />

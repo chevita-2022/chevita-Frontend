@@ -95,7 +95,7 @@ const textstyle=StyleSheet.create({
         paddingTop:10,
         fontSize:fontPercentage(13),
         fontWeight:'700',
-        color:'#374957',
+        color:'#151515',
         fontFamily:'Noto Sans KR',
         fontStyle:'normal',
         marginLeft:-13,

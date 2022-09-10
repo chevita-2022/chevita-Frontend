@@ -22,11 +22,11 @@ const NanumDetail=({navigation})=>{
             <ScrollView>
                 <Image source={require('../../assets/images/test.jpeg')} style={{width:widthPercentage(375),height:heightPercentage(300)}} />
             
-                <Pressable style={{position:'absolute',top:10}}>
+                <Pressable style={{position:'absolute',top:60}}>
                     <BackBtn color='white' goBack={goBackNanumi} />
                 </Pressable>
-                <Pressable style={{position:'absolute',right:0,top:17}}>
-                    <HeartBtn />
+                <Pressable style={{position:'absolute',right:0,top:57}}>
+                   <HeartBtn/>
                 </Pressable>
 
                 <View style={{paddingLeft:10,paddingTop:20,paddingRight:10}}>
