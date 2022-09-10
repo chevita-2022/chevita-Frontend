@@ -34,6 +34,15 @@ const WriteNanum = ({navigation}) => {
         return () => setIsMounted(false);
     },[])
 
+    const NextBtn = () => {
+        return(
+            <TouchableOpacity style={styles.next.container} onPress={()=> navigation.navigate('WriteNanum2')}>
+                <Text style={styles.next.text}>다음으로</Text>
+                <Image source={require('../../assets/images/arrow.png')} style={styles.next.image} />
+            </TouchableOpacity>
+        )
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
@@ -49,10 +58,7 @@ const WriteNanum = ({navigation}) => {
                 <ImageInput1 name="foodImg" label="사진" value={values.foodImg} handleChange={handleChange} star={true} guide="대표사진 포함 사진 3장을 필수로 업로드해주세요."/>
                 <ImageInput2 name="receiptImg" label="영수증 사진" value={values.receiptImg} handleChange={handleChange} star={false} guide="식품을 구입한 영수증 사진을 인증해주세요."/>
                 <InputType5 name="introduction" label="나눔 소개글" placeholder="나누고자 하는 식품에 대한 소개를 해주세요." value={values.introduction} handleChange={handleChange} star={true}/>
-                <TouchableOpacity style={styles.next.container} onPress={()=> navigation.navigate('WriteNanum2')}>
-                    <Text style={styles.next.text}>다음으로</Text>
-                    <Image source={require('../../assets/images/arrow.png')} style={styles.next.image} />
-                </TouchableOpacity>
+                <NextBtn/>
             </ScrollView>
         </SafeAreaView>
     )

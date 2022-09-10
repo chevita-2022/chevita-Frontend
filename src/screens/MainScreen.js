@@ -15,11 +15,11 @@ import Header from '../components/Header';
 import { widthPercentage, heightPercentage, fontPercentage } from '../ResponsiveSize';
 import NanumDetail from './nanumi/NanumDetail';
 import NanumRecord from './mypage/NanumRecord';
+import NanumReview from './mypage/NanumReview';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-const HomeStack = createNativeStackNavigator();
 const NanumiStack = createNativeStackNavigator();
 const MapStack = createNativeStackNavigator();
 const ChattingStack = createNativeStackNavigator();
@@ -72,6 +72,7 @@ const MyPageStackScreen = ({navigation}) => {
       <Stack.Navigator>
         <MyPageStack.Screen name="MyPage" component={MyPage} options={{header:()=>(<Header title='마이페이지' shadow={true} type={4}/>)}}/>
         <MyPageStack.Screen name="NanumRecord" component={NanumRecord} options={{header:()=>(<Header title='나눔 기록' shadow={true} type={2} navigation={navigation} before="MyPage"/>)}}/>
+        <MyPageStack.Screen name="NanumReview" component={NanumReview} options={{header:()=>(<Header title='' shadow={true} type={2} navigation={navigation} before="MyPage"/>)}}/>
       </Stack.Navigator>
     );
 };

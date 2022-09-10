@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { Text, StyleSheet, ScrollView, SafeAreaView, View, Pressable, Image, TouchableOpacity} from "react-native";
 import {ProfileImage} from "../../components/ProfileImage";
 import { ProgressBarForVital } from "../../components/ProgressBar";
-import { ReviewItem } from "../../components/Review";
+import { ReviewItem, ReviewList, ReviewPreview } from "../../components/Review";
 import { fontPercentage, heightPercentage, widthPercentage } from "../../ResponsiveSize";
 
 
@@ -16,9 +16,10 @@ const MyPage = ({navigation}) => {
         hashTag: '#빵순이 #비거니즘 #레시피일기',
         record: 19,
     }
-    return(
-        <SafeAreaView style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollView}>
+
+    const Profile = () => {
+        return(
+            <>
                 <ProfileImage/>
                 <Text style={styles.profile.name}>{test.name}</Text>
                 <Text style={styles.profile.place}>{test.place}</Text>
@@ -31,23 +32,62 @@ const MyPage = ({navigation}) => {
                     <View style={styles.profile.flexBox.partition}/>
                     <Text style={styles.profile.flexBox.hashTag}>{test.hashTag}</Text>
                 </View>
-                <View style={styles.profile.modify.container}>
-                    <Image source={require('../../assets/images/pencil.png')} style={styles.profile.modify.pencil}/>
-                    <Text style={styles.profile.modify.text}>프로필 수정하기</Text>
-                    <Image source={require('../../assets/images/arrow.png')} style={styles.profile.modify.arrow} />
+            </>
+        )
+    }
+
+    const ModifyProfile = () => {
+        return(
+            <View style={styles.profile.modify.container}>
+                <Image source={require('../../assets/images/pencil.png')} style={styles.profile.modify.pencil}/>
+                <Text style={styles.profile.modify.text}>프로필 수정하기</Text>
+                <Image source={require('../../assets/images/arrow.png')} style={styles.profile.modify.arrow} />
+            </View>
+        )
+    }
+
+    const ShowRecord = () => {
+        return(
+            <TouchableOpacity style={styles.recordButton.container} onPress={() => navigation.navigate('NanumRecord')}>
+                <View style={styles.recordButton.top}>
+                    <Image source={require('../../assets/images/logo_black.png')} style={styles.recordButton.image}/>
+                    <Text style={styles.recordButton.text}>나눔 기록</Text>
                 </View>
-                <TouchableOpacity style={styles.recordButton.container} onPress={() => navigation.navigate('NanumRecord')}>
-                    <View style={styles.recordButton.top}>
-                        <Image source={require('../../assets/images/logo_black.png')} style={styles.recordButton.image}/>
-                        <Text style={styles.recordButton.text}>나눔 기록</Text>
-                    </View>
-                    <Text style={styles.recordButton.number}>{test.record}</Text>
-                </TouchableOpacity>
-                <View style={styles.subTitle.container}>
-                    <Image source={require('../../assets/images/logo_black.png')} style={styles.subTitle.image}/>
-                    <Text style={styles.subTitle.text}>김채비님의 나누미 후기</Text>
-                </View>
-                <ReviewItem/>
+                <Text style={styles.recordButton.number}>{test.record}</Text>
+            </TouchableOpacity>
+        )
+    }
+
+    const ReviewBox = ({type}) => {
+        return(
+            <View style={styles.subTitle.container}>
+                <Image source={require('../../assets/images/logo_black.png')} style={styles.subTitle.image}/>
+                <Text style={styles.subTitle.text}>{type == 1 ? "김채비님의 나누미 후기" : "김채비님의 채누미 후기"}</Text>
+            </View>
+        )
+    }
+
+    const MoreBtn = ({type}) => {
+        return(
+            <TouchableOpacity style={styles.more.container} onPress={()=> navigation.navigate('NanumReview', type)}>
+                <Text style={styles.more.text}>더보기</Text>
+                <Image source={require('../../assets/images/arrow.png')} style={styles.more.image} />
+            </TouchableOpacity>
+        )
+    }
+
+    return(
+        <SafeAreaView style={styles.container}>
+            <ScrollView contentContainerStyle={styles.scrollView}>
+                <Profile/>
+                <ModifyProfile/>
+                <ShowRecord/>
+                <ReviewBox type={1}/>
+                <ReviewPreview />
+                <MoreBtn type={1}/>
+                <ReviewBox type={2}/>
+                <ReviewPreview />
+                <MoreBtn type={2}/>
             </ScrollView>
         </SafeAreaView>
     )
@@ -192,6 +232,7 @@ const styles = StyleSheet.create({
             alignItems: 'center',
             width: widthPercentage(339),
             paddingBottom: heightPercentage(8),
+            marginBottom: heightPercentage(13),
             borderBottomWidth: 2,
             botderColor: '#151515'
         },
@@ -207,6 +248,27 @@ const styles = StyleSheet.create({
             color: '#151515'
         }
 
+    },
+    more:{
+        container:{
+            width: widthPercentage(323),
+            height: heightPercentage(15),
+            marginTop: heightPercentage(13),
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+        }, 
+        text:{
+            fontSize: fontPercentage(10),
+            color: '#151515',
+        },
+        image:{
+            width: widthPercentage(10),
+            height: heightPercentage(6),
+            resizeMode: 'stretch',
+            transform: [{ rotate: '270deg'}],
+
+        }
     }
 })
 
