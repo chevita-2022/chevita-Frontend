@@ -165,39 +165,48 @@ const NicknameInput = ({ value, handleChange}) => {
 
 const DropDownInput = (props) => {
     const {name, label, value, star, handleChange} = props;
-    const etc = false;
     const [open, setOpen] = useState(false);
 
-    return (
-        <View style={DropDownStyles.container}>
-            <Label label={label} star={star}/>
-            <TouchableOpacity style={DropDownStyles.trigger.container} onPress={() => setOpen(true)}>
-                    <View style={DropDownStyles.trigger.current}>
-                        <Text style={DropDownStyles.trigger.text}>상온 보관</Text>
-                        <Image source={require('../assets/images/arrow.png')} style={DropDownStyles.trigger.image}/>
-                    </View>
-                    {etc && <TextInput placeholder="보관 방법을 상세하게 적어주세요" style={DropDownStyles.trigger.input}/>}
-                </TouchableOpacity>
-            { open &&
-                <View style={DropDownStyles.wrapper.container}>
-                    <TouchableOpacity style={DropDownStyles.wrapper.item} onPress={() => setOpen(false)} >
-                        <Text style={DropDownStyles.wrapper.text}>상온 보관</Text>
-                    </TouchableOpacity>
-                    <View style={DropDownStyles.wrapper.partition}/>
-                    <TouchableOpacity style={DropDownStyles.wrapper.item}>
-                        <Text style={DropDownStyles.wrapper.text}>냉장 보관</Text>
-                    </TouchableOpacity>
-                    <View style={DropDownStyles.wrapper.partition}/>
-                    <TouchableOpacity style={DropDownStyles.wrapper.item}>
-                        <Text style={DropDownStyles.wrapper.text}>냉동 보관</Text>
-                    </TouchableOpacity>
-                    <View style={DropDownStyles.wrapper.partition}/>
-                    <TouchableOpacity style={DropDownStyles.wrapper.item}>
-                        <Text style={DropDownStyles.wrapper.text}>기타</Text>
-                    </TouchableOpacity>
+    const arr = [[0, '상온 보관'],[1, '냉장 보관'],[2, '냉동 보관'],[3, '기타']];
 
-                </View>
+    const [selected, setSelected] = useState(0);
+
+    const tempArr = arr.filter((item) => item[0] != selected);
+
+    const onPressItem = (type) =>{
+        setOpen(false);
+        setSelected(type);
+    }
+
+    const DropDownItem = (props) => {
+        const {trigger, current, type} = props;
+        return(
+            <TouchableOpacity style={DropDownStyles().wrapper.item.container} onPress={() => trigger ? setOpen(true) : onPressItem(type)}>
+                <Text style={DropDownStyles().wrapper.item.text}>{arr[type][1]}</Text>
+                {current && <Image source={require('../assets/images/arrow.png')} style={DropDownStyles(open).wrapper.item.image}/>}
+            </TouchableOpacity>
+        )
+    }
+
+    return (
+        <View style={DropDownStyles().container}>
+            <Label label={label} star={star}/>
+            { !open ? 
+            <View style={DropDownStyles().trigger}>
+                <DropDownItem trigger={true} current={true} type={selected}/>
+            </View>
+            :
+            <View style={DropDownStyles().wrapper.container}>
+                <DropDownItem current={true} type={selected}/>
+                <View style={DropDownStyles().wrapper.item.partition}/>
+                <DropDownItem type={tempArr[0][0]}/>
+                <View style={DropDownStyles().wrapper.item.partition}/>
+                <DropDownItem type={tempArr[1][0]}/>
+                <View style={DropDownStyles().wrapper.item.partition}/>
+                <DropDownItem type={tempArr[2][0]}/>
+            </View>
             }
+
         </View>
     )
 }
@@ -416,74 +425,91 @@ const InputType4Styles = StyleSheet.create({
     }
 })
 
-const DropDownStyles = StyleSheet.create({
-    container: {
-        width: widthPercentage(319),
+const DropDownStyles = (open) => StyleSheet.create({
+    container:{
+        width: widthPercentage(320),
         marginBottom: heightPercentage(22),
     },
     trigger:{
-        container:{
-            justifyContent: 'center',
-            width: '100%',
-            minHeight: heightPercentage(43),
-            maxHeight: heightPercentage(86),
-            paddingHorizontal: widthPercentage(15),
-            borderWidth: 2,
-            borderColor: "#D9D9D9",
-            borderRadius: 12,
-        },
-        current:{
-            width: '100%',
-            height: heightPercentage(43),
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-        },
-        image:{
-            width: widthPercentage(14),
-            height: heightPercentage(7.17),
-            resizeMode: 'stretch'
-        },
-        text: {
-            fontSize: fontPercentage(12),
-            color: '#374957'
-        },
-        input:{
-            width: widthPercentage(200),
-            height: heightPercentage(29),
-            padding: 0,
-            marginHorizontal:0,
-            marginBottom: 14,
-            borderBottomWidth: 2,
-            borderBottomColor: "#D9D9D9",
-            fontSize: fontPercentage(12)
-        }
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: heightPercentage(43),
+        paddingHorizontal: widthPercentage(16),
+        backgroundColor: "#ffffff",
+        borderColor: "#ffffff",
+        borderRadius: 12,
+        ...Platform.select({
+            ios: {
+                shadowColor: "#000000",
+                shadowOffset: {
+                    width: 1,
+                    height: 1,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 6,
+            },
+            android: {
+               elevation: 3,
+            },
+        }),
     },
-    wrapper: {
+    wrapper:{
         container:{
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
-            borderWidth: 2,
-            borderColor: "#D9D9D9",
+            height: heightPercentage(172),
+            paddingHorizontal: widthPercentage(16),
             borderRadius: 12,
+                backgroundColor: "#ffffff",
+                borderColor: "#ffffff",
+                borderRadius: 12,
+                ...Platform.select({
+                    ios: {
+                        shadowColor: "#000000",
+                        shadowOffset: {
+                            width: 1,
+                            height: 1,
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 6,
+                    },
+                    android: {
+                        elevation: 3,
+                    },
+                }),
         },
         item:{
-            width: '100%',
-            height: heightPercentage(43),
-            alignItems: 'center',
-            justifyContent: 'center'
-        },
-        text:{
-            fontSize: fontPercentage(12),
-            color: '#374957'
-        },
-        partition:{
-            width: '90%',
-            height: heightPercentage(0.5),
-            backgroundColor: '#374957'
-        }
-    }
+            container:{
+                width: '100%',
+                height: heightPercentage(40),
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+            },
+            image:{
+                width: widthPercentage(14),
+                height: heightPercentage(7.17),
+                resizeMode: 'stretch',
+                transform: [{ rotate: open ? '180deg' : '0deg'}],
+            },
+            text:{
+                paddingLeft: widthPercentage(5),
+                fontSize: fontPercentage(12),
+                color: '#374957'
+            },
+            partition:{
+                width: widthPercentage(287),
+                height: heightPercentage(1),
+                backgroundColor: '#D9D9D9'
+            }
+        } 
+        
+    },
+    
+    
+
     
 })
 

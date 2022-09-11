@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         alignItems: 'center',
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        paddingBottom: heightPercentage(70)
     },
     profile:{
         name:{
