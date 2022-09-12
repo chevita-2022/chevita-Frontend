@@ -10,7 +10,7 @@ const ChattingBubble = () =>
   const [messages, setMessages] = useState([]);
 
   const [ReserveModal,setReserveModal]=useState(false);
-  const [offset,seOffset]=useState();
+  const [offset,setOffset]=useState();
 
   useEffect(() => {
     setMessages([
@@ -26,6 +26,7 @@ const ChattingBubble = () =>
       sent:true
       },
     ])
+    console.log(messages.createdAt);
   }, [])
 
   const onSend = useCallback((messages = []) => {
@@ -34,6 +35,7 @@ const ChattingBubble = () =>
 
   const renderBubble = (props) => {
     return (
+      <>
       <Bubble
         {...props}
         wrapperStyle={{
@@ -41,37 +43,29 @@ const ChattingBubble = () =>
             backgroundColor: 'rgba(255, 240, 161, 0.2)',
             borderRadius:12,
             ...Platform.select({
-              android:{
-                elevation:3
-              },
-              ios:{
-                shadowColor:'rgba(0, 0, 0, 0.25)',
-              }
-            })
+              android:{ elevation:1 },
+              ios:{ shadowColor:'rgba(0, 0, 0, 0.25)' }
+            }),
+            margin:10,
+            padding:5
           },
           left: {
             backgroundColor: '#FFFFFF',
             borderRadius:12,
             ...Platform.select({
-              android:{
-                elevation:2,
-              },
-              ios:{
-                shadowColor:'rgba(0, 0, 0, 0.25)',
-              }
-            })
+              android:{ elevation:2, },
+              ios:{ shadowColor:'rgba(0, 0, 0, 0.25)', }
+            }),
+            margin:10,
+            padding:5
           },
         }}
         textStyle={{
-          right: {
-            color: '#7D7D7D',
-          },
-          left:{
-            color: '#7D7D7D',
-          },
+          right: { color: '#151515', },
+          left:{ color: '#151515', },
         }}
-        
       />
+      </>
     );
   };
 
@@ -87,17 +81,11 @@ const ChattingBubble = () =>
           //height:heightPercentage(42),
           //marginBottom:5,
           ...Platform.select({
-            android:{
-              elevation:3
-            },
-            ios:{
-              shadowColor:'rgba(0, 0, 0, 0.25)'
-            }
+            android:{ elevation:3  },
+            ios:{ shadowColor:'rgba(0, 0, 0, 0.25)'}
           })
         }}
-        accessoryStyle={{
-          backgroundColor:'#ffffff'
-        }}
+        accessoryStyle={{ backgroundColor:'#ffffff' }}
       />
     )
   }
@@ -133,16 +121,19 @@ const ChattingBubble = () =>
             <GiftedChat
               messages={messages}
               onSend={messages => onSend(messages)}
-              user={{
-              _id: 1,
-              }}
+              user={{ _id: 1,}}
+              placeholder={'| 메세지를 작성해보세요'}
               renderBubble={renderBubble}
               renderInputToolbar={renderInputToolbar}
               renderSend={renderSend}
-              showAvatarForEveryMessage={true}
-              messagesContainerStyle={{
-                backgroundColor:'#ffffff',
-             }} /> : <></>}
+              //locale={strings.getLanguage()}
+              timeTextStyle={{
+                right:{ color:'#7D7D7D',},
+                left:{ color:'#7D7D7D' }
+              }}
+              showAvatarForEveryMessage={false}
+              messagesContainerStyle={{ backgroundColor:'#ffffff'}} /> 
+              : <></>}
       </>
   )
 }
@@ -161,9 +152,7 @@ const style=StyleSheet.create({
     fontWeight:'700',
     fontSize:fontPercentage(12),
     ...Platform.select({
-      android:{
-        elevation:3
-      }
+      android:{ elevation:3 }
     })
   },
   container:{

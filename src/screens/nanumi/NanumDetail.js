@@ -17,7 +17,21 @@ const NanumDetail=({navigation})=>{
     const col4=['2022.09.23','상온보관'];
     const appointment=['8월 26일 7시 나눔초등학교', '8월 29일 18시 나눔초등학교','9월 15일 2시 나눔초등학교'];
 
+    const [type,setType]=useState('가공·냉동')
     const [full,setFull]=useState(false);
+
+    const img= (
+        type==='채소' ? require('../../assets/images/veg.png') 
+            : type==='과일' ? require('../../assets/images/fruit.png') 
+            : type==='쌀·잡곡' ? require('../../assets/images/grain.png') 
+            : type==='정육·계란' ? require('../../assets/images/meat.png') 
+            : type==='베이커리' ? require('../../assets/images/backery.png') 
+            : type==='유제품' ? require('../../assets/images/diary.png') 
+            : type==='소스' ? require('../../assets/images/sauce.png') 
+            : type==='김치·반찬' ? require('../../assets/images/side.png') 
+            : type==='가공·냉동' ? require('../../assets/images/frz.png') 
+            : require('../../assets/images/etc.png')  //기타
+    )
 
     return(
         <SafeAreaView style={{backgroundColor:'#ffffff', flex:1}}>
@@ -51,7 +65,8 @@ const NanumDetail=({navigation})=>{
                     {/*정보 박스*/}
                     <View style={{paddingTop:20,flexDirection:'row'}}>
                         <View style={BoxStyle.container} activeOpacity={0.6}>
-                            <Text style={BoxStyle.text}>가공,냉동</Text>
+                        <Image source={img} style={BoxStyle.img} />
+                            <Text style={BoxStyle.text}> {''}{type}</Text>
                         </View>
                         <View style={BoxStyle.container} activeOpacity={0.6}>
                             <Image source={require('../../assets/images/thermometer.png')} style={BoxStyle.img} />
@@ -59,7 +74,7 @@ const NanumDetail=({navigation})=>{
                         </View>
                         <View style={BoxStyle.container} activeOpacity={0.6}>
                             <Image source={require('../../assets/images/clock.png')} style={BoxStyle.img}/>
-                            <Text style={BoxStyle.text}>D-23</Text>
+                            <Text style={BoxStyle.text}> {''}D-23</Text>
                         </View>
                     </View>
                     
