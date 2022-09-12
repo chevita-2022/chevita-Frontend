@@ -49,7 +49,7 @@ const WriteNanum = ({navigation}) => {
                 <InputType1 name="title" label="제목" placeholder="글 제목을 입력해주세요." value={values.title} handleChange={handleChange} star={true}/>
                 <InputType2 name="type" label="식품 종류" handleChange={handleChange} star={true}/>
                 <InputType3 name="buyDate" label="식품 구매일자" placeholder={['2022', '01', "01"]} value={values.buyDate} handleChange={handleChange} star={true}/>
-                <InputType1 name="place" label="식품 구매처" placeholder="식품 구매처를 입력해주세요." value={values.place} handleChange={handleChange} star={true}/>
+                <InputType1 name="place" label="식품 구매처" placeholder="식품 구매처를 입력해주세요." value={values.place} handleChange={handleChange} star={false}/>
                 <InputType3 name="openDate" label="개봉일자" placeholder={['2022', '01', "01"]} value={values.openDate} handleChange={handleChange} star={true} guide="식품을 개봉한 일자를 입력해주세요."/>
                 <InputType3 name="expDate" label="유통기한" placeholder={['2022', '01', "01"]} value={values.expDate} handleChange={handleChange} star={true}/>
                 <InputType3 name="useDate" label="소비기한" placeholder={['2022', '01', "01"]} value={values.useDate} handleChange={handleChange} star={true} guide="소비 가능한 예상 날짜를 입력해주세요."/>

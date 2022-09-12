@@ -2,15 +2,15 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { Image, Platform, SafeAreaView, ScrollView, View,Text, TouchableOpacity,StyleSheet } from 'react-native';
 import { GiftedChat,Bubble,InputToolbar, Send } from 'react-native-gifted-chat'
 import { fontPercentage, heightPercentage, widthPercentage } from '../../ResponsiveSize';
-import Modal from "react-native-simple-modal";
+import Modal from "react-native-modal";
+import { BackBtn } from '../../components/Button';
 
 
 const ChattingBubble = () => 
 {
   const [messages, setMessages] = useState([]);
 
-  const [ReserveModal,setReserveModal]=useState(false);
-  const [offset,setOffset]=useState();
+  const [reserveModal,setReserveModal]=useState(false);
 
   useEffect(() => {
     setMessages([
@@ -26,7 +26,6 @@ const ChattingBubble = () =>
       sent:true
       },
     ])
-    console.log(messages.createdAt);
   }, [])
 
   const onSend = useCallback((messages = []) => {
@@ -98,26 +97,41 @@ const ChattingBubble = () =>
     )
   }
 
+  /*const AssignReserve=()=>{
+    return(
+      <View style={{flexDirection:'row', height:heightPercentage(73),backgroundColor:'#ffffff'}}>
+      <TouchableOpacity style={style.container} onPress={()=>setReserveModal(true)}>
+          <Text style={style.text}>예약 승인</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={style.container}>
+          <Text style={style.text}>나눔 완료</Text>
+      </TouchableOpacity>
+  </View>
+    )
+  }*/
+
   return (
     <>
-        {/* 예약승인, 나눔완료 버튼 */}
-        <View style={{flexDirection:'row', height:heightPercentage(73),backgroundColor:'#ffffff'}}>
-            <TouchableOpacity style={style.container} onPress={()=>setReserveModal(true)}>
-                <Text style={style.text}>예약 승인</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={style.container}>
-                <Text style={style.text}>나눔 완료</Text>
-            </TouchableOpacity>
+    <View style={{flexDirection:'row',width:widthPercentage(100000),backgroundColor:'#ffffff'}}>
+          <TouchableOpacity style={style.container} onPress={()=>setReserveModal(true)} >
+            <Text style={style.text}>예약 승인</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={style.container}  >
+            <Text style={style.text}>나눔 완료</Text>
+          </TouchableOpacity>
         </View>
 
         {/* 채누미가 예약 승인 눌렀을 때 모달창 */}
-        <Modal offset={offset} open={ReserveModal} modalDidClose={()=>{setReserveModal(false)}} modalStyle={{borderRadius:12,backgroundColor:'#ffffff',zIndex:1050}} useNativeDriver={true}>
-            <Text style={{color:'#151515',fontWeight:'700',fontSize:fontPercentage(12),alignSelf:'center',padding:15}}> 채누미는 예약 승인이 불가합니다 </Text>
+        <Modal isVisible={reserveModal} modalStyle={{borderRadius:12,backgroundColor:'#ffffff',zIndex:1050}} useNativeDriver={true}>
+          <View style={{backgroundColor:'#ffffff',borderRadius:12,width:widthPercentage(334),height:heightPercentage(105),alignContent:'center'}}>
+            <Text style={{color:'#151515',fontWeight:'700',fontSize:fontPercentage(12),alignSelf:'center',padding:13,paddingTop:25}}> 채누미는 예약 승인이 불가합니다 </Text>
             <Text style={{color:'#151515',fontWeight:'400',fontSize:fontPercentage(10),alignSelf:'center',paddingBottom:15}}> 예약 확정 유무가 채팅으로 전송되니 조금만 기다려주세요 </Text>
+          </View>
+          <TouchableOpacity style={{position:'absolute',top:heightPercentage(10)}} onPress={()=>setReserveModal(false)}>
+            <Image source={require('../../assets/images/back-btn-white.png')} style={{width:widthPercentage(25),heigh:heightPercentage(20),margin:10}} />
+            </TouchableOpacity>
         </Modal>
 
-        {/* 모달창 켜지면 채팅 꺼짐 */}
-        { ReserveModal===false ?
             <GiftedChat
               messages={messages}
               onSend={messages => onSend(messages)}
@@ -133,7 +147,6 @@ const ChattingBubble = () =>
               }}
               showAvatarForEveryMessage={false}
               messagesContainerStyle={{ backgroundColor:'#ffffff'}} /> 
-              : <></>}
       </>
   )
 }
@@ -157,7 +170,9 @@ const style=StyleSheet.create({
   },
   container:{
     paddingTop:15,
-    paddingLeft:10
+    paddingLeft:10,
+    backgroundColor:'#ffffff',
+    height:heightPercentage(65),
   }
 })
 
