@@ -136,25 +136,6 @@ const InputType3 = (props) => {
     )
 }
 
-const InputType4 = (props) => {
-    const {name, label, placeholder, value, handleChange, star, guide} = props;
-
-    console.log(value)
-
-    const onChangeDate = (name, data, type) => {
-        const temp = {...value, [type]: parseInt(data)}
-        console.log(temp);
-        handleChange(name, temp);
-    }
-
-    return(
-        <View style={InputType4Styles.container}>
-            <Label label={label} star={star} guide={guide} />
-            <ProgressBarForDate/>
-        </View>
-    )
-}
-
 const NicknameInput = ({ value, handleChange}) => {
     return(
         <View>
@@ -247,13 +228,13 @@ const ImageInput2 = (props) => {
     )
 }
 
-const InputType5 = (props) => {
+const InputType4 = (props) => {
     const {name, label, placeholder, value, handleChange, star,} = props;
     return(
-        <View style={InputType5Styles.container}>
+        <View style={InputType4Styles.container}>
             <Label label={label} star={star}/>
-            <View style={InputType5Styles.inputBox}>
-                <TextInput style={InputType5Styles.input} multiline={true} placeholderTextColor="#D8D8D8" placeholder={placeholder} value={value} onChangeText={(value) => handleChange(name, value)}/>
+            <View style={InputType4Styles.inputBox}>
+                <TextInput style={InputType4Styles.input} multiline={true} placeholderTextColor="#D8D8D8" placeholder={placeholder} value={value} onChangeText={(value) => handleChange(name, value)}/>
             </View>
         </View>
     )
@@ -280,8 +261,6 @@ const CalendarInput = (props) => {
 const PlaceInput = (props) => {
     const {name, label, placeholder, value, handleChange, star, guide, navigation} = props;
 
-    const [isModal, setModal] = useState(false);
-
     const [detail, setDetail] = useState('');
 
     return(
@@ -296,7 +275,7 @@ const PlaceInput = (props) => {
     )
 }
 
-export {InputType1, InputType2, InputType3, InputType4,NicknameInput, DropDownInput, ImageInput1, ImageInput2, InputType5, CalendarInput, PlaceInput};
+export {InputType1, InputType2, InputType3, InputType4,NicknameInput, DropDownInput, ImageInput1, ImageInput2, CalendarInput, PlaceInput};
 
 const LabelStyles = (type) => StyleSheet.create({
     labelView:{
@@ -414,14 +393,6 @@ const InputType3Styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomColor: "#D9D9D9",
         color: "black",
-    }
-})
-
-const InputType4Styles = StyleSheet.create({
-    container:{
-        width: widthPercentage(317),
-        height: heightPercentage(100),
-        marginBottom: heightPercentage(22),
     }
 })
 
@@ -596,7 +567,7 @@ const ImageInput2Styles = StyleSheet.create({
     }
 })
 
-const InputType5Styles = StyleSheet.create({
+const InputType4Styles = StyleSheet.create({
     container: {
         width: widthPercentage(317),
     },

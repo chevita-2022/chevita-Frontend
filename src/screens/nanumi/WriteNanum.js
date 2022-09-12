@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { Text, StyleSheet, ScrollView, SafeAreaView,View, Pressable, Image, TouchableOpacity} from "react-native";
-import { DropDownInput, ImageInput1, ImageInput2, InputType1, InputType2, InputType3, InputType4, InputType5 } from "../../components/Input";
+import { DropDownInput, ImageInput1, ImageInput2, InputType1, InputType2, InputType3, InputType4 } from "../../components/Input";
 import { fontPercentage, heightPercentage, widthPercentage } from "../../ResponsiveSize";
 
 const WriteNanum = ({navigation}) => {
@@ -13,7 +13,7 @@ const WriteNanum = ({navigation}) => {
         buyDate: {year: undefined, month: undefined, day: undefined},
         openDate: {year: undefined, month: undefined, day: undefined},
         expDate: {year: undefined, month: undefined, day: undefined},
-        useDate: 1,
+        useDate: {year: undefined, month: undefined, day: undefined},
         place: '',
         store: '상온 보관',
         hashTag: '',
@@ -51,13 +51,13 @@ const WriteNanum = ({navigation}) => {
                 <InputType3 name="buyDate" label="식품 구매일자" placeholder={['2022', '01', "01"]} value={values.buyDate} handleChange={handleChange} star={true}/>
                 <InputType1 name="place" label="식품 구매처" placeholder="식품 구매처를 입력해주세요." value={values.place} handleChange={handleChange} star={true}/>
                 <InputType3 name="openDate" label="개봉일자" placeholder={['2022', '01', "01"]} value={values.openDate} handleChange={handleChange} star={true} guide="식품을 개봉한 일자를 입력해주세요."/>
-                <InputType3 name="useDate" label="유통기한" placeholder={['2022', '01', "01"]} value={values.useDate} handleChange={handleChange} star={true}/>
-                <InputType4 name="expDate" label="소비기한" value={values.expDate} handleChange={handleChange} star={true} guide="소비 가능한 예상 날짜를 입력해주세요."/>
+                <InputType3 name="expDate" label="유통기한" placeholder={['2022', '01', "01"]} value={values.expDate} handleChange={handleChange} star={true}/>
+                <InputType3 name="useDate" label="소비기한" placeholder={['2022', '01', "01"]} value={values.useDate} handleChange={handleChange} star={true} guide="소비 가능한 예상 날짜를 입력해주세요."/>
                 <DropDownInput name="store" label="보관 방식" value={values.store} handleChange={handleChange} star={true}/>
                 <InputType1 name="hashTag" label="식품 해시태그" placeholder="#베이커리 #식빵" value={values.hashTag} handleChange={handleChange} star={false}/>
                 <ImageInput1 name="foodImg" label="사진" value={values.foodImg} handleChange={handleChange} star={true} guide="대표사진 포함 사진 3장을 필수로 업로드해주세요."/>
                 <ImageInput2 name="receiptImg" label="영수증 사진" value={values.receiptImg} handleChange={handleChange} star={false} guide="식품을 구입한 영수증 사진을 인증해주세요."/>
-                <InputType5 name="introduction" label="나눔 소개글" placeholder="나누고자 하는 식품에 대한 소개를 해주세요." value={values.introduction} handleChange={handleChange} star={true}/>
+                <InputType4 name="introduction" label="나눔 소개글" placeholder="나누고자 하는 식품에 대한 소개를 해주세요." value={values.introduction} handleChange={handleChange} star={true}/>
                 <NextBtn/>
             </ScrollView>
         </SafeAreaView>

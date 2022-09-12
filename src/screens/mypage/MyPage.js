@@ -61,15 +61,31 @@ const MyPage = ({navigation}) => {
     const ReviewBox = ({type}) => {
         return(
             <View style={styles.subTitle.container}>
-                <Image source={require('../../assets/images/logo_black.png')} style={styles.subTitle.image}/>
+                <Image source={require('../../assets/images/logo_black.png')} style={styles.subTitle.image1}/>
                 <Text style={styles.subTitle.text}>{type == 1 ? "김채비님의 나누미 후기" : "김채비님의 채누미 후기"}</Text>
             </View>
         )
     }
 
-    const MoreBtn = ({type}) => {
+    const LikeBox = () => {
         return(
-            <TouchableOpacity style={styles.more.container} onPress={()=> navigation.navigate('NanumReview', type)}>
+            <View style={styles.subTitle.container}>
+                <Image source={require('../../assets/images/fullLike.png')} style={styles.subTitle.image2}/>
+                <Text style={styles.subTitle.text}>나의 찜목록</Text>
+            </View>
+        )
+    }
+
+    const MoreBtn = ({type}) => {
+        const onPress = () => {
+            if(type == 3) {
+                navigation.navigate('LikeList')
+            } else {
+                navigation.navigate('NanumReview', type)
+            }
+        }
+        return(
+            <TouchableOpacity style={styles.more.container} onPress={()=> onPress()}>
                 <Text style={styles.more.text}>더보기</Text>
                 <Image source={require('../../assets/images/arrow.png')} style={styles.more.image} />
             </TouchableOpacity>
@@ -88,6 +104,8 @@ const MyPage = ({navigation}) => {
                 <ReviewBox type={2}/>
                 <ReviewPreview />
                 <MoreBtn type={2}/>
+                <LikeBox/>
+                <MoreBtn type={3}/>
             </ScrollView>
         </SafeAreaView>
     )
@@ -237,9 +255,15 @@ const styles = StyleSheet.create({
             borderBottomWidth: 2,
             botderColor: '#151515'
         },
-        image:{
+        image1:{
             width: widthPercentage(20),
             height: heightPercentage(19),
+            marginRight: widthPercentage(6),
+            resizeMode: 'stretch'
+        },
+        image2:{
+            width: widthPercentage(15),
+            height: heightPercentage(15),
             marginRight: widthPercentage(6),
             resizeMode: 'stretch'
         },

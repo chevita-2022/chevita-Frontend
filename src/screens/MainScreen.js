@@ -16,6 +16,7 @@ import { widthPercentage, heightPercentage, fontPercentage } from '../Responsive
 import NanumDetail from './nanumi/NanumDetail';
 import NanumRecord from './mypage/NanumRecord';
 import NanumReview from './mypage/NanumReview';
+import LikeList from './mypage/LikeList';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -73,6 +74,7 @@ const MyPageStackScreen = ({navigation}) => {
         <MyPageStack.Screen name="MyPage" component={MyPage} options={{header:()=>(<Header title='마이페이지' shadow={true} type={4}/>)}}/>
         <MyPageStack.Screen name="NanumRecord" component={NanumRecord} options={{header:()=>(<Header title='나눔 기록' shadow={true} type={2} navigation={navigation} before="MyPage"/>)}}/>
         <MyPageStack.Screen name="NanumReview" component={NanumReview} options={{header:()=>(<Header title='' shadow={true} type={2} navigation={navigation} before="MyPage"/>)}}/>
+        <MyPageStack.Screen name="LikeList" component={LikeList} options={{header:()=>(<Header title='' shadow={true} type={2} navigation={navigation} before="MyPage"/>)}}/>
       </Stack.Navigator>
     );
 };
@@ -85,6 +87,7 @@ const MainScreen = () => {
       screenOptions={{
         headerShown:false,
         tabBarShowLabel: false,
+        tabBarStyle: {height: 70}
       }} >
       <Tab.Screen
         name="NanumiStack"
