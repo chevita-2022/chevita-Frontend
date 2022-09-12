@@ -32,11 +32,13 @@ const RightBtns = () => {
   )
 }
 
-const HeartBtn = () => {
+const HeartBtn = ({full}) => {
+  const image=(full===true? require('../assets/images/fullHeart.png'):require('../assets/images/heart.png'))
+  console.log(full);
   return (
-    <TouchableOpacity style={styles.heartBtn.container} onPress={() => goBack()}>
-      <Image source={require('../assets/images/heart.png')} style={styles.heartBtn.image}/>
-    </TouchableOpacity>
+    <View style={styles.heartBtn.container} /*onPress={() => goBack()}*/>
+      <Image source={image} style={styles.heartBtn.image}/>
+    </View>
   );
 }
 
