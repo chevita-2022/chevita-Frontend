@@ -19,24 +19,21 @@ const SearchBtn = () => {
   );
 }
 
-const RightBtns = () => {
+const AlarmBtn = () => {
   return (
-    <View style={styles.rightBtns.container}>
-      <TouchableOpacity style={styles.rightBtns.icon}>
-        <Image source={require('../assets/images/bell.png')} style={styles.rightBtns.image}/>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.rightBtns.icon}>
-        <Image source={require('../assets/images/menu.png')} style={styles.rightBtns.image}/>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity style={styles.alarmBtn.container}>
+      <Image source={require('../assets/images/bell.png')} style={styles.alarmBtn.image}/>
+    </TouchableOpacity>
   )
 }
 
-const HeartBtn = () => {
+const HeartBtn = ({full}) => {
+  const image=(full===true? require('../assets/images/fullHeart.png'):require('../assets/images/heart.png'))
+  console.log(full);
   return (
-    <TouchableOpacity style={styles.heartBtn.container} onPress={() => goBack()}>
-      <Image source={require('../assets/images/heart.png')} style={styles.heartBtn.image}/>
-    </TouchableOpacity>
+    <View style={styles.heartBtn.container} /*onPress={() => goBack()}*/>
+      <Image source={image} style={styles.heartBtn.image}/>
+    </View>
   );
 }
 
@@ -67,22 +64,15 @@ const styles = StyleSheet.create({
       resizeMode: 'stretch'
     },
   },
-  rightBtns: {
+  alarmBtn: {
     container: {
       position: 'absolute',
       right: widthPercentage(18),
       bottom: heightPercentage(20),
-      width: widthPercentage(64),
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between'
-    },
-    icon:{
-
     },
     image:{
-      width: widthPercentage(24),
-      height: heightPercentage(24),
+      width: widthPercentage(22),
+      height: heightPercentage(22),
       resizeMode: 'stretch'
     }
   },
@@ -100,4 +90,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export {BackBtn, SearchBtn, RightBtns, HeartBtn};
+export {BackBtn, SearchBtn, AlarmBtn, HeartBtn};

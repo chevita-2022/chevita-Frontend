@@ -17,16 +17,18 @@ const NanumDetail=({navigation})=>{
     const col4=['2022.09.23','상온보관'];
     const appointment=['8월 26일 7시 나눔초등학교', '8월 29일 18시 나눔초등학교','9월 15일 2시 나눔초등학교'];
 
+    const [full,setFull]=useState(false);
+
     return(
         <SafeAreaView style={{backgroundColor:'#ffffff', flex:1}}>
             <ScrollView>
                 <Image source={require('../../assets/images/test.jpeg')} style={{width:widthPercentage(375),height:heightPercentage(300)}} />
             
-                <Pressable style={{position:'absolute',top:10}}>
+                <Pressable style={{position:'absolute',top:60}}>
                     <BackBtn color='white' goBack={goBackNanumi} />
                 </Pressable>
-                <Pressable style={{position:'absolute',right:0,top:17}}>
-                    <HeartBtn />
+                <Pressable style={{position:'absolute',right:0,top:57}} onPress={()=>setFull((prev) => !prev)}>
+                   <HeartBtn full={full}/>
                 </Pressable>
 
                 <View style={{paddingLeft:10,paddingTop:20,paddingRight:10}}>

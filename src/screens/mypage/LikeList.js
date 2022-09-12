@@ -3,17 +3,14 @@ import { Text, StyleSheet, ScrollView, SafeAreaView, View, Pressable, Image, Tou
 import { ReviewList } from "../../components/Review";
 import { fontPercentage, heightPercentage, widthPercentage } from "../../ResponsiveSize";
 
-const NanumReview = ({route}) => {
-    console.log(route.params)
-    const type = route.params
+const LikeList = () => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <View style={styles.title.container}>
-                    <Image source={require('../../assets/images/logo_black.png')} style={styles.title.image}/>
-                    <Text style={styles.title.text}>{type == 1? "김채비님의 나누미 후기" : "김채비님의 채누미 후기"}</Text>
+                    <Image source={require('../../assets/images/fullLike.png')} style={styles.title.image}/>
+                    <Text style={styles.title.text}>나의 찜목록</Text>
                 </View>
-                <ReviewList/>
             </ScrollView>
         </SafeAreaView>
     )
@@ -38,8 +35,8 @@ const styles = StyleSheet.create({
             marginBottom: heightPercentage(15),
         },
         image:{
-            width: widthPercentage(20),
-            height: heightPercentage(19),
+            width: widthPercentage(15),
+            height: heightPercentage(15),
             marginRight: widthPercentage(6),
             resizeMode: 'stretch'
         },
@@ -51,4 +48,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default NanumReview;
+export default LikeList;

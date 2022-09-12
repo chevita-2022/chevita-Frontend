@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image, Text, StyleSheet, Platform, TouchableOpacity} from 'react-native';
-import { BackBtn, SearchBtn, RightBtns, HeartBtn } from '../components/Button';
+import { BackBtn, SearchBtn, AlarmBtn, HeartBtn } from '../components/Button';
 import { widthPercentage, heightPercentage, fontPercentage } from '../ResponsiveSize';
 
 const Header = (props) => {
@@ -21,7 +21,7 @@ const Header = (props) => {
   
     const RightIcon = () => {
       return(
-        (type == 1 || type == 4) ? <RightBtns/> : (type == 3 ? <HeartBtn/> : <></>)
+        (type == 1 || type == 4) ? <AlarmBtn/> : (type == 3 ? <HeartBtn/> : <></>)
       )
     }
   

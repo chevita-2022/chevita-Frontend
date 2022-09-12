@@ -16,6 +16,7 @@ import { widthPercentage, heightPercentage, fontPercentage } from '../Responsive
 import NanumDetail from './nanumi/NanumDetail';
 import NanumRecord from './mypage/NanumRecord';
 import NanumReview from './mypage/NanumReview';
+import LikeList from './mypage/LikeList';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -45,7 +46,7 @@ const NanumiStackScreen = ({navigation, route}) => {
         <NanumiStack.Screen name="WriteNanum" component={WriteNanum} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='Nanumi'/>)}}/>
         <NanumiStack.Screen name="WriteNanum2" component={WriteNanum2} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='WriteNanum'/>)}}/>
         <NanumiStack.Screen name="WriteAdress" component={WriteAdress} options={{header:()=>(<Header title='주소 검색' shadow={false} type={2} navigation={navigation} before='WriteNanum2'/>)}}/>
-        <NanumiStack.Screen name="NanumDetail" component={NanumDetail} options={{header:()=>(<Header title='' shadow={false} type={3} navigation={navigation} before='Nanumi'/>)}}/>
+        <NanumiStack.Screen name="NanumDetail" component={NanumDetail} options={{/*header:()=>(<Header title='' shadow={false} type={3} navigation={navigation} before='Nanumi'/>)*/ headerShown:false}}/>
       </Stack.Navigator>
     );
 };
@@ -73,6 +74,7 @@ const MyPageStackScreen = ({navigation}) => {
         <MyPageStack.Screen name="MyPage" component={MyPage} options={{header:()=>(<Header title='마이페이지' shadow={true} type={4}/>)}}/>
         <MyPageStack.Screen name="NanumRecord" component={NanumRecord} options={{header:()=>(<Header title='나눔 기록' shadow={true} type={2} navigation={navigation} before="MyPage"/>)}}/>
         <MyPageStack.Screen name="NanumReview" component={NanumReview} options={{header:()=>(<Header title='' shadow={true} type={2} navigation={navigation} before="MyPage"/>)}}/>
+        <MyPageStack.Screen name="LikeList" component={LikeList} options={{header:()=>(<Header title='' shadow={true} type={2} navigation={navigation} before="MyPage"/>)}}/>
       </Stack.Navigator>
     );
 };
@@ -85,6 +87,7 @@ const MainScreen = () => {
       screenOptions={{
         headerShown:false,
         tabBarShowLabel: false,
+        tabBarStyle: {height: 70}
       }} >
       <Tab.Screen
         name="NanumiStack"
