@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View,Platform, Pressable} from "react-native";
 import { widthPercentage, heightPercentage, fontPercentage } from "../../ResponsiveSize";
 import { Table,Col} from "react-native-table-component";
@@ -7,29 +7,52 @@ import Nanumitem from "../../components/NanumItem";
 import ChooseTime from "../../components/modal/Modal_ChooseTime";
 import { BackBtn, HeartBtn } from "../../components/Button";
 
-const NanumDetail=({navigation})=>{
+const NanumDetail=({route,navigation})=>{
 
+    const {id,day,hour,min,day_hour} = route.params;
     const goBackNanumi = () => navigation.navigate('Nanumi');
 
+    const [content,setContent]=useState([]);
+    //상세 내용 서버 연결
+    const path="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/posts/"+id;
+    fetch(path,{
+        headers:{
+            postId:id,
+        },
+    }).then(res=>res.json()).then(response=>setContent(response.data));
+
+    //구매일자
+    const unformatDate = "" + content.purchaseDate;
+    const purchase = unformatDate.substring(0, 4)+'.'+unformatDate.substring(5, 6)+'.'+unformatDate.substring(7, 9);
+    //개봉일자
+    const unformatDate1 = "" + content.openedDate;
+    const opened = unformatDate1.substring(0, 4)+'.'+unformatDate1.substring(5, 6)+'.'+unformatDate1.substring(7, 9);
+    //유통기한
+    const unformatDate2 = "" + content.shelfLife;
+    const shelf = unformatDate2.substring(0, 4)+'.'+unformatDate2.substring(5, 6)+'.'+unformatDate2.substring(7, 9);
+    
     const col1=['식품 구매일자','개봉일자'];
-    const col2=['2022.08.19','2022.08.19'];
+    const col2=[purchase,opened];
     const col3=['유통기한','보관방식'];
-    const col4=['2022.09.23','상온보관'];
+    const col4=[shelf, content.storageMethod ];
     const appointment=['8월 26일 7시 나눔초등학교', '8월 29일 18시 나눔초등학교','9월 15일 2시 나눔초등학교'];
 
-    const [type,setType]=useState('가공·냉동')
     const [full,setFull]=useState(false);
 
+    let type1=content.category;
+    console.log(type1);
+
+    //음식 종류
     const img= (
-        type==='채소' ? require('../../assets/images/veg.png') 
-            : type==='과일' ? require('../../assets/images/fruit.png') 
-            : type==='쌀·잡곡' ? require('../../assets/images/grain.png') 
-            : type==='정육·계란' ? require('../../assets/images/meat.png') 
-            : type==='베이커리' ? require('../../assets/images/backery.png') 
-            : type==='유제품' ? require('../../assets/images/diary.png') 
-            : type==='소스' ? require('../../assets/images/sauce.png') 
-            : type==='김치·반찬' ? require('../../assets/images/side.png') 
-            : type==='가공·냉동' ? require('../../assets/images/frz.png') 
+        type1==='채소' ? require('../../assets/images/veg.png') 
+            : type1==='과일' ? require('../../assets/images/fruit.png') 
+            : type1==='쌀·잡곡' ? require('../../assets/images/grain.png') 
+            : type1==='정육·계란' ? require('../../assets/images/meat.png') 
+            : type1==='베이커리' ? require('../../assets/images/backery.png') 
+            : type1==='유제품' ? require('../../assets/images/diary.png') 
+            : type1==='소스' ? require('../../assets/images/sauce.png') 
+            : type1==='김치·반찬' ? require('../../assets/images/side.png') 
+            : type1==='가공·냉동' ? require('../../assets/images/frz.png') 
             : require('../../assets/images/etc.png')  //기타
     )
 
@@ -59,22 +82,37 @@ const NanumDetail=({navigation})=>{
                         <Text style={{fontFamily:'Noto Sans KR',fontSize:13,fontWeight:'500',color:'#151515',padding:5}}>식빵빵</Text>
                     </View>
                         <Text style={{top:-17,left:widthPercentage(46),fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'400',color:'#7D7D7D'}}>아현동</Text>
-                    <Text style={{paddingTop:5,fontFamily:'Noto Sans KR',fontWeight:'700',fontSize:fontPercentage(16),color:'#151515'}}>식빵 반봉지 나눔</Text>
-                    <Text style={{paddingTop:2,fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(11),color:'#7D7D7D'}}>13시간 전</Text>
+                    <Text style={{paddingTop:5,fontFamily:'Noto Sans KR',fontWeight:'700',fontSize:fontPercentage(16),color:'#151515'}}>{content.title}</Text>
+                    {day > 0 ?
+                        <Text style={{paddingTop:2,fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(11),color:'#7D7D7D'}}> 
+                            {day}일 {day_hour}시간 {min}분 전
+                        </Text> 
+                        :
+                        (
+                            hour > 0 ?
+                            <Text style={{paddingTop:2,fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(11),color:'#7D7D7D'}}> 
+                                {hour}시간 {min}분 전
+                            </Text> 
+                            :
+                            <Text style={{paddingTop:2,fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(11),color:'#7D7D7D'}}> 
+                                {min}분 전
+                            </Text> 
+                        )
+                    }
                     
                     {/*정보 박스*/}
                     <View style={{paddingTop:20,flexDirection:'row'}}>
                         <View style={BoxStyle.container} activeOpacity={0.6}>
                         <Image source={img} style={BoxStyle.img} />
-                            <Text style={BoxStyle.text}> {''}{type}</Text>
+                            <Text style={BoxStyle.text}> {''}{type1}</Text>
                         </View>
                         <View style={BoxStyle.container} activeOpacity={0.6}>
                             <Image source={require('../../assets/images/thermometer.png')} style={BoxStyle.img} />
-                            <Text style={BoxStyle.text}>상온보관</Text>
+                            <Text style={BoxStyle.text}>{content.storageMethod}</Text>
                         </View>
                         <View style={BoxStyle.container} activeOpacity={0.6}>
                             <Image source={require('../../assets/images/clock.png')} style={BoxStyle.img}/>
-                            <Text style={BoxStyle.text}> {''}D-23</Text>
+                            <Text style={BoxStyle.text}> {''}D-{content.expirationDate}</Text>
                         </View>
                     </View>
                     
@@ -98,7 +136,7 @@ const NanumDetail=({navigation})=>{
                     <Text style={{borderTopWidth:1,borderRadius:0.5,marginTop:25, borderColor:'#D9D9D9'}}> &nbsp; </Text>
                     
                     {/*본문*/}
-                    <Text style={{color:'#181818',fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(12)}}>식빵 반봉지 나눔합니다.{'\n'} 제빵왕 김탁구가 만든거라 아주 맛있읍니다.{'\n'} 냠냠굿~</Text>
+                    <Text style={{color:'#181818',fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(12)}}>{content.contents}</Text>
                     
                     {/*나눔시간*/}
                     <View style={{padding:7,borderWidth:1,borderColor:'#F3F3F3',borderRadius:17,marginTop:100,backgroundColor:'#F3F3F3'}}>
@@ -118,7 +156,7 @@ const NanumDetail=({navigation})=>{
                     </View>
     
                     {/*조회수*/}
-                    <Text style={{width:widthPercentage(90),paddingLeft:5,paddingTop:10,fontFamily:'Noto Sans KR',fontSize:fontPercentage(10),fontWeight:'400',color:'#7D7D7D'}}>조회 18</Text> 
+                    <Text style={{width:widthPercentage(90),paddingLeft:5,paddingTop:10,fontFamily:'Noto Sans KR',fontSize:fontPercentage(10),fontWeight:'400',color:'#7D7D7D'}}>조회 {content.seenNumber}</Text> 
                     
                     {/*나눔 추천*/}
                     <View style={{flexDirection:'row',paddingTop:60}}>
@@ -126,8 +164,6 @@ const NanumDetail=({navigation})=>{
                         <Text style={{paddingLeft:6,fontFamily:'Noto Sans KR',fontSize:fontPercentage(14),fontWeight:'700',color:'#151515'}}>김채비님 주변에 이런 나눔도 있어요!</Text>
                     </View>
                     <Text style={{borderTopWidth:1,borderRadius:0.5,marginTop:13, borderColor:'#D9D9D9'}}> &nbsp; </Text>
-                    <Nanumitem/>
-                    <Nanumitem/>
                 </View>
             </ScrollView>
             <ChooseTime appointment={appointment}/>

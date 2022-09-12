@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { View,Text ,StyleSheet, SafeAreaView,Image,ScrollView,Platform, Pressable, TouchableOpacity} from "react-native";
 import { fontPercentage, heightPercentage, widthPercentage } from "../ResponsiveSize";
 
-const Nanumitem=({title,place,createdTime,hastag,like,d_day})=>{
+const Nanumitem=({title,place,createdTime,hastag,like,d_day,postId})=>{
 
     const [jjim,setJjim]=useState(false);
     const navigation = useNavigation(); 
@@ -27,7 +27,7 @@ const Nanumitem=({title,place,createdTime,hastag,like,d_day})=>{
                     <View style={{flexDirection:'row'}}>
 
                     {/* 게시물 제목 */}
-                    <Pressable onPress={()=>navigation.navigate('NanumDetail')}>
+                    <Pressable onPress={()=>navigation.navigate('NanumDetail',{id:postId, day:day, day_hour:day_hour,hour:hour,min:min})}>
                         <Text style={styles.title}>
                             {title}
                         </Text>
@@ -78,7 +78,7 @@ const Nanumitem=({title,place,createdTime,hastag,like,d_day})=>{
                     </ScrollView>
 
                     {/* 마감 기한 */}
-                    <Pressable onPress={()=>{navigation.navigate('NanumDetail')}} style={{padding:5, flexDirection:'row'}}>
+                    <Pressable onPress={()=>{navigation.navigate('NanumDetail',{id:postId})}} style={{padding:5, flexDirection:'row'}}>
                         <Image source={require('../assets/images/clock.png')} style={{height:heightPercentage(16),width:widthPercentage(15)}} />
                         <Text style={{marginLeft:8,color:'#151515',fontFamily:'Noto Sans KR',fontSize:fontPercentage(12),fontWeight:'700'}}>D-{d_day}</Text>
                     </Pressable>

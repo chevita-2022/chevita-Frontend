@@ -4,49 +4,6 @@ import Nanumitem from "../../components/NanumItem";
 import DropDownPicker from 'react-native-dropdown-picker';
 import { heightPercentage,widthPercentage,fontPercentage } from "../../ResponsiveSize";
 
-const item=[
-    {
-        key:1,
-        title:'세척 당근 반토막 나눔해요',
-        location: '서대문구 연희동',
-        createdTime:'15분전',
-        hastag:'#채소류 #당근',
-        time:'8월 26일 7,8,18시',
-        like:53,
-        d_day:2,
-    },
-    {
-        key:2,
-        title:'식빵 반봉지 나눔해요',
-        location: '서대문구 연희동',
-        createdTime:'15분전',
-        hastag:'#베이커리류 #식빵',
-        time:'8월 26일 7,8,18시',
-        like:14,
-        d_day:17,
-    },
-    {
-        key:3,
-        title:'딸기잼이랑 누텔라 교환 원해요',
-        location: '서대문구 북아현동',
-        createdTime:'30분전',
-        hastag:'#채소류 #당근',
-        time:'시간대 상관없음',
-        like:29,
-        d_day:29,
-    },
-    {
-        key:4,
-        title:'양파 반쪽 나눔합니다~',
-        location: '서대문구 대현동',
-        createdTime:'45분전',
-        hastag:'#채소류 #양파',
-        time:'8월 26일 11시',
-        like:9,
-        d_day:23,
-    },
-];
-
 const NanumList = ({navigation}) => {
 
     const [data,setData]=useState([]);
@@ -65,7 +22,7 @@ const NanumList = ({navigation}) => {
     ]);
 
     //좋아요 수 많은 순으로 정렬
-    for(var i=0;i<item.length;i++){
+    for(var i=0;i<data.length;i++){
         item2.sort(function(a,b){
             if(a.totalHearts-b.totalHearts>0){
                 return a<b;
@@ -74,7 +31,7 @@ const NanumList = ({navigation}) => {
     }
 
     // 나눔 임박한순으로 정렬
-    for(var i=0;i<item.length;i++){
+    for(var i=0;i<data.length;i++){
         item3.sort(function(a,b){
             if(a.expirationDate-b.expirationDate<0){
                 return a<b;
@@ -108,7 +65,7 @@ const NanumList = ({navigation}) => {
                 { value==='popular' ?
                     <View> 
                         {item2.map(item=>(
-                            <Nanumitem title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
+                            <Nanumitem postId={item.postId} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
                         ))}
                     </View>
                 :
@@ -116,13 +73,13 @@ const NanumList = ({navigation}) => {
                     value==='default' ?
                     <View> 
                         {data.reverse().map(item=>(
-                            <Nanumitem title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
+                            <Nanumitem postId={item.postId} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
                         ))}
                     </View>
                     :
                     <View>
                         {item3.map(item=>(
-                            <Nanumitem title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} />
+                            <Nanumitem postId={item.postId} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} />
                         ))}
                     </View>
                 )
