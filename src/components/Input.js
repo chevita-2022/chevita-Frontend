@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Text, TextInput, View, TouchableOpacity, StyleSheet, ScrollView, Platform, Image, Modal, Button, Pressable} from "react-native";
 import { widthPercentage, heightPercentage, fontPercentage } from "../ResponsiveSize";
-import { ImagePicker } from "./ImagePicker";
+import ImagePicker from "./ImagePicker";
 import { ProgressBarForDate } from "./ProgressBar";
 import { DayPicker, TimePicker } from "./CalendarPicker";
-import Postcode from '@actbase/react-daum-postcode';
-
 const Label = (props) => {
     const {label, star, guide, type} = props;
     return(
@@ -198,18 +196,9 @@ const ImageInput1 = (props) => {
         <View style={ImageInput1Styles.container}>
             <Label label={label} star={star} guide={guide} type={2}/>
             <View style={ImageInput1Styles.inputs}>
-                <TouchableOpacity style={ImageInput1Styles.input} onPress={() => ImagePicker()}>
-                    <Text style={ImageInput1Styles.text}>대표사진</Text>
-                    <Text style={ImageInput1Styles.plus}>+</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={ImageInput1Styles.input} onPress={() => ImagePicker()}>
-                    <Text style={ImageInput1Styles.text}>상세사진</Text>
-                    <Text style={ImageInput1Styles.plus}>+</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={ImageInput1Styles.input} onPress={() => ImagePicker()}>
-                    <Text style={ImageInput1Styles.text}>상세사진</Text>
-                    <Text style={ImageInput1Styles.plus}>+</Text>
-                </TouchableOpacity>
+                <ImagePicker type="major"/>
+                <ImagePicker type="detail"/>
+                <ImagePicker type="detail"/>
             </View>
         </View>
     )

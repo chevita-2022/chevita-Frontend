@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, TouchableOpacity, StyleSheet, View} from 'react-native';
+import {Image, TouchableOpacity, StyleSheet, View, Text} from 'react-native';
 import { widthPercentage, heightPercentage, fontPercentage } from '../ResponsiveSize';
 
 const BackBtn = ({goBack, color}) => {
@@ -35,6 +35,17 @@ const HeartBtn = ({full}) => {
       <Image source={image} style={styles.heartBtn.image}/>
     </View>
   );
+}
+
+const ImageBtn1 = (props) => {
+  const {type} = props;
+  const label = type == "major" ? '대표사진' : '상세사진'
+  return(
+    <View style={styles.imageBtn1.container}>
+      <Text style={styles.imageBtn1.text}>{label}</Text>
+      <Text style={styles.imageBtn1.plus}>+</Text>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -87,7 +98,42 @@ const styles = StyleSheet.create({
       height: heightPercentage(15),
       resizeMode: 'stretch'
     },
+  },
+  imageBtn1:{
+    container:{
+      flex:1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: heightPercentage(133),
+      marginHorizontal: widthPercentage(5),
+      backgroundColor: '#FAFAFA',
+      borderColor: "#FAFAFA",
+      borderRadius: 12,
+      ...Platform.select({
+          ios: {
+              shadowColor: "#000000",
+              shadowOffset: {
+                  width: 1,
+                  height: 1,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 6,
+          },
+          android: {
+              elevation: 3,
+          },
+      }),
+  },
+  text:{
+      fontSize: fontPercentage(12),
+      color: '#374957',
+  },
+  plus:{
+      marginTop: heightPercentage(2),
+      fontSize: fontPercentage(16),
+      color: '#374957',
+  }
   }
 });
 
-export {BackBtn, SearchBtn, AlarmBtn, HeartBtn};
+export {BackBtn, SearchBtn, AlarmBtn, HeartBtn, ImageBtn1};

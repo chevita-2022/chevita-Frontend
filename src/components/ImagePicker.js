@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Text, Image, StyleSheet, TouchableOpacity,View, Pressable} from "react-native";
 import { widthPercentage, heightPercentage, fontPercentage } from "../ResponsiveSize";
 import { launchImageLibrary, launchCamera } from "react-native-image-picker";
-import { ProfileImage } from "./ProfileImage";
 import Modal from "react-native-modal";
+import { ProfileImage } from "./ProfileImage";
+import { ImageBtn1 } from "./Button";
+
 
 const ImagePicker = (props) => {
   const {type} = props;
@@ -35,8 +37,12 @@ const ImagePicker = (props) => {
 
   const ModalTrigger = () => {
     switch(type){
-      case 'profile':
-        return <ProfileImage/>
+      case "profile":
+        return <ProfileImage/>;
+      case "major":
+        return <ImageBtn1 type={type}/>;
+      case "detail":
+        return <ImageBtn1 type={type}/>;
     }
   }
 
