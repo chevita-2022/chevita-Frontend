@@ -125,7 +125,7 @@ const NanumList = ({navigation}) => {
                 }   
             </ScrollView>
             <Pressable 
-                style={{position:'absolute',top:600,paddingBottom:10,alignItems:'center',backgroundColor:'#FFF0A1',height:heightPercentage(43),width:widthPercentage(152),left:122,flexDirection:'row',borderRadius:21.5,
+                style={{position:'absolute',top:580,paddingBottom:10,alignItems:'center',backgroundColor:'#FFF0A1',height:heightPercentage(43),width:widthPercentage(152),left:122,flexDirection:'row',borderRadius:21.5,
                     ...Platform.select({android:{elevation:3}})}} 
                     onPress={()=>{navigation.navigate('WriteNanum')}}>
                 <Image source={require('../../assets/images/pen.png')} style={{width:widthPercentage(21),height:heightPercentage(20),marginLeft:27,marginRight:-15,marginTop:9}} />

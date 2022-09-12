@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View,Platform, Pressable} from "react-native";
 import { widthPercentage, heightPercentage, fontPercentage } from "../../ResponsiveSize";
 import { Table,Col} from "react-native-table-component";
-import { ProgressBarForDate } from '../../components/ProgressBar';
+import { ProgressBarForDate, ProgressBarForVital } from '../../components/ProgressBar';
 import Nanumitem from "../../components/NanumItem";
 import ChooseTime from "../../components/modal/Modal_ChooseTime";
 import { BackBtn, HeartBtn } from "../../components/Button";
@@ -24,14 +24,18 @@ const NanumDetail=({navigation})=>{
             <ScrollView>
                 <Image source={require('../../assets/images/test.jpeg')} style={{width:widthPercentage(375),height:heightPercentage(300)}} />
             
-                <Pressable style={{position:'absolute',top:60}}>
+                <Pressable style={{position:'absolute',top:heightPercentage(60)}}>
                     <BackBtn color='white' goBack={goBackNanumi} />
                 </Pressable>
-                <Pressable style={{position:'absolute',right:0,top:57}} onPress={()=>setFull((prev) => !prev)}>
+                <Pressable style={{position:'absolute',right:0,top:heightPercentage(57)}} onPress={()=>setFull((prev) => !prev)}>
                    <HeartBtn full={full}/>
                 </Pressable>
 
-                <View style={{paddingLeft:10,paddingTop:20,paddingRight:10}}>
+            <View style={{position:'absolute',right:widthPercentage(20),top:heightPercentage(330)}}>
+                <ProgressBarForVital vital={85} />
+            </View>
+
+                <View style={{paddingLeft:widthPercentage(10),paddingTop:widthPercentage(20),paddingRight:widthPercentage(10)}}>
         
                     {/*제목*/}
                     <View style={{flexDirection:'row'}}>
