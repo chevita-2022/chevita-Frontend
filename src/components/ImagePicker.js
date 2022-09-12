@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Text, Image, StyleSheet, TouchableOpacity,View, Pressable} from "react-native";
 import { widthPercentage, heightPercentage, fontPercentage } from "../ResponsiveSize";
-import Modal from "react-native-simple-modal";
 import { launchImageLibrary, launchCamera } from "react-native-image-picker";
 import { ProfileImage } from "./ProfileImage";
+import Modal from "react-native-modal";
 
-const ImagePicker = () => {
+const ImagePicker = (props) => {
+  const {type} = props;
+
   const [offset, setOffset] = useState(0)
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -31,21 +33,23 @@ const ImagePicker = () => {
         setModalVisible(false);
   }
 
+  const ModalTrigger = () => {
+    switch(type){
+      case 'profile':
+        return <ProfileImage/>
+    }
+  }
+
   return(
     <>
-    <TouchableOpacity style={styles.trigger} onPress={() => setModalVisible(true)}>
-      <ProfileImage/>
+    <TouchableOpacity onPress={() => setModalVisible(true)}>
+      <ModalTrigger/>
     </TouchableOpacity>
     <Modal
-      offset={offset} 
-      open={modalVisible} 
-      modalDidClose={()=>{setModalVisible(false)}} 
-      modalStyle={styles.modal.container} 
-      overlayStyle={{
-        backgroundColor: "rgba(0, 0, 0, 0.75)",
-        flex: 1
-      }}
-      closeOnTouchOutside={true}
+      isVisible={modalVisible} 
+      transparent={true}
+      useNativeDriver={true}
+      style={styles.modal.container} 
     >
       <View style={styles.modal.btns}>
         <View style={styles.modal.option.container}>
@@ -66,19 +70,15 @@ const ImagePicker = () => {
 }
 
 const styles = StyleSheet.create({
-  trigger:{
-
-  },
   modal:{
     container:{
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: 'skyblue', 
-      zIndex: 10,
-      elevation: 3
+      backgroundColor: 'transparent', 
     },
     btns:{
       position: 'absolute',
+      bottom: heightPercentage(33),
     },
     option:{
       container:{
@@ -128,4 +128,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export {ImagePicker};
+export default ImagePicker;

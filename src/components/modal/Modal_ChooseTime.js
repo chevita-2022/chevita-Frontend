@@ -27,7 +27,7 @@ const ChooseTime=({appointment})=>{
         <>
             {/* 나눔 예약 버튼 */}
             <TouchableOpacity 
-                style={{position:'absolute',top:660,paddingBottom:10,alignItems:'center',backgroundColor:'#FFF0A1',height:heightPercentage(43),width:widthPercentage(152),left:122,flexDirection:'row',borderRadius:21.5,
+                style={{position:'absolute',top:heightPercentage(650),paddingBottom:widthPercentage(10),alignItems:'center',backgroundColor:'#FFF0A1',height:heightPercentage(43),width:widthPercentage(152),left:122,flexDirection:'row',borderRadius:21.5,
                     ...Platform.select({android:{elevation:3}})}} 
                     onPress={()=>{setModalVisible1(true)}}>
                 <Image source={require('../../assets/images/calender.png')} style={{width:widthPercentage(20),height:heightPercentage(20),marginLeft:27,marginRight:-15,marginTop:9}} />
