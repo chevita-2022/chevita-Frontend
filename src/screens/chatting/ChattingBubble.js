@@ -45,7 +45,8 @@ const ChattingBubble = () =>
               android:{ elevation:1 },
               ios:{ shadowColor:'rgba(0, 0, 0, 0.25)' }
             }),
-            margin:10,
+            marginRight:15,
+            marginBottom:5,
             padding:5
           },
           left: {
