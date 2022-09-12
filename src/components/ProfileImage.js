@@ -6,10 +6,8 @@ const ProfileImage = () => {
 
     return(
         <View style={styles.container}>
-            <TouchableOpacity>
                 <Image source={require('../assets/images/profile.png')} style={styles.profile}/>
                 <Image source={require('../assets/images/camera.png')} style={styles.camera}/>
-            </TouchableOpacity>
         </View>
     )
 }

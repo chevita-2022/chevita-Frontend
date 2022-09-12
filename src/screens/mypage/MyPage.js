@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Text, StyleSheet, ScrollView, SafeAreaView, View, Pressable, Image, TouchableOpacity} from "react-native";
+import { ImagePicker } from "../../components/ImagePicker";
+import {ImagePicker2} from "../../components/ImagePicker2";
 import {ProfileImage} from "../../components/ProfileImage";
 import { ProgressBarForVital } from "../../components/ProgressBar";
 import { ReviewItem, ReviewList, ReviewPreview } from "../../components/Review";
@@ -20,7 +22,7 @@ const MyPage = ({navigation}) => {
     const Profile = () => {
         return(
             <>
-                <ProfileImage/>
+                <ImagePicker2/>
                 <Text style={styles.profile.name}>{test.name}</Text>
                 <Text style={styles.profile.place}>{test.place}</Text>
                 <View style={styles.profile.intro.container}>
@@ -95,6 +97,7 @@ const MyPage = ({navigation}) => {
     return(
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
+                
                 <Profile/>
                 <ModifyProfile/>
                 <ShowRecord/>
