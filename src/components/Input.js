@@ -4,6 +4,7 @@ import { widthPercentage, heightPercentage, fontPercentage } from "../Responsive
 import ImagePicker from "./ImagePicker";
 import { ProgressBarForDate } from "./ProgressBar";
 import { DayPicker, TimePicker } from "./CalendarPicker";
+
 const Label = (props) => {
     const {label, star, guide, type} = props;
     return(
@@ -229,6 +230,17 @@ const InputType4 = (props) => {
     )
 }
 
+const ReviewInput = (props) => {
+    const {name, placeholder, value, handleChange, } = props;
+    return(
+        <View style={ReviewInputStyles.container}>
+            <View style={ReviewInputStyles.inputBox}>
+                <TextInput style={ReviewInputStyles.input} multiline={true} placeholderTextColor="#7D7D7D" placeholder={placeholder} value={value} onChangeText={(value) => handleChange(name, value)}/>
+            </View>
+        </View>
+    )
+}
+
 const CalendarInput = (props) => {
     const {name, label, placeholder, value, handleChange, star, guide} = props;
     
@@ -264,7 +276,7 @@ const PlaceInput = (props) => {
     )
 }
 
-export {InputType1, InputType2, InputType3, InputType4,NicknameInput, DropDownInput, ImageInput1, ImageInput2, CalendarInput, PlaceInput};
+export {InputType1, InputType2, InputType3, InputType4,NicknameInput, DropDownInput, ImageInput1, ImageInput2, CalendarInput, PlaceInput,ReviewInput};
 
 const LabelStyles = (type) => StyleSheet.create({
     labelView:{
@@ -467,10 +479,6 @@ const DropDownStyles = (open) => StyleSheet.create({
         } 
         
     },
-    
-    
-
-    
 })
 
 const ImageInput1Styles = StyleSheet.create({
@@ -587,6 +595,29 @@ const InputType4Styles = StyleSheet.create({
         minHeight: heightPercentage(144),
         padding:0,
         margin:0,
+        textAlignVertical:"top",
+    }
+})
+
+const ReviewInputStyles = StyleSheet.create({
+    container: {
+        width: widthPercentage(306),
+        height:heightPercentage(132),
+        alignSelf:'center'
+    },
+    inputBox:{
+        alignItems: 'center',
+        width: '100%',
+        paddingVertical: heightPercentage(5),
+        backgroundColor: '#F7F7F7',
+        borderColor: "#F7F7F7",
+        borderRadius: 12,
+    },
+    input: {
+        width: widthPercentage(306),
+        minHeight: heightPercentage(132),
+        paddingTop:0,
+        marginTop:5,
         textAlignVertical:"top",
     }
 })

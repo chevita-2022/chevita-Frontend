@@ -49,8 +49,12 @@ const item=[
 
 const NanumList = ({navigation}) => {
 
-    let item2=[...item];
-    let item3=[...item];
+    const [data,setData]=useState([]);
+    const path="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/posts";
+    fetch(path).then((res)=>res.json()).then((response)=> setData(response.data));
+
+    let item2=[...data];
+    let item3=[...data];
 
     const [open,setOpen]=useState(false);
     const [value,setValue]=useState(null);
@@ -63,7 +67,7 @@ const NanumList = ({navigation}) => {
     //좋아요 수 많은 순으로 정렬
     for(var i=0;i<item.length;i++){
         item2.sort(function(a,b){
-            if(a.like-b.like>0){
+            if(a.totalHearts-b.totalHearts>0){
                 return a<b;
             }
         });
@@ -72,7 +76,7 @@ const NanumList = ({navigation}) => {
     // 나눔 임박한순으로 정렬
     for(var i=0;i<item.length;i++){
         item3.sort(function(a,b){
-            if(a.d_day-b.d_day<0){
+            if(a.expirationDate-b.expirationDate<0){
                 return a<b;
             }
         });
@@ -103,22 +107,22 @@ const NanumList = ({navigation}) => {
             <ScrollView>
                 { value==='popular' ?
                     <View> 
-                        {item2.map( PopularArr=>(
-                            <Nanumitem title={PopularArr.title} place={PopularArr.location} createdTime={PopularArr.createdTime} hastag={PopularArr.hastag} appointment={PopularArr.time} like={PopularArr.like} d_day={PopularArr.d_day} />
+                        {item2.map(item=>(
+                            <Nanumitem title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
                         ))}
                     </View>
                 :
                 (
                     value==='default' ?
                     <View> 
-                        {item.map(item=>(
-                            <Nanumitem title={item.title} place={item.location} createdTime={item.createdTime} hastag={item.hastag} appointment={item.time} like={item.like} d_day={item.d_day} />
+                        {data.reverse().map(item=>(
+                            <Nanumitem title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
                         ))}
                     </View>
                     :
                     <View>
                         {item3.map(item=>(
-                            <Nanumitem title={item.title} place={item.location} createdTime={item.createdTime} hastag={item.hastag} appointment={item.time} like={item.like} d_day={item.d_day} />
+                            <Nanumitem title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} />
                         ))}
                     </View>
                 )
