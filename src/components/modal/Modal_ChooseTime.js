@@ -6,10 +6,12 @@ import Modal from "react-native-simple-modal";
 const ChooseTime=({appointment})=>{
 
     const [offset,seOffset]=useState();
-    const [backgroundColor0,setBackgroundColor0]=useState('#ffffff');
+    /*const [backgroundColor0,setBackgroundColor0]=useState('#ffffff');
     const [backgroundColor1,setBackgroundColor1]=useState('#ffffff');
     const [backgroundColor2,setBackgroundColor2]=useState('#ffffff');
-    const [backgroundColor3,setBackgroundColor3]=useState('#ffffff');
+    const [backgroundColor3,setBackgroundColor3]=useState('#ffffff');*/
+
+    const [select,setSelect]=useState(4);
 
     const [ModalVisible1,setModalVisible1]=useState(false);
     const [ModalVisible2, setModalVisible2]=useState(false);
@@ -37,35 +39,18 @@ const ChooseTime=({appointment})=>{
             {/*모달창*/}
             <Modal offset={offset} open={ModalVisible1} modalDidClose={()=>{setModalVisible1(false)}} modalStyle={{borderRadius:12,backgroundColor:'#ffffff'}} useNativeDriver={true}>
                 <Text style={{padding:14,textAlign:'center',color:'#151515',fontWeight:'700',fontFamily:'Noto Sans KR',fontSize:fontPercentage(13)}}> 나눔 예약 시간대를 선택해주세요</Text>
-                    {/*<View style={{flexDirection:'row'}}>
-                        {appointment.map((time)=>(
-                            <TouchableOpacity style={{width:widthPercentage(95),height:heightPercentage(60),margin:7,paddingLeft:4,flexDirection:'row',backgroundColor:backgroundColor[time],borderRadius:12}} >
+                    <View style={{flexDirection:'row'}}>
+                        {appointment.map((i)=>(
+                            <TouchableOpacity style={{width:widthPercentage(95),height:heightPercentage(60),margin:7,paddingLeft:4,flexDirection:'row',backgroundColor: select == i ?'#D9D9D9':'#ffffff',borderRadius:12}} onPress={()=>setSelect(i)} >
                                 <Image source={require('../../assets/images/location.png')} style={{width:widthPercentage(11),height:heightPercentage(12),top:14}} />
-                                <Text style={{textAlign:'center',padding:5,color:'#374957',fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),width:widthPercentage(80),right:2,top:7}}>{time}</Text>
+                                <Text style={{textAlign:'center',padding:5,color:'#374957',fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),width:widthPercentage(80),right:2,top:7}}>{i}</Text>
                             </TouchableOpacity>
                         ))}
-                    </View>*/}
+                    </View>
 
-                       { /* 코드 수정 필요 */}
-                        <View style={{flexDirection:'row'}}>
-                        <TouchableOpacity style={{width:widthPercentage(95),height:heightPercentage(60),margin:7,paddingLeft:4,flexDirection:'row',backgroundColor:backgroundColor0,borderRadius:12}} onPressIn={()=>{setBackgroundColor0('#D9D9D9')}} >
-                                <Image source={require('../../assets/images/location.png')} style={{width:widthPercentage(11),height:heightPercentage(12),top:14}} />
-                                <Text style={{textAlign:'center',padding:5,color:'#374957',fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),width:widthPercentage(80),right:2,top:7}}>{appointment[0]}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{width:widthPercentage(95),height:heightPercentage(60),margin:7,paddingLeft:4,flexDirection:'row',backgroundColor:backgroundColor1,borderRadius:12}} onPressIn={()=>{setBackgroundColor1('#D9D9D9')}} >
-                                <Image source={require('../../assets/images/location.png')} style={{width:widthPercentage(11),height:heightPercentage(12),top:14}} />
-                                <Text style={{textAlign:'center',padding:5,color:'#374957',fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),width:widthPercentage(80),right:2,top:7}}>{appointment[0]}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{width:widthPercentage(95),height:heightPercentage(60),margin:7,paddingLeft:4,flexDirection:'row',backgroundColor:backgroundColor2,borderRadius:12}} onPressIn={()=>{setBackgroundColor2('#D9D9D9')}} >
-                                <Image source={require('../../assets/images/location.png')} style={{width:widthPercentage(11),height:heightPercentage(12),top:14}} />
-                                <Text style={{textAlign:'center',padding:5,color:'#374957',fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),width:widthPercentage(80),right:2,top:7}}>{appointment[0]}</Text>
-                        </TouchableOpacity>
-                        </View>
-
-                    <TouchableOpacity style={{marginTop:15,marginBottom:20,width:widthPercentage(135),height:heightPercentage(43),alignSelf:'center',backgroundColor:backgroundColor3,borderRadius:12}}  onPressIn={()=>{setBackgroundColor3('#D9D9D9')}}>
+                    <TouchableOpacity style={{marginTop:15,marginBottom:20,width:widthPercentage(135),height:heightPercentage(43),alignSelf:'center',backgroundColor:select===3? '#D9D9D9':'#ffffff',borderRadius:12}}  onPress={()=>setSelect(3)}>
                         <Text style={{textAlign:'center',alignItems:'center',color:'#374957',fontFamily:'Noto Sans KR',fontSize:fontPercentage(12),fontWeight:'400',paddingTop:11}}>기타 시간대 요청하기</Text>
                     </TouchableOpacity>
-
 
                     <TouchableOpacity style={{marginBottom:13,flexDirection:'row',backgroundColor:'#FFF0A1',width:widthPercentage(142),height:heightPercentage(43),borderRadius:21.5,alignSelf:'center',
                     ...Platform.select({android:{elevation:3}})}}
