@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { Image, Platform, SafeAreaView, ScrollView, View } from 'react-native';
+import { Image, Platform, SafeAreaView, ScrollView, View,Text, TouchableOpacity,StyleSheet } from 'react-native';
 import { GiftedChat,Bubble,InputToolbar, Send } from 'react-native-gifted-chat'
+import { fontPercentage, heightPercentage, widthPercentage } from '../../ResponsiveSize';
 
 const ChattingBubble = () => 
 {
@@ -10,13 +11,14 @@ const ChattingBubble = () =>
     setMessages([
       {
         _id: 1,
-        text: 'Hello',
+        text: 'Hello Devleoper',
         createdAt: new Date(),
         user: {
           _id: 2,
           name: 'React Native',
           avatar: 'https://placeimg.com/140/140/any',
         },
+      sent:true
       },
     ])
   }, [])
@@ -63,6 +65,7 @@ const ChattingBubble = () =>
             color: '#7D7D7D',
           },
         }}
+        
       />
     );
   };
@@ -74,9 +77,10 @@ const ChattingBubble = () =>
         containerStyle={{
           borderRadius:17.5,
           backgroundColor:'#ffffff',
-          width:353,
-          left:20,
-          height:42,
+          //width:widthPercentage(353),
+          //left:20,
+          //height:heightPercentage(42),
+          //marginBottom:5,
           ...Platform.select({
             android:{
               elevation:3
@@ -102,6 +106,16 @@ const ChattingBubble = () =>
   }
 
   return (
+    <>
+    <View style={{flexDirection:'row', height:heightPercentage(73),backgroundColor:'#ffffff'}}>
+      <TouchableOpacity style={style.container}>
+        <Text style={style.text}>예약 승인</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={style.container}>
+        <Text style={style.text}>나눔 완료</Text>
+      </TouchableOpacity>
+    </View>
+
     <GiftedChat
       messages={messages}
       onSend={messages => onSend(messages)}
@@ -116,7 +130,32 @@ const ChattingBubble = () =>
         backgroundColor:'#ffffff'
       }}
     />
+    </>
   )
 }
+
+const style=StyleSheet.create({
+  text:{
+    width:widthPercentage(93),
+    height:heightPercentage(38),
+    backgroundColor:'#FFF0A1',
+    textAlignVertical:'center',
+    textAlign:'center',
+    color:'#151515',
+    borderRadius:12,
+    fontFamily:'Noto Sans KR',
+    fontWeight:'700',
+    fontSize:fontPercentage(12),
+    ...Platform.select({
+      android:{
+        elevation:3
+      }
+    })
+  },
+  container:{
+    paddingTop:15,
+    paddingLeft:10
+  }
+})
 
 export default ChattingBubble;
