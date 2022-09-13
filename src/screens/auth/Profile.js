@@ -17,7 +17,7 @@ const Profile=({navigation})=>{
             <Pressable style={{position:'absolute',top:500,left:30,width:widthPercentage(300)}} onPress={() => navigation.navigate("MainScreen")}>
                 <Text style={{right:-240,color:'#767676',fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(10),paddingTop:3}}>다음에 하기  {'>'} </Text>
             </Pressable>
-            <Pressable onPress={() => navigation.navigate("Permission")}>
+            <Pressable onPress={() => navigation.navigate("PlaceAddress")}>
                 <Text style={{position:'absolute',color:'#151515',fontFamily:'Noto Sans KR',fontWeight:'500',fontSize:fontPercentage(12),top:450,right:0}}>다음으로 {'>'}</Text>
             </Pressable>
         </SafeAreaView>
