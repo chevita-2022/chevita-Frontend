@@ -14,7 +14,8 @@ const ChooseTime=({appointment,otherId})=>{
 
     const [ModalVisible1,setModalVisible1]=useState(false);
     const [ModalVisible2, setModalVisible2]=useState(false);
-
+    
+    const [room,setRoom]=useState([]);
     const getRoomId=()=>{
         const path="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/chat/"+userId+'/'+otherId;
         fetch(path,{
@@ -23,8 +24,12 @@ const ChooseTime=({appointment,otherId})=>{
             headers:{
                 'Content-Type':'application/json',
             }
-        }).then(response=>response.json()).then(data=>{console.log(data.roomId,otherId)})
+        }).then(response=>response.json()).then(data=>{setRoom(data)})
         setModalVisible1(false); setModalVisible2(true);
+    }
+
+    if(room.roomId != undefined) {
+        roomId=room.roomId;
     }
 
     return(
