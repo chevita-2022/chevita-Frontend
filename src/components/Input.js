@@ -86,7 +86,6 @@ const InputType2 = (props) => {
     const TypeItem = (props) => {
         const {name, obj} = props;
         const imageUrl = '../assets/images/' + obj.type + '.png'
-        console.log(imageUrl)
         return(
             <TouchableOpacity style={InputType2Styles(focused === obj.type).item} activeOpacity={0.6} onPress={() => onChangeType(name, obj.type)}>
                 <Image source={obj.img} style={InputType2Styles("diary" === obj.type).image}/>
@@ -156,6 +155,7 @@ const DropDownInput = (props) => {
     const onPressItem = (type) =>{
         setOpen(false);
         setSelected(type);
+        handleChange(name, arr[selected][1]);
     }
 
     const DropDownItem = (props) => {
@@ -193,14 +193,24 @@ const DropDownInput = (props) => {
 
 const ImageInput1 = (props) => {
     const {name, label, placeholder, value, handleChange, star, guide} = props;
+
+    const [more, setMore] = useState(0);
     return(
         <View style={ImageInput1Styles.container}>
             <Label label={label} star={star} guide={guide} type={2}/>
-            <View style={ImageInput1Styles.inputs}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={ImageInput1Styles.inputs.container}>
                 <ImagePicker type="major"/>
                 <ImagePicker type="detail"/>
                 <ImagePicker type="detail"/>
-            </View>
+                { more > 0 && <ImagePicker type="detail"/>}
+                { more > 1 && <ImagePicker type="detail"/>}
+                { more != 2 &&
+                    <Pressable style={ImageInput1Styles.inputs.more.container} onPress={()=> setMore(more + 1)}>
+                        <Text style={ImageInput1Styles.inputs.more.text}>추가</Text>
+                        <Text style={ImageInput1Styles.inputs.more.plus}>+</Text>
+                    </Pressable>
+                }
+            </ScrollView>
         </View>
     )
 } 
@@ -210,10 +220,7 @@ const ImageInput2 = (props) => {
     return(
         <View style={ImageInput2Styles.container}>
             <Label label={label} star={star} guide={guide} type={2}/>
-            <TouchableOpacity style={ImageInput2Styles.input} onPress={() => ImagePicker()}>
-                <Text style={ImageInput2Styles.text}>영수증 사진</Text>
-                <Text style={ImageInput2Styles.plus}>+</Text>
-            </TouchableOpacity>
+            <ImagePicker type="receipt"/>
         </View>
     )
 }
@@ -242,25 +249,88 @@ const ReviewInput = (props) => {
 }
 
 const CalendarInput = (props) => {
-    const {name, label, placeholder, value, handleChange, star, guide} = props;
-    
-    const [state, setState] = useState();
-    
-    useEffect(()=>{
-        handleChange(name, [state?.year, state?.month, state?.day]);
-    },[state])
+    const {name, placeholder, value, handleChange, guide} = props;
 
+    const [values, setValues] = useState({
+        0:{
+            date: '',
+            time: [],
+        },
+        1:{
+            date: '',
+            time: [],
+        },
+        2:{
+            date: '',
+            time: [],
+        }
+    })
+
+    useEffect(()=>{
+        console.log(values)
+    },[values])
+    
+    
+
+    const [more, setMore] = useState(0);
+
+    const AddTimeBtn = () => {
+        return(
+            <View style={CalendarInputStyles().add.container}>
+                <TouchableOpacity style={CalendarInputStyles().add.box} onPress={() => setMore(more+1)}>
+                    <Text style={CalendarInputStyles().add.text}>나눔 시간대 추가</Text>
+                    <Image source={require('../assets/images/plus.png')} style={CalendarInputStyles().add.image}/>
+                </TouchableOpacity>
+            </View>
+        )
+    }
+
+    const [reset, setReset] = useState(false);
+    const AddAllTime = () => {
+
+        const onPress = () => {
+            if(reset == true){
+                setReset(false);
+            } else {
+                setReset(true);
+                setMore(0);
+                setValues({});
+            }
+        }
+
+        return(
+            <TouchableOpacity style={CalendarInputStyles(reset).reset.container} onPress={()=> onPress()}>
+                <Text style={CalendarInputStyles().reset.text}>시간대 상관없음</Text>
+            </TouchableOpacity>
+        )
+    }
     return(
-        <View style={CalendarInputStyles.container}>
-            <Label label={label} star={star} guide={guide} type={2}/>
-            <DayPicker setState={setState}/>
-            <TimePicker state={state} handleChange={handleChange}/>
+        <View style={CalendarInputStyles().container}>
+            <Label label="나눔시간대 1" star={true} guide={guide} type={2}/>
+            <DayPicker num={0} values={values} setValues={setValues}/>
+            <TimePicker num={0} values={values} setValues={setValues}/>
+            { more > 0 &&
+                <View style={CalendarInputStyles().extra}>
+                    <Label label="나눔시간대 2" star={false} type={2}/>
+                    <DayPicker num={1} values={values} setValues={setValues} />
+                    <TimePicker num={1} values={values} setValues={setValues}/>
+                </View>
+            }
+            { more > 1 &&
+                <View style={CalendarInputStyles().extra}>
+                    <Label label="나눔시간대 3" star={false} type={2}/>
+                    <DayPicker num={2} values={values} setValues={setValues}/>
+                    <TimePicker num={2} values={values} setValues={setValues}/>
+                </View>
+            }
+            { more !=2 && <AddTimeBtn/>}
+            <AddAllTime/>
         </View>
     )
 }
 
 const PlaceInput = (props) => {
-    const {name, label, placeholder, value, handleChange, star, guide, navigation} = props;
+    const {name, label, placeholder, value, value2, handleChange, star, guide, navigation} = props;
 
     const [detail, setDetail] = useState('');
 
@@ -268,10 +338,10 @@ const PlaceInput = (props) => {
         <View style={PlaceInputStyles.container}>
             <Label label={label} star={star} type={1}/>
             <TouchableOpacity style={PlaceInputStyles.btn.container} onPress={() => navigation.navigate('WriteAdress')}>
-                <Text style={PlaceInputStyles.btn.text}>{value != undefined ? value.address : '눌러서 주소를 입력해 주세요.'}</Text>
+                <Text style={PlaceInputStyles.btn.text}>{value ? value : '눌러서 주소를 입력해 주세요.'}</Text>
                 <Image source={require('../assets/images/search.png')} style={PlaceInputStyles.btn.image}/>
             </TouchableOpacity>
-            {value != undefined && <TextInput style={PlaceInputStyles.input} placeholderTextColor="#D8D8D8" placeholder="상세 주소를 입력해주세요." value={detail} onChangeText={(value) => setDetail(value)}/>}
+            {value != undefined && <TextInput style={PlaceInputStyles.input} placeholderTextColor="#D8D8D8" placeholder="상세 주소를 입력해주세요." value={value2} onChangeText={(val) => handleChange(name, val)}/>}
         </View>
     )
 }
@@ -483,12 +553,48 @@ const DropDownStyles = (open) => StyleSheet.create({
 
 const ImageInput1Styles = StyleSheet.create({
     container:{
-        width: widthPercentage(327),
+        width: widthPercentage(330),
         marginBottom: heightPercentage(22),
     },
     inputs:{
-        flexDirection: 'row',
-        alignItems: "center",
+        container:{
+            width: '100%',
+        },
+        more:{
+            container:{
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: widthPercentage(57),
+                height: heightPercentage(133),
+                marginRight: 2,
+                backgroundColor: '#FAFAFA',
+                borderColor: "#FAFAFA",
+                borderRadius: 12,
+                ...Platform.select({
+                    ios: {
+                        shadowColor: "#000000",
+                        shadowOffset: {
+                            width: 1,
+                            height: 1,
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 6,
+                    },
+                    android: {
+                        elevation: 3,
+                    },
+                }),
+            },
+            text:{
+                fontSize: fontPercentage(12),
+                color: '#151515',
+            },
+            plus:{
+                marginTop: heightPercentage(2),
+                fontSize: fontPercentage(16),
+                color: '#151515',
+            }
+        }
     },
     input:{
         flex:1,
@@ -622,11 +728,69 @@ const ReviewInputStyles = StyleSheet.create({
     }
 })
 
-const CalendarInputStyles = StyleSheet.create({
+const CalendarInputStyles = (reset) => StyleSheet.create({
     container:{
         width: widthPercentage(317),
         marginBottom: heightPercentage(22),
     },
+    extra:{
+        marginTop: heightPercentage(24),
+    },
+    add:{
+        container:{
+            width: '100%',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            width: widthPercentage(321),
+            height: heightPercentage(16),
+            marginTop: heightPercentage(16)
+        },
+        box:{
+            flexDirection: 'row',
+            alignItems: 'center'
+        },
+        text:{
+            paddingRight: widthPercentage(3),
+            fontSize: fontPercentage(10),
+            color: '#707070'
+        },
+        image:{
+            width: widthPercentage(15),
+            height: heightPercentage(15),
+            resizeMode: 'stretch'
+        }
+    },
+    reset:{
+        container:{
+            width: widthPercentage(317),
+            height: heightPercentage(43),
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: heightPercentage(27),
+            borderRadius:12,
+            backgroundColor: reset === true ? "#FFF0A1" :"#ffffff",
+            borderColor: reset === true ? "#FFF0A1" :"#ffffff",
+            ...Platform.select({
+                ios: {
+                    shadowColor: "#000000",
+                    shadowOffset: {
+                        width: 1,
+                        height: 1,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 6,
+                },
+                android: {
+                    elevation: 3,
+                },
+            }),
+        },
+        text:{
+            fontSize: fontPercentage(14),
+            color: '#151515'
+        }
+    }
 })
 
 const PlaceInputStyles = StyleSheet.create({

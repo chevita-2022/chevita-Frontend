@@ -36,7 +36,7 @@ const WriteNanum = ({navigation}) => {
 
     const NextBtn = () => {
         return(
-            <TouchableOpacity style={styles.next.container} onPress={()=> navigation.navigate('WriteNanum2')}>
+            <TouchableOpacity style={styles.next.container} onPress={()=> navigation.navigate('WriteNanum2', values)}>
                 <Text style={styles.next.text}>다음으로</Text>
                 <Image source={require('../../assets/images/arrow.png')} style={styles.next.image} />
             </TouchableOpacity>

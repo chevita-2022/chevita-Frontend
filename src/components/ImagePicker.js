@@ -4,7 +4,7 @@ import { widthPercentage, heightPercentage, fontPercentage } from "../Responsive
 import { launchImageLibrary, launchCamera } from "react-native-image-picker";
 import Modal from "react-native-modal";
 import { ProfileImage } from "./ProfileImage";
-import { ImageBtn1 } from "./Button";
+import { ImageBtn1, ImageBtn2 } from "./Button";
 
 
 const ImagePicker = (props) => {
@@ -43,19 +43,22 @@ const ImagePicker = (props) => {
         return <ImageBtn1 type={type}/>;
       case "detail":
         return <ImageBtn1 type={type}/>;
+      case "receipt":
+        return <ImageBtn2/>;
     }
   }
 
   return(
     <>
-    <TouchableOpacity onPress={() => setModalVisible(true)}>
+    <Pressable style={styles.trigger} onPress={() => setModalVisible(true)}>
       <ModalTrigger/>
-    </TouchableOpacity>
+    </Pressable>
     <Modal
       isVisible={modalVisible} 
       transparent={true}
       useNativeDriver={true}
-      style={styles.modal.container} 
+      style={styles.modal.container}
+      onBackdropPress={() => setModalVisible(false)}
     >
       <View style={styles.modal.btns}>
         <View style={styles.modal.option.container}>
@@ -76,6 +79,9 @@ const ImagePicker = (props) => {
 }
 
 const styles = StyleSheet.create({
+  trigger:{
+
+  },
   modal:{
     container:{
       alignItems: 'center',

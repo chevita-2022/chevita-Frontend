@@ -2,15 +2,29 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, Image, View, Text, ScrollView, Pressable } from "react-native";
 import { Calendar } from "react-native-calendars";
 import { widthPercentage, heightPercentage, fontPercentage } from "../ResponsiveSize";
-import CheckBox from "@react-native-community/checkbox";
 
-const DayPicker = ({setState}) => {
-    const [selectedDate, setSelectedDate] = useState()
+const DayPicker = (props) => {
+    const {num, values, setValues} = props;
+    const [selectedDate, setSelectedDate] = useState();
+
+    const onPressDay = (day) => {
+        setSelectedDate(day.dateString); 
+        console.log(day)
+        let temp = {
+            date: [day.year, day.month, day.day],
+            time: values[0].time
+        }
+        const newArr = (num == 0 ? {0:temp} : num == 1 ? {1:temp} : {2:temp})
+
+        setValues({...values, ...newArr})
+    }
+    
+    
 
     return (
         <Calendar
                 style={DaypickerStyles().calendar.container}
-                onDayPress={(day) => {setSelectedDate(day.dateString); setState(day);}}
+                onDayPress={(day) => onPressDay(day)}
                 markedDates={{[selectedDate]: {selected: true}}}
                 monthFormat={'yyyy MM월'}
                 theme={{
@@ -40,21 +54,26 @@ const DayPicker = ({setState}) => {
 
 const TimePicker = (props) => {
 
-    const {state, handleChange} = props;
+    const {num, values, setValues} = props;
     const arr = [...new Array(24)].map((_, i) => i+1);
 
     const [selected, setSelected] = useState([...new Array(24)].fill(false));
     
     const TimeItem = ({date}) => {
         const onPress = () => {
-            const temp = [...selected];
+            let temp = [...selected];
             if(temp[date - 1]  == false) {
                 temp[date - 1] = true;
             } else {
                 temp[date - 1] = false;
             }
             setSelected(temp)
-            console.log(selected)
+
+            temp = [...temp].map((item,i) => {
+                if(item == true) 
+                    return i + 1;
+            }).filter(notUndefined => notUndefined !== undefined)
+            setState({...state, time:temp})
         }
 
         return(
@@ -68,22 +87,8 @@ const TimePicker = (props) => {
 
     const ItemList = () => arr.map(date => <TimeItem key={date} date={date}/>);
 
-    const [toggleCheckBox, setToggleCheckBox] = useState(false);
-
-    const setAllTime = () => {
-        if(toggleCheckBox == true){
-            setToggleCheckBox(false);
-            setSelected([...new Array(24)].fill(false));
-            console.log(selected)
-        } else {
-            setToggleCheckBox(true);
-            setSelected([...new Array(24)].fill(true));
-            console.log(selected)
-        }
-    }
-
     return(
-        (state ? 
+        (values[num].date ? 
             <View style={TimePickerStyles().container}>
                 <View style={TimePickerStyles().guide.container}>
                     <Text style={TimePickerStyles().guide.star}>*</Text>
@@ -94,25 +99,6 @@ const TimePicker = (props) => {
                         <ItemList/>
                     </View>
                 </ScrollView>
-                <View style={TimePickerStyles().option.container}>
-                    <View style={TimePickerStyles().option.box}>
-                        <Pressable onPress={() => setAllTime()}>
-                            <Text style={TimePickerStyles().option.text}>시간대 상관없음</Text>
-                        </Pressable>
-                        <View style={TimePickerStyles().option.checkBox}>
-                            <CheckBox 
-                                disabled={false}
-                                value={toggleCheckBox} 
-                                onValueChange={() => setAllTime()} 
-                                tintColors={{ true: '#707070', false: '#707070'}} 
-                            />
-                        </View>
-                    </View>
-                    <TouchableOpacity style={TimePickerStyles().option.box}>
-                        <Text style={TimePickerStyles().option.text}>나눔 시간대 추가</Text>
-                        <Image source={require('../assets/images/plus.png')} style={TimePickerStyles().option.image}/>
-                    </TouchableOpacity>
-                </View>
             </View>
             :
             <></>
@@ -225,13 +211,6 @@ const TimePickerStyles = (selected) => StyleSheet.create({
             paddingRight: widthPercentage(3),
             fontSize: fontPercentage(10),
             color: '#707070'
-        },
-        checkBox:{
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: widthPercentage(10),
-            height: heightPercentage(10),
-            marginLeft: widthPercentage(5)
         },
         image:{
             width: widthPercentage(15),
