@@ -4,53 +4,14 @@ import Nanumitem from "../../components/NanumItem";
 import DropDownPicker from 'react-native-dropdown-picker';
 import { heightPercentage,widthPercentage,fontPercentage } from "../../ResponsiveSize";
 
-const item=[
-    {
-        key:1,
-        title:'세척 당근 반토막 나눔해요',
-        location: '서대문구 연희동',
-        createdTime:'15분전',
-        hastag:'#채소류 #당근',
-        time:'8월 26일 7,8,18시',
-        like:53,
-        d_day:2,
-    },
-    {
-        key:2,
-        title:'식빵 반봉지 나눔해요',
-        location: '서대문구 연희동',
-        createdTime:'15분전',
-        hastag:'#베이커리류 #식빵',
-        time:'8월 26일 7,8,18시',
-        like:14,
-        d_day:17,
-    },
-    {
-        key:3,
-        title:'딸기잼이랑 누텔라 교환 원해요',
-        location: '서대문구 북아현동',
-        createdTime:'30분전',
-        hastag:'#채소류 #당근',
-        time:'시간대 상관없음',
-        like:29,
-        d_day:29,
-    },
-    {
-        key:4,
-        title:'양파 반쪽 나눔합니다~',
-        location: '서대문구 대현동',
-        createdTime:'45분전',
-        hastag:'#채소류 #양파',
-        time:'8월 26일 11시',
-        like:9,
-        d_day:23,
-    },
-];
-
 const NanumList = ({navigation}) => {
 
-    let item2=[...item];
-    let item3=[...item];
+    const [data,setData]=useState([]);
+    const path="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/posts";
+    fetch(path).then((res)=>res.json()).then((response)=> setData(response.data));
+
+    let item2=[...data];
+    let item3=[...data];
 
     const [open,setOpen]=useState(false);
     const [value,setValue]=useState(null);
@@ -61,18 +22,18 @@ const NanumList = ({navigation}) => {
     ]);
 
     //좋아요 수 많은 순으로 정렬
-    for(var i=0;i<item.length;i++){
+    for(var i=0;i<data.length;i++){
         item2.sort(function(a,b){
-            if(a.like-b.like>0){
+            if(a.totalHearts-b.totalHearts>0){
                 return a<b;
             }
         });
     }
 
     // 나눔 임박한순으로 정렬
-    for(var i=0;i<item.length;i++){
+    for(var i=0;i<data.length;i++){
         item3.sort(function(a,b){
-            if(a.d_day-b.d_day<0){
+            if(a.expirationDate-b.expirationDate<0){
                 return a<b;
             }
         });
@@ -103,22 +64,22 @@ const NanumList = ({navigation}) => {
             <ScrollView>
                 { value==='popular' ?
                     <View> 
-                        {item2.map( PopularArr=>(
-                            <Nanumitem title={PopularArr.title} place={PopularArr.location} createdTime={PopularArr.createdTime} hastag={PopularArr.hastag} appointment={PopularArr.time} like={PopularArr.like} d_day={PopularArr.d_day} />
+                        {item2.map(item=>(
+                            <Nanumitem postId={item.postId} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
                         ))}
                     </View>
                 :
                 (
                     value==='default' ?
                     <View> 
-                        {item.map(item=>(
-                            <Nanumitem title={item.title} place={item.location} createdTime={item.createdTime} hastag={item.hastag} appointment={item.time} like={item.like} d_day={item.d_day} />
+                        {data.reverse().map(item=>(
+                            <Nanumitem postId={item.postId} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
                         ))}
                     </View>
                     :
                     <View>
                         {item3.map(item=>(
-                            <Nanumitem title={item.title} place={item.location} createdTime={item.createdTime} hastag={item.hastag} appointment={item.time} like={item.like} d_day={item.d_day} />
+                            <Nanumitem postId={item.postId} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} />
                         ))}
                     </View>
                 )

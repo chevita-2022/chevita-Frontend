@@ -48,6 +48,15 @@ const ImageBtn1 = (props) => {
   )
 }
 
+const ImageBtn2 = () => {
+  return(
+    <View style={styles.imageBtn2.container} onPress={() => ImagePicker()}>
+      <Text style={styles.imageBtn2.text}>영수증 사진</Text>
+      <Text style={styles.imageBtn2.plus}>+</Text>
+    </View>
+  )
+}
+
 const styles = StyleSheet.create({
   backBtn:{
     container:{
@@ -101,11 +110,14 @@ const styles = StyleSheet.create({
   },
   imageBtn1:{
     container:{
-      flex:1,
+      width: widthPercentage(81),
+      height: heightPercentage(133),
       alignItems: 'center',
       justifyContent: 'center',
       height: heightPercentage(133),
-      marginHorizontal: widthPercentage(5),
+      marginLeft: 1,
+      marginRight: widthPercentage(4),
+      marginVertical: 1,
       backgroundColor: '#FAFAFA',
       borderColor: "#FAFAFA",
       borderRadius: 12,
@@ -133,7 +145,41 @@ const styles = StyleSheet.create({
       fontSize: fontPercentage(16),
       color: '#374957',
   }
+  },
+  imageBtn2:{
+    container:{
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      height: heightPercentage(79),
+      backgroundColor: '#FAFAFA',
+      borderColor: "#FAFAFA",
+      borderRadius: 12,
+      ...Platform.select({
+          ios: {
+              shadowColor: "#000000",
+              shadowOffset: {
+                  width: 1,
+                  height: 1,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 6,
+          },
+          android: {
+              elevation: 3,
+          },
+      }),
+    },
+    text:{
+        fontSize: fontPercentage(12),
+        color: '#151515',
+    },
+    plus:{
+        marginTop: heightPercentage(2),
+        fontSize: fontPercentage(16),
+        color: '#151515',
+    }
   }
 });
 
-export {BackBtn, SearchBtn, AlarmBtn, HeartBtn, ImageBtn1};
+export {BackBtn, SearchBtn, AlarmBtn, HeartBtn, ImageBtn1, ImageBtn2};
