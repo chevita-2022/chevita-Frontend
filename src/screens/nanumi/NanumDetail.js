@@ -1,11 +1,10 @@
-//NanumDeatil.js
 import React, { useEffect, useState } from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View,Platform, Pressable} from "react-native";
 import { widthPercentage, heightPercentage, fontPercentage } from "../../ResponsiveSize";
 import { Table,Col} from "react-native-table-component";
 import { ProgressBarForDate, ProgressBarForVital } from '../../components/ProgressBar';
 import Nanumitem from "../../components/NanumItem";
-import ChooseTime from "../../components/modal/Modal_ChooseTime";
+import {ChooseTime} from "../../components/modal/Modal_ChooseTime";
 import { BackBtn, HeartBtn } from "../../components/Button";
 
 const NanumDetail=({route,navigation})=>{

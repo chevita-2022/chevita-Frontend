@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, Image, StyleSheet, TouchableOpacity,View, Pressable} from "react-native";
 import { heightPercentage,fontPercentage,widthPercentage } from "../../ResponsiveSize";
 import Modal from "react-native-simple-modal";
@@ -15,7 +15,7 @@ const ChooseTime=({appointment,otherId})=>{
     const [ModalVisible1,setModalVisible1]=useState(false);
     const [ModalVisible2, setModalVisible2]=useState(false);
 
-    if(chat===true){
+    const getRoomId=()=>{
         const path="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/chat/"+userId+'/'+otherId;
         fetch(path,{
             method:"POST",
@@ -23,7 +23,8 @@ const ChooseTime=({appointment,otherId})=>{
             headers:{
                 'Content-Type':'application/json',
             }
-        }).then(response=>response.json()).then(data=>{roomId=data.roomId});
+        }).then(response=>response.json()).then(data=>{console.log(data.roomId,otherId)})
+        setModalVisible1(false); setModalVisible2(true);
     }
 
     return(
@@ -55,7 +56,7 @@ const ChooseTime=({appointment,otherId})=>{
 
                     <TouchableOpacity style={{marginBottom:13,flexDirection:'row',backgroundColor:'#FFF0A1',width:widthPercentage(142),height:heightPercentage(43),borderRadius:21.5,alignSelf:'center',
                     ...Platform.select({android:{elevation:3}})}}
-                    onPress={()=>{setModalVisible1(false); setModalVisible2(true); setChat(true); }} >
+                    onPress={getRoomId} >
                         <Image source={require('../../assets/images/calender.png')} style={{width:widthPercentage(20),height:heightPercentage(20),marginLeft:30,marginRight:-18,marginTop:10}} />
                         <Text style={textstyle.reserve}>예약하기</Text>
                     </TouchableOpacity>
