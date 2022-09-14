@@ -6,6 +6,8 @@ import InitialScreen from "./auth/InitialScreen"
 import Nickname from './auth/Nickname';
 import Profile from './auth/Profile';
 import Permission from './auth/Permission';
+import PlaceAddress from './auth/PlaceAdress';
+import WriteAdress from './nanumi/WriteAdress';
 
 const Stack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
@@ -32,6 +34,8 @@ const AuthStackScreen = () => {
         <AuthStack.Screen name="Profile" component={Profile} />
         <AuthStack.Screen name="MainScreen" component={MainScreen} />
         <AuthStack.Screen name="Permission" component={Permission} />
+        <AuthStack.Screen name="PlaceAddress" component={PlaceAddress} />
+        <AuthStack.Screen name="WriteAdress" component={WriteAdress} />
       </Stack.Navigator>
     );
 };

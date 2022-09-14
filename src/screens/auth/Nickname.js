@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from "react";
-import { SafeAreaView,Text,StyleSheet,Image,View,TouchableOpacity, Button,Pressable } from "react-native";
+import { SafeAreaView,Text,StyleSheet,Image,View,TouchableOpacity, Button,Pressable, KeyboardAvoidingView, Platform } from "react-native";
 import { NicknameInput } from "../../components/Input";
 import { fontPercentage,widthPercentage,heightPercentage } from "../../ResponsiveSize";
 
@@ -34,5 +34,12 @@ const Nickname=({navigation})=>{
         </SafeAreaView>
     )
 }
+
+
+const styles = StyleSheet.create({
+    avoidingView: {
+      flex: 1,
+    },
+  })
 
 export default Nickname;
