@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, Image, View, Text, ScrollView, Pressable } from "react-native";
 import { Calendar } from "react-native-calendars";
 import { widthPercentage, heightPercentage, fontPercentage } from "../ResponsiveSize";
+import {format} from 'date-fns';
 
 const DayPicker = (props) => {
     const {num, values, setValues} = props;
@@ -9,10 +10,13 @@ const DayPicker = (props) => {
 
     const onPressDay = (day) => {
         setSelectedDate(day.dateString); 
+        console.log(selectedDate)
         console.log(day)
+        const a = format(new Date(2022,9,3), 'yyyy-MM-dd')
+        console.log(a)
         let temp = {
             date: [day.year, day.month, day.day],
-            time: values[0].time
+            time: values[num]?.time
         }
         const newArr = (num == 0 ? {0:temp} : num == 1 ? {1:temp} : {2:temp})
 
@@ -73,7 +77,14 @@ const TimePicker = (props) => {
                 if(item == true) 
                     return i + 1;
             }).filter(notUndefined => notUndefined !== undefined)
-            setState({...state, time:temp})
+
+            const arr = {
+                date: values[num].date,
+                time: [...temp]
+            }
+            const newArr = (num == 0 ? {0:arr} : num == 1 ? {1:arr} : {2:arr})
+    
+            setValues({...values, ...newArr})
         }
 
         return(
@@ -88,7 +99,7 @@ const TimePicker = (props) => {
     const ItemList = () => arr.map(date => <TimeItem key={date} date={date}/>);
 
     return(
-        (values[num].date ? 
+        (values[num]?.date ? 
             <View style={TimePickerStyles().container}>
                 <View style={TimePickerStyles().guide.container}>
                     <Text style={TimePickerStyles().guide.star}>*</Text>

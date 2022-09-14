@@ -11,7 +11,7 @@ const WriteNanum2 = ({navigation, route}) => {
     const [values, setValues] = useState({
         nanumDate: '',
         nanumPlace: '',
-        nanumDetailPlace:'',
+        detailedLocation:'',
     });
 
     const [post, setPost] = useState({});
@@ -55,7 +55,7 @@ const WriteNanum2 = ({navigation, route}) => {
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <CalendarInput name="nanumDate" guide="나눔이 가능한 시간대를 모두 선택해주세요." value={values.nanumDate} handleChange={handleChange}/>
-                <PlaceInput name="nanumDetailPlace" label="나눔 위치" value={values.nanumPlace} value2={values.nanumDetailPlace} handleChange={handleChange} star={true} navigation={navigation}/>
+                <PlaceInput name="detailedLocation" label="나눔 위치" value={values.nanumPlace} value2={values.nanumDetailPlace} handleChange={handleChange} star={true} navigation={navigation}/>
                 <Pressable style={styles.finishBtn.container} onPress={()=> createPost()}>
                     <Text style={styles.finishBtn.text}>글 작성 완료</Text>
                 </Pressable>

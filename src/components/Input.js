@@ -114,21 +114,34 @@ const InputType2 = (props) => {
 }
 
 const InputType3 = (props) => {
-    const {name, label, placeholder, value, handleChange, star, guide} = props;
+    const {name, label, value, handleChange, star, guide} = props;
 
-    const onChangeDate = (name, data, type) => {
-        const temp = {...value, [type]: parseInt(data)}
-        console.log(temp);
-        handleChange(name, temp);
+    const [year, setYear] = useState();
+    const [month, setMonth] = useState();
+    const [day, setDay] = useState();
+
+    const onChangeDate = (data, type) => {
+        switch(type){
+            case "year":
+                setYear(data);
+                break;
+            case "month":
+                setMonth(data);
+                break;
+            case "day":
+                setDay(data);
+                break;
+        }
+        handleChange(name, ""+year+month+day)
     }
 
     return(
         <View style={InputType3Styles.container}>
             <Label label={label} star={star} guide={guide}/>
             <View style={InputType3Styles.inputContainer}>
-                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder={placeholder[0]} value={value.year} onChangeText={(value) => onChangeDate(name, value, 'year')}/>
-                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder={placeholder[1]} value={value.month} onChangeText={(value) => onChangeDate(name, value, 'month')}/>
-                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder={placeholder[2]} value={value.daty} onChangeText={(value) => onChangeDate(name, value, 'day')}/>
+                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder="2022" value={year} onChangeText={(value) => onChangeDate(value, 'year')}/>
+                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder="01" value={month} onChangeText={(value) => onChangeDate(value, 'month')}/>
+                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder="01" value={day} onChangeText={(value) => onChangeDate(value, 'day')}/>
             </View>
         </View>
     )
@@ -267,6 +280,7 @@ const CalendarInput = (props) => {
     })
 
     useEffect(()=>{
+        handleChange(name, values)
         console.log(values)
     },[values])
     
