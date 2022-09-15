@@ -17,7 +17,7 @@ const ChooseTime=({appointment,otherId})=>{
     
     const [room,setRoom]=useState([]);
     const getRoomId=()=>{
-        const path="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/chat/"+userId+'/'+otherId;
+        const path="http://52.79.70.87/chat/"+userId+'/'+otherId;
         fetch(path,{
             method:"POST",
             cache: "no-cache",

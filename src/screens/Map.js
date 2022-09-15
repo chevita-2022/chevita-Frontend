@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         line:{
             width: widthPercentage(100),
             height: heightPercentage(2),
-            marginTop: heightPercentage(5),
+            marginTop: heightPercentage(10),
             marginBottom: heightPercentage(22),
             backgroundColor: '#D9D9D9',
         },

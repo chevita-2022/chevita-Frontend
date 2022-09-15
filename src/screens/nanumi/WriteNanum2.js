@@ -72,7 +72,7 @@ const WriteNanum2 = ({navigation, route}) => {
         console.log(tempData)
         
 
-        fetch('http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/posts', requestOptions)
+        fetch('http://52.79.70.87/posts', requestOptions)
             .then(response => response.json())
             .then(data => console.log(data))
             .catch(error => {

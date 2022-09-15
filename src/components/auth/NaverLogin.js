@@ -42,7 +42,7 @@ const Naver_Login = () => {
       <View>
         <TouchableOpacity onPress={()=>naverLogin(initials)}>
           <Image source={require('../../assets/images/auth/NaverLogin.png')}
-                  style={{width:widthPercentage(253),height:heightPercentage(40),top:438,alignSelf:'center'}} />
+                  style={{width:widthPercentage(253),height:heightPercentage(40),top:482,alignSelf:'center'}} />
         </TouchableOpacity>
       </View>
     )
