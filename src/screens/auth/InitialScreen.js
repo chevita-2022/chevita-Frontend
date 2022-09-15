@@ -10,13 +10,13 @@ const InitalScreen=({navigation})=>{
     return(
         <SafeAreaView style={{backgroundColor:'#ffffff',flex:1}}>
             <AppLogo/>
-            <Text style={{color:'rgba(0, 0, 0, 0.8)',fontSize:fontPercentage(12),fontFamily:'Noto Sans KR',fontWeight:'400',top:220,alignSelf:'center'}}>냉장고 속 잠자는 식재료를 일깨워줄</Text>
-            <Text style={{fontFamily:'alata-regular',fontSize:fontPercentage(36),fontWeight:"bold",alignSelf:'center',color:'#151515',top:215}}>chevita</Text>
+            <Text style={{color:'rgba(0, 0, 0, 0.8)',fontSize:fontPercentage(12),fontWeight:'400',top:220,alignSelf:'center'}}>냉장고 속 잠자는 식재료를 일깨워줄</Text>
+            <Text style={{fontFamily:'alata-regular',fontSize:fontPercentage(36),alignSelf:'center',color:'#151515',top:215, fontFamily: 'Alata-Regular'}}>chevita</Text>
             <KakaoLogin/>
             <Naver_Login/>
             <GoogleLogin/>
-            <Button title="Nickname" onPress={() => navigation.navigate("Nickname")}/>
-            <Button title="Home" onPress={() => navigation.navigate("Main")}/>
+            {/*<Button title="Nickname" onPress={() => navigation.navigate("Nickname")}/>
+            <Button title="Home" onPress={() => navigation.navigate("Main")}/>*/}
         </SafeAreaView>
         
     )

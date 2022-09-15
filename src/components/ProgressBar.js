@@ -141,7 +141,8 @@ const barStyles = (current) => StyleSheet.create({
     vitalBar:{
         container:{
             width: widthPercentage(116),
-            height: heightPercentage(30)
+            height: heightPercentage(30),
+            backgroundColor: 'skyblue'
         },
         label:{
             container:{
@@ -164,10 +165,10 @@ const barStyles = (current) => StyleSheet.create({
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            width: '98%',
+            width: widthPercentage(116),
         },
         bar:{
-            width: '100%',
+            width: widthPercentage(116),
             height: heightPercentage(3),
             borderRadius: 2,
             backgroundColor: '#D9D9D9',

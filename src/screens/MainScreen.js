@@ -83,7 +83,7 @@ const MyPageStackScreen = ({navigation}) => {
 const MainScreen = () => {
   return (
     <Tab.Navigator
-      initialRouteName="HomeStack"
+      initialRouteName="NanumiStack"
       screenOptions={{
         headerShown:false,
         tabBarShowLabel: false,
