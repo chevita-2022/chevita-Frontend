@@ -4,7 +4,7 @@ import { widthPercentage, heightPercentage, fontPercentage } from "../../Respons
 import { Table,Col} from "react-native-table-component";
 import { ProgressBarForDate, ProgressBarForVital } from '../../components/ProgressBar';
 import Nanumitem from "../../components/NanumItem";
-import ChooseTime from "../../components/modal/Modal_ChooseTime";
+import {ChooseTime} from "../../components/modal/Modal_ChooseTime";
 import { BackBtn, HeartBtn } from "../../components/Button";
 
 const NanumDetail=({route,navigation})=>{
@@ -17,9 +17,24 @@ const NanumDetail=({route,navigation})=>{
     const path="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/posts/"+id;
     fetch(path,{
         headers:{
-            postId:id,
+            postid:id,
         },
     }).then(res=>res.json()).then(response=>setContent(response.data));
+
+    const [userLocate,setUserLocate]=useState('');
+    const [userNickname,setUserNickname]=useState('');
+    const [userInfo,setUserInfo]=useState('');
+
+    if(id!=undefined) {
+    //작성자 정보 조회
+    const path1="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/user/"+content.userIdx;
+    fetch(path1,{
+        headers:{
+            userid:content.userIdx,
+        },
+    }).then(res=>res.json())
+    .then(response=>{setUserInfo(response);}); 
+}
 
     //구매일자
     const unformatDate = "" + content.purchaseDate;
@@ -40,7 +55,6 @@ const NanumDetail=({route,navigation})=>{
     const [full,setFull]=useState(false);
 
     let type1=content.category;
-    console.log(type1);
 
     //음식 종류
     const img= (
@@ -69,7 +83,7 @@ const NanumDetail=({route,navigation})=>{
                 </Pressable>
 
             <View style={{position:'absolute',right:widthPercentage(20),top:heightPercentage(330)}}>
-                <ProgressBarForVital vital={85} />
+                <ProgressBarForVital vital={userInfo.vital} />
             </View>
 
                 <View style={{paddingLeft:widthPercentage(10),paddingTop:widthPercentage(20),paddingRight:widthPercentage(10)}}>
@@ -79,9 +93,14 @@ const NanumDetail=({route,navigation})=>{
                         <View style={{...Platform.select({android:{elevation:3}}),borderRadius:100}}>
                             <Image source={require("../../assets/images/carrotEx1.jpeg")} style={{width:widthPercentage(40),height:heightPercentage(40),borderRadius:100}} />
                        </View>
-                        <Text style={{fontFamily:'Noto Sans KR',fontSize:13,fontWeight:'500',color:'#151515',padding:5}}>식빵빵</Text>
+                        {userInfo.userNickName != undefined ?
+                        <Text style={{fontFamily:'Noto Sans KR',fontSize:13,fontWeight:'500',color:'#151515',padding:5}}>{userInfo.userNickName}</Text>
+                        : <></>}
                     </View>
-                        <Text style={{top:-17,left:widthPercentage(46),fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'400',color:'#7D7D7D'}}>아현동</Text>
+                        {userInfo.userAddress != undefined ? 
+                        <Text style={{top:-17,left:widthPercentage(46),fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'400',color:'#7D7D7D'}}>{userInfo.userAddress}</Text>
+                        :
+                        <></>}
                     <Text style={{paddingTop:5,fontFamily:'Noto Sans KR',fontWeight:'700',fontSize:fontPercentage(16),color:'#151515'}}>{content.title}</Text>
                     {day > 0 ?
                         <Text style={{paddingTop:2,fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(11),color:'#7D7D7D'}}> 
@@ -166,7 +185,7 @@ const NanumDetail=({route,navigation})=>{
                     <Text style={{borderTopWidth:1,borderRadius:0.5,marginTop:13, borderColor:'#D9D9D9'}}> &nbsp; </Text>
                 </View>
             </ScrollView>
-            <ChooseTime appointment={appointment}/>
+            <ChooseTime appointment={appointment} otherId={content.userIdx}/>
         </SafeAreaView>
     )
 }

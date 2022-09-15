@@ -1,16 +1,39 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useRef } from 'react'
 import { Image, Platform, SafeAreaView, ScrollView, View,Text, TouchableOpacity,StyleSheet } from 'react-native';
 import { GiftedChat,Bubble,InputToolbar, Send } from 'react-native-gifted-chat'
 import { fontPercentage, heightPercentage, widthPercentage } from '../../ResponsiveSize';
 import Modal from "react-native-modal";
-import { BackBtn } from '../../components/Button';
 import { ProgressBarForVital } from '../../components/ProgressBar';
 import { ReviewInput } from '../../components/Input';
+import { roomId, userId } from '../../components/modal/Modal_ChooseTime';
 
+const ChattingBubble = () => {
 
-const ChattingBubble = () => 
-{
+  /* 웹소켓 열기 */
+  const ws=useRef(null);
+  useEffect(()=>{
+    ws.current=new WebSocket(`ws://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/ws/chat`)
+    console.log(ws.current);
+
+    ws.current.onopen=()=>{
+      console.log('connected');
+    }
+
+    ws.current.onmessage=()=>{
+      console.log('message');
+    }
+
+    ws.current.onclose=()=>{
+      console.log('close');
+    }
+
+   /*return()=>{
+      ws.current.close();
+    }*/
+  },[])
+
   const [messages, setMessages] = useState([]);
+  const [sendServer,setSendServer]=useState([]);
 
   const [reserveModal,setReserveModal]=useState(false);
   const [nanumState,setNanumState]=useState(false);
@@ -25,7 +48,6 @@ const ChattingBubble = () =>
       ...value, // 기존의 input 객체를 복사한 뒤
       [name]: value // name 키를 가진 값을 value 로 설정
     });
-    console.log(value)
 };
 
   useEffect(() => {
@@ -48,9 +70,31 @@ const ChattingBubble = () =>
     ])
   }, [])
 
-  const onSend = useCallback((messages = []) => {
+   const onSend = useCallback((messages = []) => {
+    setMessages(previousMessages => GiftedChat.append(previousMessages, messages));
+     let str=JSON.stringify({
+      "type": "ENTER",
+      "roomId": /*roomId*/"fabb2ff8-1482-4ddb-9492-a254c7678533",
+      "sender": userId,
+      "message": messages[0].text,
+    });
+    ws.current.send(str);
+    console.log(str);
+  }, []) 
+
+ /* const onSend=()=>{
+
+    let str=JSON.stringify({
+      "type": "ENTER",
+      "roomId": roomId,
+      "sender": userId,
+      "message": "hello",
+    });
+    ws.current.send(str);
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-  }, [])
+
+    console.log(str);
+  }*/
 
   const renderBubble = (props) => {
     return (
@@ -112,9 +156,9 @@ const ChattingBubble = () =>
 
   const renderSend=(props)=>{
     return(
-      <Send {...props} containerStyle={{backgroundColor:'#FFF0A1',width:42,height:42,top:-1,borderRadius:100,left:3}}>
-        <Image source={require('../../assets/images/messageSend.png')} style={{width:15, height:15,borderWidth:1.5,top:-12,left:12}}/>
-      </Send>
+        <Send {...props} containerStyle={{backgroundColor:'#FFF0A1',width:42,height:42,top:-1,borderRadius:100,left:3}} >
+          <Image source={require('../../assets/images/messageSend.png')} style={{width:15, height:15,borderWidth:1.5,top:-12,left:12}}/>
+        </Send>
     )
   }
 

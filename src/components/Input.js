@@ -114,21 +114,23 @@ const InputType2 = (props) => {
 }
 
 const InputType3 = (props) => {
-    const {name, label, placeholder, value, handleChange, star, guide} = props;
+    const {name, label, value, handleChange, star, guide} = props;
 
-    const onChangeDate = (name, data, type) => {
-        const temp = {...value, [type]: parseInt(data)}
-        console.log(temp);
-        handleChange(name, temp);
-    }
+    const [year, setYear] = useState('');
+    const [month, setMonth] = useState('');
+    const [date, setDate] = useState('');
+    
+    useEffect(()=>{
+        handleChange(name, ""+year+month+date)
+    },[year, month, date])
 
     return(
         <View style={InputType3Styles.container}>
             <Label label={label} star={star} guide={guide}/>
             <View style={InputType3Styles.inputContainer}>
-                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder={placeholder[0]} value={value.year} onChangeText={(value) => onChangeDate(name, value, 'year')}/>
-                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder={placeholder[1]} value={value.month} onChangeText={(value) => onChangeDate(name, value, 'month')}/>
-                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder={placeholder[2]} value={value.daty} onChangeText={(value) => onChangeDate(name, value, 'day')}/>
+                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder="2022" value={year} onChangeText={(value) => setYear(value)}/>
+                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder="01" value={month} onChangeText={(value) => setMonth(value)}/>
+                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder="01" value={date} onChangeText={(value) => setDate(value)}/>
             </View>
         </View>
     )
@@ -136,9 +138,7 @@ const InputType3 = (props) => {
 
 const NicknameInput = ({ value, handleChange}) => {
     return(
-        <View>
-            <TextInput maxLength={12} style={{width: '100%', padding:0,margin:0, borderBottomWidth: 2, borderBottomColor: "#767676", color: "black",}}  value={value} onChangeText={(value) => handleChange(value)} />
-        </View>
+        <TextInput maxLength={12} style={{width: '100%', padding:0,margin:0, borderBottomWidth: 1, borderBottomColor: "#151515", color: "black",}}  value={value} onChangeText={(value) => handleChange(value)} />
     )
 }
 
@@ -267,6 +267,7 @@ const CalendarInput = (props) => {
     })
 
     useEffect(()=>{
+        handleChange(name, values)
         console.log(values)
     },[values])
     

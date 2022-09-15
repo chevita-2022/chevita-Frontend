@@ -1,13 +1,15 @@
 import React, { useState ,useEffect} from "react";
-import { SafeAreaView,Text,StyleSheet,Image,View,TouchableOpacity, Button,Pressable } from "react-native";
+import { SafeAreaView,Text,StyleSheet,Image,View,TouchableOpacity, Button,Pressable, KeyboardAvoidingView, Platform } from "react-native";
+import ImagePicker from "../../components/ImagePicker";
 import { NicknameInput } from "../../components/Input";
 import { fontPercentage,widthPercentage,heightPercentage } from "../../ResponsiveSize";
 
 const Nickname=({navigation})=>{
 
-    const [isMounted, setIsMounted] = useState(false);
+  
     const [nickname,setNickname]=useState('');
     const [alert,setAlert]=useState('');
+    const [isMounted, setIsMounted] = useState(false);
 
     const handleChange = (value) => {
         setIsMounted(true);
@@ -19,20 +21,113 @@ const Nickname=({navigation})=>{
     },[])
 
     return(
-        <SafeAreaView style={{flex:1,backgroundColor:'#ffffff',padding:50}}>
-            <Text style={{position:'absolute',top:130,padding:50}}>
-                <Text style={{fontSize:fontPercentage(20),fontFamily:'Noto Sans KR',fontWeight:'700',color:'rgba(0,0,0,0.8)'}}>닉네임</Text>
-                <Text style={{fontSize:fontPercentage(13),fontFamily:'Noto Sans KR',fontWeight:'400',color:'rgba(0,0,0,0.8)'}}>을 설정해주세요</Text>
-            </Text>
-            <View style={{top:450}}>
-                <NicknameInput name='nickname' value={nickname} handleChange={handleChange}/>
-                <Text style={{right:-240,color:'#767676',fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(10),paddingTop:3}}>최대 12자</Text>
-            </View>
-            <Pressable onPress={() => navigation.navigate("Profile")}>
-                <Text style={{position:'absolute',color:'#151515',fontFamily:'Noto Sans KR',fontWeight:'500',fontSize:fontPercentage(12),top:550,right:0}}>다음으로 {'>'}</Text>
-            </Pressable>
+       <SafeAreaView style={{flex:1,backgroundColor:'#ffffff',padding:50}}>
+            <Text style={styles.title1}>Let's chaevita!</Text>
+            <Text style={styles.title2}>계정 설정</Text>
+
+            <Image source={require('../../assets/images/point.png')} style={styles.point} />
+            <Text style={styles.question}>프로필 사진을 설정해주세요</Text>
+            <ImagePicker type="profile2" />
+
+            <Image source={require('../../assets/images/point.png')} style={styles.point} />
+            <Text style={styles.question}>닉네임을 설정해주세요</Text>
+            <NicknameInput name='nickname' value={nickname} handleChange={handleChange}/>
+            <Text style={{right:-240,color:'#767676',fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(10),paddingTop:3}}>최대 12자</Text>
+           
+            <View style={{padding:10}} />
+
+            <Image source={require('../../assets/images/point.png')} style={styles.point} />
+            <Text style={styles.question}>동네위치를 설정해주세요</Text>
+
+          { /* <View style={PlaceInputStyles.container}>
+            <TouchableOpacity style={PlaceInputStyles.btn.container} onPress={() => navigation.navigate('WriteAdress')}>
+                <Text style={PlaceInputStyles.btn.text}>{value ? value : '눌러서 주소를 입력해 주세요.'}</Text>
+                <Image source={require('../../assets/images/search.png')} style={PlaceInputStyles.btn.image}/>
+            </TouchableOpacity>
+            </View>*/}
+
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    title1:{
+        fontSize:fontPercentage(24),
+        fontWeight:'700',
+        color: '#151515',
+    },
+    title2:{
+        fontSize:fontPercentage(16),
+        fontWeight:'700',
+        color:'#151515',
+        marginBottom:15
+    },
+    point:{
+        marginTop:10,
+        width:widthPercentage(5),
+        height:heightPercentage(5)
+    },
+    question:{
+        padding:5,
+        color:'#151515',
+        marginBottom:15,
+    }
+  })
+
+  const PlaceInputStyles = StyleSheet.create({
+    container:{
+        width: widthPercentage(317),
+        marginBottom: heightPercentage(22)
+    },
+    btn:{
+        container:{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            height: heightPercentage(43),
+            paddingHorizontal: widthPercentage(15),
+            marginBottom: heightPercentage(10),
+            borderRadius: 12,
+            backgroundColor: '#FAFAFA',
+            borderColor: "#FAFAFA",
+            borderRadius: 12,
+            ...Platform.select({
+                ios: {
+                    shadowColor: "#000000",
+                    shadowOffset: {
+                        width: 1,
+                        height: 1,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 6,
+                },
+                android: {
+                    elevation: 3,
+                },
+            }),
+        },
+        text:{
+            fontSize: fontPercentage(14),
+            color: '#151515'
+        },
+        image:{
+            width: widthPercentage(17),
+            height: heightPercentage(17),
+            resizeMode: 'stretch',
+        }
+    },
+    input:{
+        alignItems: 'center',
+        width: '100%',
+        height: heightPercentage(30),
+        paddingLeft: widthPercentage(15),
+        padding: 0,
+        margin:0,
+        borderBottomWidth: 2,
+        borderBottomColor: "#D9D9D9",
+        color: "#151515",
+    }
+})
 
 export default Nickname;

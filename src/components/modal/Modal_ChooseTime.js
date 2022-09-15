@@ -1,29 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, Image, StyleSheet, TouchableOpacity,View, Pressable} from "react-native";
 import { heightPercentage,fontPercentage,widthPercentage } from "../../ResponsiveSize";
 import Modal from "react-native-simple-modal";
 
-const ChooseTime=({appointment})=>{
+let roomId='',userId=103;
+
+const ChooseTime=({appointment,otherId})=>{
 
     const [offset,seOffset]=useState();
-    /*const [backgroundColor0,setBackgroundColor0]=useState('#ffffff');
-    const [backgroundColor1,setBackgroundColor1]=useState('#ffffff');
-    const [backgroundColor2,setBackgroundColor2]=useState('#ffffff');
-    const [backgroundColor3,setBackgroundColor3]=useState('#ffffff');*/
 
     const [select,setSelect]=useState(4);
+    const [chat,setChat]=useState(false);
 
     const [ModalVisible1,setModalVisible1]=useState(false);
     const [ModalVisible2, setModalVisible2]=useState(false);
-
-    /*const onPressedIn=(i)=>{
-        setBackgroundColor(backgroundColor[i],[...backgroundColor[i],color]);
-        setColor('black');
-        console.log(i);
+    
+    const [room,setRoom]=useState([]);
+    const getRoomId=()=>{
+        const path="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/chat/"+userId+'/'+otherId;
+        fetch(path,{
+            method:"POST",
+            cache: "no-cache",
+            headers:{
+                'Content-Type':'application/json',
+            }
+        }).then(response=>response.json()).then(data=>{setRoom(data)})
+        setModalVisible1(false); setModalVisible2(true);
     }
-    const onPressedOut=()=>{
-        setBackgroundColor('#ffffff');
-    }*/
+
+    if(room.roomId != undefined) {
+        roomId=room.roomId;
+    }
 
     return(
         <>
@@ -54,7 +61,7 @@ const ChooseTime=({appointment})=>{
 
                     <TouchableOpacity style={{marginBottom:13,flexDirection:'row',backgroundColor:'#FFF0A1',width:widthPercentage(142),height:heightPercentage(43),borderRadius:21.5,alignSelf:'center',
                     ...Platform.select({android:{elevation:3}})}}
-                    onPress={()=>{setModalVisible1(false); setModalVisible2(true)}} >
+                    onPress={getRoomId} >
                         <Image source={require('../../assets/images/calender.png')} style={{width:widthPercentage(20),height:heightPercentage(20),marginLeft:30,marginRight:-18,marginTop:10}} />
                         <Text style={textstyle.reserve}>예약하기</Text>
                     </TouchableOpacity>
@@ -100,4 +107,4 @@ const textstyle=StyleSheet.create({
     },
 })
 
-export default ChooseTime;
+export {ChooseTime,roomId,userId};

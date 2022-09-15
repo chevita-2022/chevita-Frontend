@@ -29,7 +29,6 @@ const AlarmBtn = () => {
 
 const HeartBtn = ({full}) => {
   const image=(full===true? require('../assets/images/fullHeart.png'):require('../assets/images/heart.png'))
-  console.log(full);
   return (
     <View style={styles.heartBtn.container} /*onPress={() => goBack()}*/>
       <Image source={image} style={styles.heartBtn.image}/>
