@@ -13,7 +13,7 @@ const InitalScreen=({navigation})=>{
             <KakaoLogin/>
             <Naver_Login/>
            <Button title="Nickname" onPress={() => navigation.navigate("Nickname")}/>
-            <Button title="Home" onPress={() => navigation.navigate("Main")}/> 
+            <Button title="Home" onPress={() => navigation.navigate("Main")}/>
         </SafeAreaView>
         
     )

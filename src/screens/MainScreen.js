@@ -43,7 +43,7 @@ const NanumiStackScreen = ({navigation, route}) => {
     return (
       <Stack.Navigator>
         <NanumiStack.Screen name="Nanumi" component={NanumList} options={{header:()=>(<Header title='나누미' shadow={true} type={1} navigation={navigation}/> )}}/>
-        <NanumiStack.Screen name="WriteNanum" component={WriteNanum} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='Nanumi'/>)}}/>
+        <NanumiStack.Screen name="WriteNanum" component={WriteNanum} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='Nanumi'/>), tabBarVisible: false,}}/>
         <NanumiStack.Screen name="WriteNanum2" component={WriteNanum2} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='WriteNanum'/>)}}/>
         <NanumiStack.Screen name="WriteAdress" component={WriteAdress} options={{header:()=>(<Header title='주소 검색' shadow={false} type={2} navigation={navigation} before='WriteNanum2'/>)}}/>
         <NanumiStack.Screen name="NanumDetail" component={NanumDetail} options={{/*header:()=>(<Header title='' shadow={false} type={3} navigation={navigation} before='Nanumi'/>)*/ headerShown:false}}/>
@@ -80,7 +80,8 @@ const MyPageStackScreen = ({navigation}) => {
 };
 
 
-const MainScreen = () => {
+const MainScreen = (props) => {
+  const hide = props.routeName != "WriteNanum" || props.routeName != "WriteNanum2"
   return (
     <Tab.Navigator
       initialRouteName="NanumiStack"
@@ -98,7 +99,8 @@ const MainScreen = () => {
             <Image source={require('../assets/images/focused_nanumi.png')} style={styles.tabBarIcon}/>
             : 
             <Image source={require('../assets/images/nanumi.png')} style={styles.tabBarIcon}/>
-          )
+          ),
+          tabBarStyle: { display: hide ? "none" : "flex" }
         }}
       />
       <Tab.Screen

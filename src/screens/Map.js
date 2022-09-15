@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable, Button, Image, TextInput} from "react-native";
+import { Text, StyleSheet, ScrollView, SafeAreaView,View, Pressable, Button, Image, TextInput} from "react-native";
 import GoogleMap from "../components/GoogleMap";
 import Geocoder from 'react-native-geocoding';
 import { getDistance } from 'geolib';
@@ -37,7 +37,9 @@ const Map = () => {
             expirationDate:2,
         }
 
-    const [searchWord, SetSearchWord] = useState('')
+    const [searchWord, SetSearchWord] = useState('');
+    const [searching, setSearching] = useState(false);
+    const [selectedItem, setSelectedItem] = useState('')
 
     const SearchModal = () => {
         return(
@@ -45,9 +47,13 @@ const Map = () => {
                 <View style={styles.modal.line}></View>
                 <View style={styles.modal.searchBox.container}>
                     <Image source={require('../assets/images/search.png')} style={styles.modal.searchBox.image}/>
-                    <TextInput style={styles.modal.searchBox.input} placeholder={searchWord ? "내 주변 #" + searchWord + " 키워드 검색 결과"   : "내 주변 #키워드 를 검색해보세요."} placeholderTextColor='#151515' value={searchWord} onChange={(value)=> SetSearchWord(value)}/>
+                    {searching ?
+                    <Text style={styles.modal.searchBox.input}>내 주변 #{searchWord} 키워드 검색 결과</Text>
+                    :
+                    <TextInput style={styles.modal.searchBox.input} placeholder={"내 주변 #키워드 를 검색해보세요."} placeholderTextColor='#151515' value={searchWord} onChange={(value)=> SetSearchWord(value)}/>
+                    }
                 </View>
-                <Text style={styles.modal.guide}>서대문구 연희동 근처 당근 관련 글을 {1}건 찾았어요!</Text>
+                {searchWord != "" && <Text style={styles.modal.guide}>서대문구 연희동 근처 당근 관련 글을 {1}건 찾았어요!</Text>}
                 <Nanumitem postId={item.postId} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate}/>
             </View>
         )
@@ -65,24 +71,36 @@ const Map = () => {
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        backgroundColor: '#ffffff',
     },
     modal:{
         container:{
             position: 'absolute',
-            bottom: 5,
+            bottom: 2,
             width: widthPercentage(375),
             minHeight: heightPercentage(74),
             maxHeight: heightPercentage(277),
+            paddingTop : heightPercentage(6),
             alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor: '#ffffff',
-            borderRadius: 12
+            borderRadius: 12,
+            ...Platform.select({
+                ios: {
+                    shadowColor: "#000000",
+                    shadowOffset: {
+                        width: 1,
+                        height: 1,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 6,
+                },
+                android: {
+                    elevation: 3,
+                },
+            }),
         },
         line:{
             width: widthPercentage(100),
             height: heightPercentage(2),
-            marginTop: heightPercentage(10),
             marginBottom: heightPercentage(22),
             backgroundColor: '#D9D9D9',
         },
