@@ -12,7 +12,7 @@ const Nanumitem=({title,place,createdTime,hastag,like,d_day,postId})=>{
     //시간 계산
     const created=new Date(createdTime[0],createdTime[1]-1,createdTime[2],createdTime[3],createdTime[4],createdTime[5]);
     const now=new Date();
-
+    
     const elapsedMSec = now.getTime() - created.getTime();
     const elapsedMin = parseInt(elapsedMSec / 1000 /60); 
     const hour=parseInt(elapsedMin/60);
