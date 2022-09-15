@@ -116,32 +116,21 @@ const InputType2 = (props) => {
 const InputType3 = (props) => {
     const {name, label, value, handleChange, star, guide} = props;
 
-    const [year, setYear] = useState();
-    const [month, setMonth] = useState();
-    const [day, setDay] = useState();
-
-    const onChangeDate = (data, type) => {
-        switch(type){
-            case "year":
-                setYear(data);
-                break;
-            case "month":
-                setMonth(data);
-                break;
-            case "day":
-                setDay(data);
-                break;
-        }
-        handleChange(name, ""+year+month+day)
-    }
+    const [year, setYear] = useState('');
+    const [month, setMonth] = useState('');
+    const [date, setDate] = useState('');
+    
+    useEffect(()=>{
+        handleChange(name, ""+year+month+date)
+    },[year, month, date])
 
     return(
         <View style={InputType3Styles.container}>
             <Label label={label} star={star} guide={guide}/>
             <View style={InputType3Styles.inputContainer}>
-                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder="2022" value={year} onChangeText={(value) => onChangeDate(value, 'year')}/>
-                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder="01" value={month} onChangeText={(value) => onChangeDate(value, 'month')}/>
-                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder="01" value={day} onChangeText={(value) => onChangeDate(value, 'day')}/>
+                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder="2022" value={year} onChangeText={(value) => setYear(value)}/>
+                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder="01" value={month} onChangeText={(value) => setMonth(value)}/>
+                <TextInput keyboardType='numeric' style={InputType3Styles.input} placeholder="01" value={date} onChangeText={(value) => setDate(value)}/>
             </View>
         </View>
     )
