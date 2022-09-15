@@ -14,7 +14,7 @@ const NanumDetail=({route,navigation})=>{
 
     const [content,setContent]=useState([]);
     //상세 내용 서버 연결
-    const path="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/posts/"+id;
+    const path="http://52.79.70.87/posts/"+id;
     fetch(path,{
         headers:{
             postid:id,
@@ -25,7 +25,7 @@ const NanumDetail=({route,navigation})=>{
 
     if(id!=undefined) {
     //작성자 정보 조회
-    const path1="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/user/"+content.userIdx;
+    const path1="http://52.79.70.87/user/"+content.userIdx;
     fetch(path1,{
         headers:{
             userid:content.userIdx,
@@ -73,7 +73,7 @@ const NanumDetail=({route,navigation})=>{
             <ScrollView>
                 <Image source={require('../../assets/images/test.jpeg')} style={{width:widthPercentage(375),height:heightPercentage(300)}} />
             
-                <Pressable style={{position:'absolte',top:heightPercentage(60)}}>
+                <Pressable style={{position:'absolute',top:heightPercentage(60)}}>
                     <BackBtn color='white' goBack={goBackNanumi} />
                 </Pressable>
                 <Pressable style={{position:'absolute',right:0,top:heightPercentage(57)}} onPress={()=>setFull((prev) => !prev)}>

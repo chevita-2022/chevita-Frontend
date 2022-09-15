@@ -3,11 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MainScreen from "./MainScreen";
 import InitialScreen from "./auth/InitialScreen"
-import Nickname from './auth/Nickname';
-import Profile from './auth/Profile';
-import Permission from './auth/Permission';
-import PlaceAddress from './auth/PlaceAdress';
 import WriteAdress from './nanumi/WriteAdress';
+import Profile from './auth/Profile';
 
 const Stack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
@@ -30,11 +27,8 @@ const AuthStackScreen = () => {
           headerShown:false,
         }}>
         <AuthStack.Screen name="Initial" component={InitialScreen}/>
-        <AuthStack.Screen name="Nickname" component={Nickname} />
-        <AuthStack.Screen name="Profile" component={Profile} />
+        <AuthStack.Screen name="Nickname" component={Profile} />
         <AuthStack.Screen name="MainScreen" component={MainScreen} />
-        <AuthStack.Screen name="Permission" component={Permission} />
-        <AuthStack.Screen name="PlaceAddress" component={PlaceAddress} />
         <AuthStack.Screen name="WriteAdress" component={WriteAdress} />
       </Stack.Navigator>
     );
