@@ -14,20 +14,18 @@ const NanumDetail=({route,navigation})=>{
 
     const [content,setContent]=useState([]);
     //상세 내용 서버 연결
-    const path="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/posts/"+id;
+    const path="http://52.79.70.87/posts/"+id;
     fetch(path,{
         headers:{
             postid:id,
         },
     }).then(res=>res.json()).then(response=>setContent(response.data));
 
-    const [userLocate,setUserLocate]=useState('');
-    const [userNickname,setUserNickname]=useState('');
     const [userInfo,setUserInfo]=useState('');
 
     if(id!=undefined) {
     //작성자 정보 조회
-    const path1="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/user/"+content.userIdx;
+    const path1="http://52.79.70.87/user/"+content.userIdx;
     fetch(path1,{
         headers:{
             userid:content.userIdx,
