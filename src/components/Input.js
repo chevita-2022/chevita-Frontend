@@ -136,7 +136,7 @@ const InputType3 = (props) => {
 
 const NicknameInput = ({ value, handleChange}) => {
     return(
-        <TextInput maxLength={12} style={{width: '100%', padding:0,margin:0, borderBottomWidth: 2, borderBottomColor: "#767676", color: "black",}}  value={value} onChangeText={(value) => handleChange(value)} />
+        <TextInput maxLength={12} style={{width: '100%', padding:0,margin:0, borderBottomWidth: 1, borderBottomColor: "#151515", color: "black",}}  value={value} onChangeText={(value) => handleChange(value)} />
     )
 }
 

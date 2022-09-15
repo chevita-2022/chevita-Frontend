@@ -40,7 +40,7 @@ const ProgressBarForVital = (props) =>{
             </View>
             <View style={barStyles().vitalBar.barGroup}>
                 <View style={barStyles().vitalBar.bar}>
-                    <View style={barStyles(23).vitalBar.currentBar}>
+                    <View style={barStyles(vital).vitalBar.currentBar}>
                         <View style={barStyles().vitalBar.currentCircle}>
                             <Text style={barStyles().vitalBar.number}>{vital}%</Text>
                         </View>
