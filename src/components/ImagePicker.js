@@ -3,7 +3,7 @@ import { Text, Image, StyleSheet, TouchableOpacity,View, Pressable} from "react-
 import { widthPercentage, heightPercentage, fontPercentage } from "../ResponsiveSize";
 import { launchImageLibrary, launchCamera } from "react-native-image-picker";
 import Modal from "react-native-modal";
-import { ProfileImage } from "./ProfileImage";
+import { ProfileImage, ProfileImage1 } from "./ProfileImage";
 import { ImageBtn1, ImageBtn2 } from "./Button";
 
 
@@ -45,6 +45,8 @@ const ImagePicker = (props) => {
         return <ImageBtn1 type={type}/>;
       case "receipt":
         return <ImageBtn2/>;
+      case "profile2":
+        return <ProfileImage1/>;
     }
   }
 

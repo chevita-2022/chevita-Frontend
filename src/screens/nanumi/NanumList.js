@@ -41,7 +41,7 @@ const NanumList = ({navigation}) => {
 
     return(
         <SafeAreaView style={{backgroundColor:'#fff',flex:1}}>
-          <Text style={{fontFamily:'Noto Sans KR',fontSize:fontPercentage(16),fontWeight:'700',color:'#151515',paddingLeft:11,paddingVertical:0,top:23,height:heightPercentage(60),}}>김탁구님 주변 인기 나눔글</Text>
+        <Text style={{fontFamily:'Noto Sans KR',fontSize:fontPercentage(16),fontWeight:'700',color:'#151515',paddingLeft:11,paddingVertical:0,top:23,height:heightPercentage(60),}}>김탁구님 주변 인기 나눔글</Text>
             <DropDownPicker
                 open={open}
                 value={value}
@@ -65,22 +65,22 @@ const NanumList = ({navigation}) => {
                 { value==='popular' ?
                     <View> 
                         {item2.map(item=>(
-                            <Nanumitem postId={item.postId} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
+                            <Nanumitem postId={item.postIdx} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
                         ))}
                     </View>
                 :
                 (
-                    value==='default' ?
-                    <View> 
-                        {data.reverse().map(item=>(
-                            <Nanumitem postId={item.postId} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
-                        ))}
+                    value==='lank' ?
+                    <View>
+                    {item3.map(item=>(
+                        <Nanumitem postId={item.postIdx} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} />
+                    ))}
                     </View>
                     :
-                    <View>
-                        {item3.map(item=>(
-                            <Nanumitem postId={item.postId} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} />
-                        ))}
+                    <View> 
+                    {data.reverse().map(item=>(
+                        <Nanumitem postId={item.postIdx} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
+                    ))}
                     </View>
                 )
                 }   
