@@ -47,7 +47,7 @@ const KakaoLogin = () => {
     <TouchableOpacity onPress={signInWithKakao}>
         <Image
           source={require("../../assets/images/auth/KakaoLogin.png")}
-          style={{ top: 190,width:widthPercentage(263),height:heightPercentage(40),top:423,alignSelf:'center' }} />
+          style={{width:widthPercentage(263),height:heightPercentage(40),top:470,alignSelf:'center' }} />
     </TouchableOpacity>
   );
 };

@@ -21,8 +21,6 @@ const NanumDetail=({route,navigation})=>{
         },
     }).then(res=>res.json()).then(response=>setContent(response.data));
 
-    const [userLocate,setUserLocate]=useState('');
-    const [userNickname,setUserNickname]=useState('');
     const [userInfo,setUserInfo]=useState('');
 
     if(id!=undefined) {
@@ -75,7 +73,7 @@ const NanumDetail=({route,navigation})=>{
             <ScrollView>
                 <Image source={require('../../assets/images/test.jpeg')} style={{width:widthPercentage(375),height:heightPercentage(300)}} />
             
-                <Pressable style={{position:'absolute',top:heightPercentage(60)}}>
+                <Pressable style={{position:'absolte',top:heightPercentage(60)}}>
                     <BackBtn color='white' goBack={goBackNanumi} />
                 </Pressable>
                 <Pressable style={{position:'absolute',right:0,top:heightPercentage(57)}} onPress={()=>setFull((prev) => !prev)}>
