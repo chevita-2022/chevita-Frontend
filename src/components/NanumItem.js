@@ -3,22 +3,47 @@ import React, { useState } from "react";
 import { View,Text ,StyleSheet, SafeAreaView,Image,ScrollView,Platform, Pressable, TouchableOpacity} from "react-native";
 import { fontPercentage, heightPercentage, widthPercentage } from "../ResponsiveSize";
 
+//d_day 
+const YMDFormatter= (num) => { 
+    
+    if (!num) return "";
+    var formatNum = '';
+
+    // 공백제거
+    num = num.replace(/\s/gi, "");
+
+    try {
+        if (num.length == 8) {
+            formatNum = num.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+        }
+    } catch (e) {
+        formatNum = num;
+        console.log(e);
+    }
+    return formatNum;
+}
+
 const Nanumitem=({title,place,createdTime,hastag,like,d_day,postId})=>{
 
     const [jjim,setJjim]=useState(false);
     const navigation = useNavigation(); 
     const likeImage=(jjim===false ? require('../assets/images/like.png') : require('../assets/images/fullLike.png'))
 
-    //시간 계산
+    //작성한 시간 계산
     const created=new Date(createdTime[0],createdTime[1]-1,createdTime[2],createdTime[3],createdTime[4],createdTime[5]);
     const now=new Date();
-    
+
     const elapsedMSec = now.getTime() - created.getTime();
     const elapsedMin = parseInt(elapsedMSec / 1000 /60); 
     const hour=parseInt(elapsedMin/60);
     const min=parseInt(elapsedMin%60);
     const day_hour=parseInt(elapsedMin/60)%24;
     const day=parseInt(hour/24);
+
+    //디데이 계산
+    const exday=new Date(YMDFormatter(d_day));
+    const dday=exday.getTime()-now.getTime();
+    const result=Math.ceil(dday/(1000*60*60*24));
 
     return(
         <SafeAreaView style={{flex:1,marginLeft:widthPercentage(10),marginRight:widthPercentage(10)}} >
@@ -27,7 +52,7 @@ const Nanumitem=({title,place,createdTime,hastag,like,d_day,postId})=>{
                     <View style={{flexDirection:'row'}}>
 
                     {/* 게시물 제목 */}
-                    <Pressable onPress={()=>navigation.navigate('NanumDetail',{id:postId, day:day, day_hour:day_hour,hour:hour,min:min})}>
+                    <Pressable onPress={()=>navigation.navigate('NanumDetail',{id:postId, day:day, day_hour:day_hour,hour:hour,min:min,d_day:result})}>
                         <Text style={styles.title}>
                             {title}
                         </Text>
@@ -80,7 +105,7 @@ const Nanumitem=({title,place,createdTime,hastag,like,d_day,postId})=>{
                     {/* 마감 기한 */}
                     <Pressable onPress={()=>{navigation.navigate('NanumDetail',{id:postId})}} style={{padding:5, flexDirection:'row'}}>
                         <Image source={require('../assets/images/clock.png')} style={{height:heightPercentage(16),width:widthPercentage(15)}} />
-                        <Text style={{marginLeft:8,color:'#151515',fontFamily:'Noto Sans KR',fontSize:fontPercentage(12),fontWeight:'700'}}>D-{d_day}</Text>
+                        <Text style={{marginLeft:8,color:'#151515',fontFamily:'Noto Sans KR',fontSize:fontPercentage(12),fontWeight:'700'}}>D-{result}</Text>
                     </Pressable>
                 </View>
         </SafeAreaView>

@@ -6,10 +6,11 @@ import { ProgressBarForDate, ProgressBarForVital } from '../../components/Progre
 import Nanumitem from "../../components/NanumItem";
 import {ChooseTime} from "../../components/modal/Modal_ChooseTime";
 import { BackBtn, HeartBtn } from "../../components/Button";
+import { SliderBox } from "react-native-image-slider-box";
 
 const NanumDetail=({route,navigation})=>{
 
-    const {id,day,hour,min,day_hour} = route.params;
+    const {id,day,hour,min,day_hour,d_day} = route.params;
     const goBackNanumi = () => navigation.navigate('Nanumi');
 
     const [content,setContent]=useState([]);
@@ -22,28 +23,30 @@ const NanumDetail=({route,navigation})=>{
     }).then(res=>res.json()).then(response=>setContent(response.data));
 
     const [userInfo,setUserInfo]=useState('');
-
     if(id!=undefined) {
-    //작성자 정보 조회
-    const path1="http://52.79.70.87/user/"+content.userIdx;
-    fetch(path1,{
-        headers:{
-            userid:content.userIdx,
-        },
-    }).then(res=>res.json())
-    .then(response=>{setUserInfo(response);}); 
-}
+        //작성자 정보 조회
+        const path1="http://52.79.70.87/user/"+content.userIdx;
+        fetch(path1,{
+            headers:{
+                userid:content.userIdx,
+            },
+        }).then(res=>res.json())
+        .then(response=>{setUserInfo(response);}); 
+    }
 
     //구매일자
     const unformatDate = "" + content.purchaseDate;
-    const purchase = unformatDate.substring(0, 4)+'.'+unformatDate.substring(5, 6)+'.'+unformatDate.substring(7, 9);
+    let purchase = unformatDate.substring(0, 4)+'.'+unformatDate.substring(4, 6)+'.'+unformatDate.substring(6, 8);
+    if(purchase==='..') {purchase='-'}
     //개봉일자
     const unformatDate1 = "" + content.openedDate;
-    const opened = unformatDate1.substring(0, 4)+'.'+unformatDate1.substring(5, 6)+'.'+unformatDate1.substring(7, 9);
+    let opened = unformatDate1.substring(0, 4)+'.'+unformatDate1.substring(4, 6)+'.'+unformatDate1.substring(6, 8);
+    if(opened==='..') {opened='-'}
     //유통기한
     const unformatDate2 = "" + content.shelfLife;
-    const shelf = unformatDate2.substring(0, 4)+'.'+unformatDate2.substring(5, 6)+'.'+unformatDate2.substring(7, 9);
-    
+    let shelf = unformatDate2.substring(0, 4)+'.'+unformatDate2.substring(4, 6)+'.'+unformatDate2.substring(6, 8);
+    if(shelf==='..') {shelf="-"}
+
     const col1=['식품 구매일자','개봉일자'];
     const col2=[purchase,opened];
     const col3=['유통기한','보관방식'];
@@ -71,7 +74,13 @@ const NanumDetail=({route,navigation})=>{
     return(
         <SafeAreaView style={{backgroundColor:'#ffffff', flex:1}}>
             <ScrollView>
-                <Image source={require('../../assets/images/test.jpeg')} style={{width:widthPercentage(375),height:heightPercentage(300)}} />
+                {content.imgUrls != undefined ?
+                    <SliderBox 
+                        autoplay={false}
+                        images={content.imgUrls}
+                        ImageComponentStyle={{ width: widthPercentage(375), height: heightPercentage(300) }} />
+                : <></>
+                }
             
                 <Pressable style={{position:'absolute',top:heightPercentage(60)}}>
                     <BackBtn color='white' goBack={goBackNanumi} />
@@ -129,7 +138,7 @@ const NanumDetail=({route,navigation})=>{
                         </View>
                         <View style={BoxStyle.container} activeOpacity={0.6}>
                             <Image source={require('../../assets/images/clock.png')} style={BoxStyle.img}/>
-                            <Text style={BoxStyle.text}> {''}D-{content.expirationDate}</Text>
+                            <Text style={BoxStyle.text}> {''}D-{d_day}</Text>
                         </View>
                     </View>
                     
@@ -149,7 +158,7 @@ const NanumDetail=({route,navigation})=>{
                         <Image source={require('../../assets/images/clock.png')} style={{width:widthPercentage(20),height:heightPercentage(20)}} />
                         <Text  style={{paddingLeft:5,fontFamily:'Noto Sans KR',fontWeight:'700',fontSize:fontPercentage(13),color:'#151515'}}>소비기한</Text>
                     </View>
-                    <ProgressBarForDate/>
+                    <ProgressBarForDate value={d_day} />
                     <Text style={{borderTopWidth:1,borderRadius:0.5,marginTop:25, borderColor:'#D9D9D9'}}> &nbsp; </Text>
                     
                     {/*본문*/}

@@ -4,18 +4,22 @@ import { widthPercentage, heightPercentage, fontPercentage } from "../Responsive
 
 
 const ProgressBarForDate = (props) =>{
-    const {start, end} = props;
-    const value = 23
+    const {start, end,value} = props;
+    let bar_value=value
+    if(value>=30) {
+        bar_value=30
+    }
+
     return(
         <View style={barStyles().dateBar.container}>
             <View style={barStyles().dateBar.barGroup}>
                 <View style={barStyles().dateBar.startCircle}/>
                 <View style={barStyles().dateBar.bar}>
-                    <View style={barStyles(23).dateBar.currentBar}>
+                    <View style={barStyles(bar_value).dateBar.currentBar}>
                         <View style={barStyles().dateBar.currentCircle}>
                             <View style={barStyles().dateBar.textBallon.container}>
                                 <Image source={require('../assets/images/ballon.png')} style={barStyles().dateBar.textBallon.ballon}/>
-                                <Text style={barStyles().dateBar.textBallon.text}>23일</Text>
+                                <Text style={barStyles().dateBar.textBallon.text}>{value}일</Text>
                             </View>
                         </View>
                     </View>
