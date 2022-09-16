@@ -23,7 +23,7 @@ const YMDFormatter= (num) => {
     return formatNum;
 }
 
-const Nanumitem=({title,place,createdTime,hastag,like,d_day,postId})=>{
+const Nanumitem=({title,createdTime,hastag,like,d_day,postId,locate,imgUrl})=>{
 
     const [jjim,setJjim]=useState(false);
     const navigation = useNavigation(); 
@@ -44,6 +44,9 @@ const Nanumitem=({title,place,createdTime,hastag,like,d_day,postId})=>{
     const exday=new Date(YMDFormatter(d_day));
     const dday=exday.getTime()-now.getTime();
     const result=Math.ceil(dday/(1000*60*60*24));
+
+    //위치 공백기준으로 자르기
+    const arr1 = locate.split(" ");
 
     return(
         <SafeAreaView style={{flex:1,marginLeft:widthPercentage(10),marginRight:widthPercentage(10)}} >
@@ -68,17 +71,17 @@ const Nanumitem=({title,place,createdTime,hastag,like,d_day,postId})=>{
                     {/* 올린 장소 및 시간 */}
                     {day > 0 ?
                         <Text style={{fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(10),padding:1,color:'rgba(55, 73, 87, 0.5)',width:widthPercentage(200)}}> 
-                            {place} &nbsp; {day}일 {day_hour}시간 {min}분 전
+                            {arr1[1]} {arr1[2]} &nbsp; {day}일 {day_hour}시간 {min}분 전
                         </Text> 
                         :
                         (
                             hour > 0 ?
                             <Text style={{fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(10),padding:1,color:'rgba(55, 73, 87, 0.5)',width:widthPercentage(200)}}> 
-                                {place} &nbsp; {hour}시간 {min}분 전
+                                {arr1[1]} {arr1[2]} &nbsp; {hour}시간 {min}분 전
                             </Text> 
                             :
                             <Text style={{fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(10),padding:1,color:'rgba(55, 73, 87, 0.5)',width:widthPercentage(200)}}> 
-                                {place} &nbsp; {min}분 전
+                                {arr1[1]} {arr1[2]} &nbsp; {min}분 전
                             </Text> 
                         )
                     }
@@ -88,18 +91,11 @@ const Nanumitem=({title,place,createdTime,hastag,like,d_day,postId})=>{
 
                     {/* 이미지 */}
                     <ScrollView horizontal={true} style={{flexDirection:'row', paddingBottom:3}} showsHorizontalScrollIndicator={false}>
-                        <View style={{...Platform.select({android:{elevation:3}}),borderRadius:15}}>
-                            <Image source={require("../assets/images/carrotEx1.jpeg")} style={styles.imgbox} />
-                        </View>
-                        <View style={{...Platform.select({android:{elevation:3}}),borderRadius:15}}>
-                            <Image source={require("../assets/images/breadEx1.jpeg")} style={styles.imgbox} />
-                        </View>
-                        <View style={{...Platform.select({android:{elevation:3}}),borderRadius:15}}>
-                            <Image source={require("../assets/images/jamEx1.jpeg")} style={styles.imgbox} />
-                        </View>
-                        <View style={{...Platform.select({android:{elevation:3}}),borderRadius:15}}>
-                            <Image source={require("../assets/images/jamEx2.jpeg")} style={styles.imgbox} />
-                        </View>
+                        {imgUrl.map((i)=>(
+                            <View style={{...Platform.select({android:{elevation:3}}),borderRadius:15}}>
+                                <Image source={{uri:i}} style={styles.imgbox} />
+                            </View>
+                        ))}
                     </ScrollView>
 
                     {/* 마감 기한 */}

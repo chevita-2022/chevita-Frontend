@@ -15,7 +15,7 @@ const NanumDetail=({route,navigation})=>{
 
     const [content,setContent]=useState([]);
     //상세 내용 서버 연결
-    const path="http://52.79.70.87/posts/"+id;
+    const path="http://15.165.222.64/posts/"+id;
     fetch(path,{
         headers:{
             postid:id,
@@ -25,7 +25,7 @@ const NanumDetail=({route,navigation})=>{
     const [userInfo,setUserInfo]=useState('');
     if(id!=undefined) {
         //작성자 정보 조회
-        const path1="http://52.79.70.87/user/"+content.userIdx;
+        const path1="http://15.165.222.64/user/"+content.userIdx;
         fetch(path1,{
             headers:{
                 userid:content.userIdx,
@@ -192,7 +192,7 @@ const NanumDetail=({route,navigation})=>{
                     <Text style={{borderTopWidth:1,borderRadius:0.5,marginTop:13, borderColor:'#D9D9D9'}}> &nbsp; </Text>
                 </View>
             </ScrollView>
-            <ChooseTime appointment={appointment} otherId={content.userIdx}/>
+            <ChooseTime appointment={appointment} otherId={content.userIdx} title={content.title} />
         </SafeAreaView>
     )
 }

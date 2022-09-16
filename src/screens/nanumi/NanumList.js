@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable,Image, Platform} from "react-native";
+import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable,Image, Platform, ImageStore} from "react-native";
 import Nanumitem from "../../components/NanumItem";
 import DropDownPicker from 'react-native-dropdown-picker';
 import { heightPercentage,widthPercentage,fontPercentage } from "../../ResponsiveSize";
@@ -7,7 +7,7 @@ import { heightPercentage,widthPercentage,fontPercentage } from "../../Responsiv
 const NanumList = ({navigation}) => {
 
     const [data,setData]=useState([]);
-    const path="http://52.79.70.87/posts";
+    const path="http://15.165.222.64/posts";
     fetch(path).then((res)=>res.json()).then((response)=> setData(response.data));
 
     let item2=[...data];
@@ -65,7 +65,7 @@ const NanumList = ({navigation}) => {
                 { value==='popular' ?
                     <View> 
                         {item2.map(item=>(
-                            <Nanumitem postId={item.postIdx} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
+                            <Nanumitem postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
                         ))}
                     </View>
                 :
@@ -73,13 +73,13 @@ const NanumList = ({navigation}) => {
                     value==='lank' ?
                     <View>
                     {item3.map(item=>(
-                        <Nanumitem postId={item.postIdx} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} />
+                        <Nanumitem postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
                     ))}
                     </View>
                     :
                     <View> 
                     {data.reverse().map(item=>(
-                        <Nanumitem postId={item.postIdx} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
+                        <Nanumitem postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation}  imgUrl={item.imgUrls} />
                     ))}
                     </View>
                 )

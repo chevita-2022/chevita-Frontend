@@ -5,31 +5,35 @@ import { fontPercentage, heightPercentage, widthPercentage } from '../../Respons
 import Modal from "react-native-modal";
 import { ProgressBarForVital } from '../../components/ProgressBar';
 import { ReviewInput } from '../../components/Input';
-import { roomId, userId } from '../../components/modal/Modal_ChooseTime';
+import { roomId, userId,chatOtherId } from '../../components/modal/Modal_ChooseTime';
 
 const ChattingBubble = () => {
+
+  const a=2076232, b=1976255;
+
+  //console.log(roomId);
 
   /* 웹소켓 열기 */
   const ws=useRef(null);
   useEffect(()=>{
-    ws.current=new WebSocket(`ws://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/ws/chat`)
+    ws.current=new WebSocket(`ws://15.165.222.64/ws/chat`)
     console.log(ws.current);
 
     ws.current.onopen=()=>{
       console.log('connected');
     }
 
-    ws.current.onmessage=()=>{
-      console.log('message');
+    ws.current.onmessage=()=>{ //메세지를 받음
+      console.log('receive');
     }
 
     ws.current.onclose=()=>{
       console.log('close');
     }
 
-   /*return()=>{
+   return()=>{
       ws.current.close();
-    }*/
+    }
   },[])
 
   const [messages, setMessages] = useState([]);
@@ -57,30 +61,49 @@ const ChattingBubble = () => {
   useEffect(() => {
     setMessages([
       {
-        _id: 1,
-        text: 'Hello Devleoper',
+        _id: a, //receiver id (나)
+        text: 'Hello Developer',
         createdAt: new Date(),
+
         user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
+          _id: b, // sender id (상대방)
+          name: 'haeun'
         },
-      sent:true
       },
     ])
   }, [])
 
+  useEffect(() => {
+    ws.current.onmessage = e => {
+      const response = JSON.parse(e.data);
+      console.log("onmessage=>", JSON.stringify(response));
+      var sentMessages = {
+        _id: response.sender,
+        text: response.message,
+        createdAt: new Date(response.createdAt * 1000),
+        user: {
+          _id: response.receiver,
+          name: 'haeun',
+        },
+      }
+      setMessages(previousMessages => GiftedChat.append(previousMessages, sentMessages))
+    };
+  }, []);
+
    const onSend = useCallback((messages = []) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, messages));
-     let str=JSON.stringify({
-      "type": "ENTER",
-      "roomId": /*roomId*/"fabb2ff8-1482-4ddb-9492-a254c7678533",
-      "sender": userId,
+  
+    let str=JSON.stringify({
+      "roomId": "6ea21e1e-9ed6-49ac-9a4b-2de8b567141d",
+      "sender": a,
+      "receiver":b,
       "message": messages[0].text,
-    });
+    })
     ws.current.send(str);
-    console.log(str);
+    setMessages(previousMessages => GiftedChat.append(previousMessages, messages));
   }, []) 
+
+  console.log(messages);
+
 
  /* const onSend=()=>{
 
@@ -228,17 +251,19 @@ const ChattingBubble = () => {
             <GiftedChat
               messages={messages}
               onSend={messages => onSend(messages)}
-              user={{ _id: 1,}}
+              user={ { 
+                _id: chatOtherId, 
+              }}
               placeholder={'| 메세지를 작성해보세요'}
               renderBubble={renderBubble}
               renderInputToolbar={renderInputToolbar}
+              renderUsernameOnMessage={true} 
               renderSend={renderSend}
               //locale={strings.getLanguage()}
               timeTextStyle={{
                 right:{ color:'#7D7D7D',},
                 left:{ color:'#7D7D7D' }
               }}
-              showAvatarForEveryMessage={false}
               messagesContainerStyle={{ backgroundColor:'#ffffff'}} /> 
       </>
   )

@@ -3,10 +3,12 @@ import { Text, Image, StyleSheet, TouchableOpacity,View, Pressable} from "react-
 import { heightPercentage,fontPercentage,widthPercentage } from "../../ResponsiveSize";
 import Modal from "react-native-simple-modal";
 
-let roomId='',userId=103;
+let roomId='',userId=2076232, chatTitle='',chatOtherId='';
 
-const ChooseTime=({appointment,otherId})=>{
+const ChooseTime=({appointment,otherId,title})=>{
 
+    chatTitle=title;
+    chatOtherId=1976255;
     const [offset,seOffset]=useState();
 
     const [select,setSelect]=useState(4);
@@ -17,7 +19,7 @@ const ChooseTime=({appointment,otherId})=>{
     
     const [room,setRoom]=useState([]);
     const getRoomId=()=>{
-        const path="http://52.79.70.87/chat/"+userId+'/'+otherId;
+        const path="http://15.165.222.64/chat/"+userId+'/'+otherId;
         fetch(path,{
             method:"POST",
             cache: "no-cache",
@@ -31,6 +33,8 @@ const ChooseTime=({appointment,otherId})=>{
     if(room.roomId != undefined) {
         roomId=room.roomId;
     }
+
+    console.log(roomId);
 
     return(
         <>
@@ -107,4 +111,4 @@ const textstyle=StyleSheet.create({
     },
 })
 
-export {ChooseTime,roomId,userId};
+export {ChooseTime,roomId,userId,chatTitle,chatOtherId};
