@@ -31,7 +31,7 @@ const ProgressBarForDate = (props) =>{
 }
 
 const ProgressBarForVital = (props) =>{
-    const {vital} = props;
+    const {vital, top} = props;
     return(
         <View style={barStyles().vitalBar.container}>
             <View style={barStyles().vitalBar.label.container}>
@@ -42,7 +42,7 @@ const ProgressBarForVital = (props) =>{
                 <View style={barStyles().vitalBar.bar}>
                     <View style={barStyles(vital).vitalBar.currentBar}>
                         <View style={barStyles().vitalBar.currentCircle}>
-                            <Text style={barStyles().vitalBar.number}>{vital}%</Text>
+                            <Text style={barStyles(vital,top).vitalBar.number}>{vital}%</Text>
                         </View>
                     </View>
                 </View>
@@ -51,7 +51,7 @@ const ProgressBarForVital = (props) =>{
     )
 }
 
-const barStyles = (current) => StyleSheet.create({
+const barStyles = (current, top) => StyleSheet.create({
     dateBar:{
         container:{
             alignItems: 'center',
@@ -140,9 +140,10 @@ const barStyles = (current) => StyleSheet.create({
     },
     vitalBar:{
         container:{
-            width: widthPercentage(116),
-            height: heightPercentage(30),
-            backgroundColor: 'skyblue'
+            width: '100%',
+            height: '100%',
+            justifyContent: 'space-around',
+            paddingBottom: heightPercentage(17)
         },
         label:{
             container:{
@@ -165,17 +166,17 @@ const barStyles = (current) => StyleSheet.create({
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            width: widthPercentage(116),
+            width: '100%',
         },
         bar:{
-            width: widthPercentage(116),
+            width: '100%',
             height: heightPercentage(3),
             borderRadius: 2,
             backgroundColor: '#D9D9D9',
         },
         currentBar:{
             justifyContent:'center',
-            width: (current/30*100)+'%',
+            width: (current)+'%',
             height: heightPercentage(3),
             paddingTop: heightPercentage(3),
             borderRadius: 2,
@@ -205,7 +206,8 @@ const barStyles = (current) => StyleSheet.create({
         },
         number:{
             position: 'absolute',
-            top: -heightPercentage(20),
+            top: top ? -heightPercentage(20) : 0,
+            bottom: top ? 0 : -heightPercentage(20),
             right: -widthPercentage(15),
             width: widthPercentage(31),
             height: heightPercentage(17),

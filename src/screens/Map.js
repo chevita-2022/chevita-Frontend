@@ -6,24 +6,7 @@ import { getDistance } from 'geolib';
 import Nanumitem from "../components/NanumItem";
 import { fontPercentage, heightPercentage, widthPercentage } from "../ResponsiveSize";
 
-Geocoder.init("AIzaSyBmMinPStpXNnPcWNefzg3T01Ktjm1bQA4");
-
-export const convertAddressToCoordinates = (address) => {
-    Geocoder.from(address)
-            .then(json => {
-                var location = json.results[0].geometry.location;
-                console.log(location);
-                return location
-            })
-            .catch(error => console.warn(error));
-}
-
 const Map = () => {
-    console.log(convertAddressToCoordinates("서울특별시 서초구 효령로 25길 19"))
-    const data = convertAddressToCoordinates("서울특별시 서초구 효령로 25길 19")
-    useEffect(()=>{
-        console.log(data)
-    },[data])
 
     const item =
         {

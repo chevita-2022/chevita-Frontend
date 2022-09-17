@@ -81,7 +81,7 @@ const MyPageStackScreen = ({navigation}) => {
 
 
 const MainScreen = (props) => {
-  const hide = props.routeName != "WriteNanum" || props.routeName != "WriteNanum2"
+  const hide = props.routeName == "WriteNanum" || props.routeName == "WriteNanum2"
   return (
     <Tab.Navigator
       initialRouteName="NanumiStack"

@@ -11,7 +11,7 @@ const data = [
     },
     {
         name: '채비채비2',
-        review: '식품 잘받았어요. 다른 것들도 챙겨주셔서 감사합니다. 먼 길 오느라 고생 많으셨습니다. 조심히 들어가세요!',
+        review: '식품 잘받았어요. 다른 것들도 챙겨주셔서 감사합니다. 먼 길 오느라 고생 많으셨습니다.',
         vital: '95'
     },
     {
@@ -32,7 +32,9 @@ const ReviewItem = ({reviewData}) => {
             <View style={ReviewItemStyles.right.container}>
                 <View style={ReviewItemStyles.right.top.container}>
                     <Text style={ReviewItemStyles.right.top.name}>{reviewData.name}</Text>
-                    <ProgressBarForVital vital={reviewData.vital}/>
+                    <View style={ReviewItemStyles.right.top.bar}>
+                        <ProgressBarForVital vital={reviewData.vital} top={true}/>
+                    </View>
                 </View>
                 <Text style={ReviewItemStyles.right.review}>{reviewData.review}</Text>
             </View>
@@ -52,6 +54,7 @@ const ReviewItemStyles = StyleSheet.create({
         width: widthPercentage(336),
         height: heightPercentage(76),
         marginBottom: heightPercentage(2),
+        paddingRight:3,
     },
     image:{
         width: widthPercentage(55),
@@ -76,6 +79,10 @@ const ReviewItemStyles = StyleSheet.create({
                 fontWeight: 'bold',
                 color: '#151515'
             },
+            bar:{
+                width: widthPercentage(116),
+                height: heightPercentage(40)
+            }
         },
         review:{
             width: widthPercentage(270),

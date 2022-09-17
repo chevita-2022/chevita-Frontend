@@ -3,62 +3,55 @@ import { Text, StyleSheet, ScrollView, SafeAreaView,View, Pressable} from "react
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";	
 import { Platform, PermissionsAndroid } from "react-native";
 import Geolocation from "react-native-geolocation-service";
+import Geocoder from 'react-native-geocoding';
+import { getDistance } from 'geolib'
 
 const GoogleMap = () => {
 
-    const [location, setLocation] = useState();
+    const [currentLocation, setCurrentLocation] = useState({latitude: 37.4819682, longitude: 126.993978});
+    
+    const arr = ["서울특별시 서초구 효령로 25길 20", "서울특별시 서초구 효령로 24길 20", "서울특별시 서초구 효령로 18길 21"]
+    const [distance, setDistance] = useState([]);
+    const [coordinates, setCoordinates] = useState([]);
 
-    const requestPermission = async() => {
-        try {
-          if (Platform.OS === "ios") {
-            return await Geolocation.requestAuthorization("always");
-          }
-          // 안드로이드 위치 정보 수집 권한 요청
-          if (Platform.OS === "android") {
-            return await PermissionsAndroid.request(
-              PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            );
-          }
-        } catch (e) {
-          console.log(e);
-        }
+
+    Geocoder.init("AIzaSyBmMinPStpXNnPcWNefzg3T01Ktjm1bQA4");
+
+    const promise = new Promise;
+    const getData = () => {
+      promise.then((appData) => {
+          console.log(appData);
+        });
+    };
+
+
+    const convertAddressToCoordinates = (address) => {
+        const result = Geocoder.from(address)
+                .then(json => {
+                    var location = json.results[0].geometry.location;
+                    console.log(location);
+                    return location
+                })
+                .catch(error => console.warn(error));
+        return getData(result)
     }
 
-    useEffect(() => {
-        requestPermission().then(result => {
-            console.log({ result });
-            if (result === "granted") {
-              Geolocation.getCurrentPosition(
-                pos => {
-                  setLocation(pos.coords);
-                },
-                error => {
-                  console.log(error);
-                },
-                {
-                  enableHighAccuracy: true,
-                  timeout: 3600,
-                  maximumAge: 3600,
-                },
-              );
-            }
-          });
-        }, []);
+    useEffect(()=>{
+      setCoordinates(arr.map((item) => convertAddressToCoordinates(item)))
+      console.log(coordinates)
+    },[])
 
     return(
-        location ? 
             <MapView
                 style={MapStyles.container}
                 provider={PROVIDER_GOOGLE}
                 initialRegion={{
-                    latitude: location.latitude,
-                    longitude: location.longitude,
+                    latitude: currentLocation.latitude,
+                    longitude: currentLocation.longitude,
                     latitudeDelta: 0.005,
                     longitudeDelta: 0.005,
                 }}
             />
-        :
-            <></>
     )
 }
 
