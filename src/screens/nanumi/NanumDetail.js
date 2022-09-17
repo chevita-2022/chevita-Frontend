@@ -15,7 +15,7 @@ const NanumDetail=({route,navigation})=>{
 
     const [content,setContent]=useState([]);
     //상세 내용 서버 연결
-    const path="http://15.165.222.64/posts/"+id;
+    const path="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/posts/"+id;
     fetch(path,{
         headers:{
             postid:id,
@@ -25,7 +25,7 @@ const NanumDetail=({route,navigation})=>{
     const [userInfo,setUserInfo]=useState('');
     if(id!=undefined) {
         //작성자 정보 조회
-        const path1="http://15.165.222.64/user/"+content.userIdx;
+        const path1="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/user/"+content.userIdx;
         fetch(path1,{
             headers:{
                 userid:content.userIdx,
@@ -95,7 +95,7 @@ const NanumDetail=({route,navigation})=>{
 
                 <View style={{paddingLeft:widthPercentage(10),paddingTop:widthPercentage(20),paddingRight:widthPercentage(10)}}>
         
-                    {/*제목*/}
+                    {/* 게시자 정보 */}
                     <View style={{flexDirection:'row'}}>
                         <View style={{...Platform.select({android:{elevation:3}}),borderRadius:100}}>
                             <Image source={require("../../assets/images/carrotEx1.jpeg")} style={{width:widthPercentage(40),height:heightPercentage(40),borderRadius:100}} />
@@ -108,7 +108,14 @@ const NanumDetail=({route,navigation})=>{
                         <Text style={{top:-17,left:widthPercentage(46),fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'400',color:'#7D7D7D'}}>{userInfo.userAddress}</Text>
                         :
                         <></>}
-                    <Text style={{paddingTop:5,fontFamily:'Noto Sans KR',fontWeight:'700',fontSize:fontPercentage(16),color:'#151515'}}>{content.title}</Text>
+
+                    {/* 제목 및 나눔 상태 */}
+                    <View style={{flexDirection:'row'}}>
+                        <Text style={{paddingTop:5,fontFamily:'Noto Sans KR',fontWeight:'700',fontSize:fontPercentage(16),color:'#151515'}}>{content.title}</Text>
+                        <Text style={BoxStyle.reserve}>나눔 예약</Text>
+                    </View>
+
+                    {/* 게시물 올린 시간 */}
                     {day > 0 ?
                         <Text style={{paddingTop:2,fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(11),color:'#7D7D7D'}}> 
                             {day}일 {day_hour}시간 {min}분 전
@@ -125,7 +132,13 @@ const NanumDetail=({route,navigation})=>{
                             </Text> 
                         )
                     }
-                    
+
+                    {/* 영수증 인증 */}
+                    <View style={{flexDirection:'row',position:'absolute',top:50,right:0}}>
+                        <Text style={{color:'#151515' ,fontWeight:'400',fontSize:fontPercentage(10),display:'flex',alignItems:'center',marginTop:4}}>영수증인증</Text>
+                        <Image source={require('../../assets/images/receipt.png')} style={{width:widthPercentage(20),height:heightPercentage(20),}}/>
+                    </View>
+
                     {/*정보 박스*/}
                     <View style={{paddingTop:20,flexDirection:'row'}}>
                         <View style={BoxStyle.container} activeOpacity={0.6}>
@@ -234,6 +247,19 @@ const BoxStyle=StyleSheet.create({
     img:{
         height:heightPercentage(19),
         width:widthPercentage(18),
+    },
+    reserve:{
+        color:'#707070',
+        fontSize:fontPercentage(10),
+        fontWeight:'400',
+        marginLeft:10,
+        marginTop:7,
+        borderWidth:1,
+        textAlign:'center',
+        width:widthPercentage(49),
+        padding:3,
+        borderColor:'#BDBDBD',
+        borderRadius:5
     }
 })
 

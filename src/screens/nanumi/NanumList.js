@@ -7,7 +7,7 @@ import { heightPercentage,widthPercentage,fontPercentage } from "../../Responsiv
 const NanumList = ({navigation}) => {
 
     const [data,setData]=useState([]);
-    const path="http://15.165.222.64/posts";
+    const path="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/posts";
     fetch(path).then((res)=>res.json()).then((response)=> setData(response.data));
 
     let item2=[...data];
