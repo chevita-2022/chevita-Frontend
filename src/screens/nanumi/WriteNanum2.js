@@ -72,7 +72,7 @@ const WriteNanum2 = ({navigation, route}) => {
         console.log(tempData)
         
 
-        fetch('http://52.79.70.87/posts', requestOptions)
+        fetch('http://15.165.222.64/posts', requestOptions)
             .then(response => response.json())
             .then(data => console.log(data))
             .catch(error => {

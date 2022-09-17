@@ -49,7 +49,7 @@ const Profile=({navigation})=>{
 const styles = StyleSheet.create({
     title1:{
         fontSize:fontPercentage(24),
-        fontWeight:'700',
+        fontFamily:'Alata-Regular',
         color: '#151515',
     },
     title2:{
