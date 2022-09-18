@@ -12,8 +12,6 @@ const InitalScreen=({navigation})=>{
             <Text style={{fontSize:fontPercentage(36),alignSelf:'center',color:'#151515',top:160,fontFamily: 'Alata-Regular'}}>chevita</Text>
             <KakaoLogin/>
             <Naver_Login/>
-            <Button title="Nickname" onPress={() => navigation.navigate("Nickname")}/>
-            <Button title="Home" onPress={() => navigation.navigate("Main")}/>
         </SafeAreaView>
     )
 }

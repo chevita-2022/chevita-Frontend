@@ -15,6 +15,9 @@ const GoogleMap = (props) => {
     const arr = [{latitude: 37.4819782, longitude: 126.993978}, {latitude: 37.4819692, longitude: 126.993978}]
 
     /*const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
+=======
+    const path="http://52.78.161.124/posts";
+>>>>>>> bdc43d32950cfa43c9c2ceed7147ff7d9296e20c
     useEffect(()=>{
         fetch(path).then((res)=>res.json()).then((response)=>
             setArr(response.data)     
