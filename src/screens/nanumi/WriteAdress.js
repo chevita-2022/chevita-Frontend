@@ -4,13 +4,18 @@ import Postcode from '@actbase/react-daum-postcode';
 
 const WriteAdress = (props) => {
 
-    const {navigation, setAddress} = props;
+    const {navigation, setAddress, route} = props;
+
+    console.log(route.params.type)
 
     const getAddressData = (data) => {
         let defaultAddress = ''; // 기본주소
         defaultAddress = data.address;
-
-        navigation.navigate('WriteNanum2', {address: defaultAddress})
+        if(route.params.type == "profile"){
+            navigation.navigate('Nickname', {address: defaultAddress})    
+        } else {
+            navigation.navigate('WriteNanum2', {address: defaultAddress})
+        }
     }
     return (
         <SafeAreaView style={styles.container}>

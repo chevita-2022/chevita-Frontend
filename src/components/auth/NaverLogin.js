@@ -18,15 +18,24 @@ const androidKeys = {
   
 const initials = Platform.OS === 'ios' ? iosKeys : androidKeys;
 
-const [naverToken, setNaverToken] = React.useState(null);
-
 const Naver_Login = () => {
+  const [naverToken, setNaverToken] = React.useState(null);
+
+  const getUserProfile = async () => {
+    const profileResult = await getProfile(naverToken.accessToken);
+    if (profileResult.resultcode === '024') {
+      Alert.alert('로그인 실패', profileResult.message);
+      return;
+    }
+    console.log('profileResult', profileResult);
+  };
 
     const naverLogin = props => {
       return new Promise((resolve, reject) => {
         NaverLogin.login(props, (err, token) => {
           console.log(`\n\n  Token is fetched  :: ${token} \n\n`);
           setNaverToken(token);
+          getUserProfile();
           console.log("navertoken: "+ JSON.stringify(token))
           if (err) {
             reject(err);
@@ -40,7 +49,7 @@ const Naver_Login = () => {
 
     return(
       <View>
-        <TouchableOpacity onPress={()=>naverLogin(initials)}>
+        <TouchableOpacity onPress={()=>{naverLogin(initials)}}>
           <Image source={require('../../assets/images/auth/NaverLogin.png')}
                   style={{width:widthPercentage(253),height:heightPercentage(40),top:482,alignSelf:'center'}} />
         </TouchableOpacity>
@@ -64,28 +73,6 @@ const NaverLogout = () => {
     )
 }
 
-const getNaverProfile = () => {
-
-    const getUserProfile = async () => {
-        const profileResult = await getProfile(naverToken.accessToken);
-        if (profileResult.resultcode === '024') {
-          Alert.alert('로그인 실패', profileResult.message);
-          return;
-        }
-        console.log('profileResult', profileResult);
-      };
-
-    return(
-        <View>
-            <TouchableOpacity>
-                {!!naverToken && (
-                    <Button title="회원정보 가져오기" onPress={getUserProfile} />
-                )}
-            </TouchableOpacity>
-        </View>
-    )
-}
-
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -97,4 +84,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export {Naver_Login, NaverLogout, getNaverProfile};
+export {Naver_Login, NaverLogout, };

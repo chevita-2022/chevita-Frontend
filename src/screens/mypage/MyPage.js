@@ -24,14 +24,8 @@ const MyPage = ({navigation}) => {
                 <ImagePicker type="profile"/>
                 <Text style={styles.profile.name}>{test.name}</Text>
                 <Text style={styles.profile.place}>{test.place}</Text>
-                <View style={styles.profile.intro.container}>
-                    <Image source={require('../../assets/images/introduction.png')} style={styles.profile.intro.image}/>
-                    <Text style={styles.profile.intro.text}>{test.intro}</Text>
-                </View>
                 <View style={styles.profile.flexBox.container}>
-                    <ProgressBarForVital vital={85}/>
-                    <View style={styles.profile.flexBox.partition}/>
-                    <Text style={styles.profile.flexBox.hashTag}>{test.hashTag}</Text>
+                    <ProgressBarForVital vital={85} top={false}/>
                 </View>
             </>
         )
@@ -157,10 +151,11 @@ const styles = StyleSheet.create({
         },
         flexBox:{
             container:{
-                flexDirection: 'row',
+                width: widthPercentage(204),
+                height: heightPercentage(50),
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginTop: heightPercentage(15)
+                marginTop: heightPercentage(15),
             },
             partition:{
                 width: widthPercentage(1),

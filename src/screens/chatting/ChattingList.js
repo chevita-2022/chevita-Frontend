@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Pressable, SafeAreaView, ScrollView, Text } from "react-native";
 import PersonalChatting from "../../components/PersonalChatting";
+import { chatTitle } from "../../components/modal/Modal_ChooseTime";
 
 const List = [
     {
@@ -72,12 +73,16 @@ const List = [
 ]
 
 const ChattingList=({navigation})=>{
+
+    const [chatRoom,setChatRoom]=useState([]);
+    fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/chat/"+101).then(response=>response.json()).then(response=>setChatRoom(response))
+
     return(
         <SafeAreaView style={{paddingTop:10,height:'100%',backgroundColor:'#FFFFFF'}}>
             <ScrollView style={{backgroundColor:'#FFFFFF'}}>
             <Pressable onPress={()=>{navigation.navigate('ChattingBubble')}}>
                     {List.map(list=>(
-                            <PersonalChatting key={list.key} title={list.title} time={list.time} message={list.lastMessage} />
+                            <PersonalChatting title={list.roomId} time='시간' message={list.lastMessage} />
                         )
                     )}
                 </Pressable>

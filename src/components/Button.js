@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {Image, TouchableOpacity, StyleSheet, View, Text} from 'react-native';
 import { widthPercentage, heightPercentage, fontPercentage } from '../ResponsiveSize';
@@ -12,8 +13,9 @@ const BackBtn = ({goBack, color}) => {
 }
 
 const SearchBtn = () => {
+  const navigation=useNavigation();
   return (
-    <TouchableOpacity style={styles.searchBtn.container} onPress={() => goBack()}>
+    <TouchableOpacity style={styles.searchBtn.container} onPress={() => navigation.navigate('Search') }>
       <Image source={require('../assets/images/search.png')} style={styles.searchBtn.image}/>
     </TouchableOpacity>
   );

@@ -17,6 +17,8 @@ import NanumDetail from './nanumi/NanumDetail';
 import NanumRecord from './mypage/NanumRecord';
 import NanumReview from './mypage/NanumReview';
 import LikeList from './mypage/LikeList';
+import Search from './Search';
+import Notice from './Notice';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -24,6 +26,7 @@ const Stack = createNativeStackNavigator();
 const NanumiStack = createNativeStackNavigator();
 const MapStack = createNativeStackNavigator();
 const ChattingStack = createNativeStackNavigator();
+const NoticeStack = createNativeStackNavigator();
 const MyPageStack = createNativeStackNavigator();
 
 
@@ -43,10 +46,11 @@ const NanumiStackScreen = ({navigation, route}) => {
     return (
       <Stack.Navigator>
         <NanumiStack.Screen name="Nanumi" component={NanumList} options={{header:()=>(<Header title='나누미' shadow={true} type={1} navigation={navigation}/> )}}/>
-        <NanumiStack.Screen name="WriteNanum" component={WriteNanum} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='Nanumi'/>)}}/>
+        <NanumiStack.Screen name="WriteNanum" component={WriteNanum} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='Nanumi'/>), tabBarVisible: false,}}/>
         <NanumiStack.Screen name="WriteNanum2" component={WriteNanum2} options={{header:()=>(<Header title='나누미 글 작성' shadow={false} type={2} navigation={navigation} before='WriteNanum'/>)}}/>
         <NanumiStack.Screen name="WriteAdress" component={WriteAdress} options={{header:()=>(<Header title='주소 검색' shadow={false} type={2} navigation={navigation} before='WriteNanum2'/>)}}/>
         <NanumiStack.Screen name="NanumDetail" component={NanumDetail} options={{/*header:()=>(<Header title='' shadow={false} type={3} navigation={navigation} before='Nanumi'/>)*/ headerShown:false}}/>
+        <NanumiStack.Screen name="Search" component={Search} options={{header:()=>(<Header title='' shadow={true} type={2} navigation={navigation} before='Nanumi'/>)}}/>
       </Stack.Navigator>
     );
 };
@@ -68,6 +72,14 @@ const ChattingStackScreen = () => {
     );
 };
 
+const NoticeStackScreen = () => {
+  return (
+    <Stack.Navigator>
+      <NoticeStack.Screen name="Notice" component={Notice} options={{header:()=>(<Header title='알림' shadow={true} type={4}/>)}}/>
+    </Stack.Navigator>
+  );
+};
+
 const MyPageStackScreen = ({navigation}) => {
     return (
       <Stack.Navigator>
@@ -80,7 +92,8 @@ const MyPageStackScreen = ({navigation}) => {
 };
 
 
-const MainScreen = () => {
+const MainScreen = (props) => {
+  const hide = props.routeName == "WriteNanum" || props.routeName == "WriteNanum2"
   return (
     <Tab.Navigator
       initialRouteName="NanumiStack"
@@ -98,7 +111,8 @@ const MainScreen = () => {
             <Image source={require('../assets/images/focused_nanumi.png')} style={styles.tabBarIcon}/>
             : 
             <Image source={require('../assets/images/nanumi.png')} style={styles.tabBarIcon}/>
-          )
+          ),
+          tabBarStyle: { display: hide ? "none" : "flex" }
         }}
       />
       <Tab.Screen
@@ -116,9 +130,9 @@ const MainScreen = () => {
       />
       <Tab.Screen
         name="ChattingStack"
-        component={ChattingStackScreen}
+        component={NoticeStackScreen}
         options={{
-          title: '채팅',
+          title: '알림',
           tabBarIcon: ({focused}) => (
             focused ? 
             <Image source={require('../assets/images/focused_chatting.png')} style={styles.tabBarIcon}/>

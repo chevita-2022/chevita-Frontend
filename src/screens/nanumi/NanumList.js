@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable,Image, Platform} from "react-native";
+import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable,Image, Platform, ImageStore} from "react-native";
 import Nanumitem from "../../components/NanumItem";
 import DropDownPicker from 'react-native-dropdown-picker';
 import { heightPercentage,widthPercentage,fontPercentage } from "../../ResponsiveSize";
@@ -7,8 +7,9 @@ import { heightPercentage,widthPercentage,fontPercentage } from "../../Responsiv
 const NanumList = ({navigation}) => {
 
     const [data,setData]=useState([]);
-    const path="http://52.79.70.87/posts";
+    const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
     fetch(path).then((res)=>res.json()).then((response)=> setData(response.data));
+    const userIdx = 1;
 
     let item2=[...data];
     let item3=[...data];
@@ -65,7 +66,7 @@ const NanumList = ({navigation}) => {
                 { value==='popular' ?
                     <View> 
                         {item2.map(item=>(
-                            <Nanumitem postId={item.postIdx} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
+                            <Nanumitem userIdx={userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
                         ))}
                     </View>
                 :
@@ -73,13 +74,13 @@ const NanumList = ({navigation}) => {
                     value==='lank' ?
                     <View>
                     {item3.map(item=>(
-                        <Nanumitem postId={item.postIdx} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} />
+                        <Nanumitem userIdx={userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
                     ))}
                     </View>
                     :
                     <View> 
                     {data.reverse().map(item=>(
-                        <Nanumitem postId={item.postIdx} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} />
+                        <Nanumitem userIdx={userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation}  imgUrl={item.imgUrls} />
                     ))}
                     </View>
                 )
@@ -91,7 +92,7 @@ const NanumList = ({navigation}) => {
                     onPress={()=>{navigation.navigate('WriteNanum')}}>
                 <Image source={require('../../assets/images/pen.png')} style={{width:widthPercentage(21),height:heightPercentage(20),marginLeft:27,marginRight:-15,marginTop:9}} />
                 <Text style={textstyle.write}>나눔글 작성</Text>
-        </Pressable>
+            </Pressable>
         </SafeAreaView>
     )
 

@@ -9,6 +9,7 @@ import {
   unlink,
 } from "@react-native-seoul/kakao-login";
 import { fontPercentage, heightPercentage, widthPercentage } from "../../ResponsiveSize";
+import { useNavigation } from "@react-navigation/native";
 
 export const SIGN_WITH_KAKAO = async () => {
   const token = await login();
@@ -19,13 +20,40 @@ export const SIGN_WITH_KAKAO = async () => {
 
 const KakaoLogin = () => {
 
+  const navigation=useNavigation();
   const [result, setResult] = useState('');
+  const [exist,setExist]=useState();
+
   const signInWithKakao = async () => {
     const token = await login();
 
     setResult(JSON.stringify(token));
-    console.log(token);
-    console.log(token.accessToken);
+    
+    const profile = await getKakaoProfile();
+    
+    setResult(JSON.stringify(profile));
+    console.log(profile.id);
+
+    let existingUser='';
+    const [userIdx,setUserIdx]=useState('');
+  fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user/login",{
+      method:"POST",
+      headers:{
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify({'token':profile.id})
+    }).then(response=>response.json()).then(res=> setExist(res)).catch()
+
+   if(exist!=undefined) {
+    if(exist.existingUser===false && exist.existingUser!= null){
+      navigation.navigate('Profile');
+    }
+    else if (exist.existingUser===true) {
+      navigation.navigate('MainScreen');
+      console.log('true');
+    }
+  }
+
   };
 
   const signOutWithKakao = async () => {
@@ -33,14 +61,6 @@ const KakaoLogin = () => {
 
     setResult(message);
     //console.log(result);
-  };
-
-  const getProfile = async () => {
-    const profile = await getKakaoProfile();
-
-    setResult(JSON.stringify(profile));
-    console.log(profile.nickname);
-    console.log(profile.id);
   };
   
   return (
