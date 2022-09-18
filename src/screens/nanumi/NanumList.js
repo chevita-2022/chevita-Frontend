@@ -6,9 +6,10 @@ import { heightPercentage,widthPercentage,fontPercentage } from "../../Responsiv
 
 const NanumList = ({navigation}) => {
 
-    /*const [data,setData]=useState([]);
-    const path="chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
+    const [data,setData]=useState([]);
+    const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
     fetch(path).then((res)=>res.json()).then((response)=> setData(response.data));
+    const userIdx = 1;
 
     let item2=[...data];
     let item3=[...data];
@@ -37,11 +38,11 @@ const NanumList = ({navigation}) => {
                 return a<b;
             }
         });
-    }*/
+    }
 
     return(
         <SafeAreaView style={{backgroundColor:'#fff',flex:1}}>
-        {/*<Text style={{fontFamily:'Noto Sans KR',fontSize:fontPercentage(16),fontWeight:'700',color:'#151515',paddingLeft:11,paddingVertical:0,top:23,height:heightPercentage(60),}}>김탁구님 주변 인기 나눔글</Text>
+        <Text style={{fontFamily:'Noto Sans KR',fontSize:fontPercentage(16),fontWeight:'700',color:'#151515',paddingLeft:11,paddingVertical:0,top:23,height:heightPercentage(60),}}>김탁구님 주변 인기 나눔글</Text>
             <DropDownPicker
                 open={open}
                 value={value}
@@ -65,7 +66,7 @@ const NanumList = ({navigation}) => {
                 { value==='popular' ?
                     <View> 
                         {item2.map(item=>(
-                            <Nanumitem postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
+                            <Nanumitem userIdx={userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
                         ))}
                     </View>
                 :
@@ -73,18 +74,18 @@ const NanumList = ({navigation}) => {
                     value==='lank' ?
                     <View>
                     {item3.map(item=>(
-                        <Nanumitem postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
+                        <Nanumitem userIdx={userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
                     ))}
                     </View>
                     :
                     <View> 
                     {data.reverse().map(item=>(
-                        <Nanumitem postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation}  imgUrl={item.imgUrls} />
+                        <Nanumitem userIdx={userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation}  imgUrl={item.imgUrls} />
                     ))}
                     </View>
                 )
                 }   
-            </ScrollView>*/}
+            </ScrollView>
             <Pressable 
                 style={{position:'absolute',top:580,paddingBottom:10,alignItems:'center',backgroundColor:'#FFF0A1',height:heightPercentage(43),width:widthPercentage(152),left:122,flexDirection:'row',borderRadius:21.5,
                     ...Platform.select({android:{elevation:3}})}} 

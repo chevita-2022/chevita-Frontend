@@ -9,19 +9,20 @@ const Search=()=>{
     const [data, setData] = useState([]);
     const [arr, setArr] = useState([])
 
-    const path="chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
+    const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
 
-
-
-    const onPressSearch = async () => {
+    const onPressSearch = () => {
         console.log(value)
-        console.log(data)
-        await fetch(path).then((res)=>res.json()).then((response)=>
-            console.log(response.data)     
+        fetch(path).then((res)=>res.json()).then((response)=>
+            setData(response.data)     
         );
-        //console.log(data)
-        //let item = [...data]
-        //setArr(item.filter((item) => item.title.includes(value)))} 
+
+        let item = [...data]
+        console.log(item)
+        item.map((item) => console.log(item.title))
+        
+        setArr(item.filter((item) => item?.title?.includes(value) || item?.content?.includes(value)))
+        console.log(arr)
 
     }
 
@@ -30,6 +31,11 @@ const Search=()=>{
     return(
         <SafeAreaView style={{backgroundColor:'#ffffff', flex:1, alignItems: 'center'}}>
             <SearchBar value={value} setValue={setValue} onPressSearch={onPressSearch}/>
+            <View> 
+                {arr.map(item=>(
+                    <Nanumitem userIdx={item.userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
+                ))}
+            </View>
         </SafeAreaView>
     )
 }

@@ -10,12 +10,12 @@ import { SliderBox } from "react-native-image-slider-box";
 
 const NanumDetail=({route,navigation})=>{
 
-    const {id,day,hour,min,day_hour,d_day} = route.params;
+    const {id,day,hour,min,day_hour,d_day,userIdx} = route.params;
     const goBackNanumi = () => navigation.navigate('Nanumi');
 
     const [content,setContent]=useState([]);
     //상세 내용 서버 연결
-    const path="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/posts/"+id;
+    const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts/"+id;
     fetch(path,{
         headers:{
             postid:id,
@@ -25,7 +25,7 @@ const NanumDetail=({route,navigation})=>{
     const [userInfo,setUserInfo]=useState('');
     if(id!=undefined) {
         //작성자 정보 조회
-        const path1="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/user/"+content.userIdx;
+        const path1="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user/"+content.userIdx;
         fetch(path1,{
             headers:{
                 userid:content.userIdx,
@@ -51,11 +51,16 @@ const NanumDetail=({route,navigation})=>{
     const col2=[purchase,opened];
     const col3=['유통기한','보관방식'];
     const col4=[shelf, content.storageMethod ];
-    const appointment=['8월 26일 7시 나눔초등학교', '8월 29일 18시 나눔초등학교','9월 15일 2시 나눔초등학교'];
 
     const [full,setFull]=useState(false);
-
     let type1=content.category;
+
+    let userAddressArr=[];
+    // exampleString 문자열을 " " 공백 기준으로 배열로 나눈다.
+    if(userInfo.userAddress!=undefined){
+    userAddressArr = userInfo.userAddress.split(" ");
+   }
+   
 
     //음식 종류
     const img= (
@@ -98,21 +103,28 @@ const NanumDetail=({route,navigation})=>{
                     {/* 게시자 정보 */}
                     <View style={{flexDirection:'row'}}>
                         <View style={{...Platform.select({android:{elevation:3}}),borderRadius:100}}>
-                            <Image source={require("../../assets/images/carrotEx1.jpeg")} style={{width:widthPercentage(40),height:heightPercentage(40),borderRadius:100}} />
-                       </View>
+                            {userInfo.profileImgUrl !=undefined ?
+                            <Image source={{uri:userInfo.profileImgUrl}} style={{width:widthPercentage(40),height:heightPercentage(40),borderRadius:100}} />
+                            :
+                            <Image source={require('../../assets/images/profile.png')} style={{width:widthPercentage(40),height:heightPercentage(40),borderRadius:100}} /> }
+                            </View>
                         {userInfo.userNickName != undefined ?
                         <Text style={{fontFamily:'Noto Sans KR',fontSize:13,fontWeight:'500',color:'#151515',padding:5}}>{userInfo.userNickName}</Text>
                         : <></>}
                     </View>
                         {userInfo.userAddress != undefined ? 
-                        <Text style={{top:-17,left:widthPercentage(46),fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'400',color:'#7D7D7D'}}>{userInfo.userAddress}</Text>
+                        <Text style={{top:-17,left:widthPercentage(46),fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'400',color:'#7D7D7D'}}>{userAddressArr[0]} {userAddressArr[1]}</Text>
                         :
                         <></>}
 
                     {/* 제목 및 나눔 상태 */}
                     <View style={{flexDirection:'row'}}>
                         <Text style={{paddingTop:5,fontFamily:'Noto Sans KR',fontWeight:'700',fontSize:fontPercentage(16),color:'#151515'}}>{content.title}</Text>
-                        <Text style={BoxStyle.reserve}>나눔 예약</Text>
+                        {content.nanumStatus!=undefined && content.nanumStatus==='예약 확정' ?
+                            <Text style={BoxStyle.reserve}>나눔 예약</Text>
+                            : ( content.nanumStatus!=undefined && content.nanumStatus==='나눔 완료' ?
+                            <Text style={BoxStyle.reserve}>나눔 완료</Text> : <></> )
+                        }
                     </View>
 
                     {/* 게시물 올린 시간 */}
@@ -134,10 +146,12 @@ const NanumDetail=({route,navigation})=>{
                     }
 
                     {/* 영수증 인증 */}
-                    <View style={{flexDirection:'row',position:'absolute',top:50,right:0}}>
-                        <Text style={{color:'#151515' ,fontWeight:'400',fontSize:fontPercentage(10),display:'flex',alignItems:'center',marginTop:4}}>영수증인증</Text>
+                    {content.certificatedReceipt!=undefined && content.certificatedReceipt === true ? 
+                    <View style={{flexDirection:'row',position:'absolute',top:95,right:0,marginRight:5}}>
+                        <Text style={{color:'#151515' ,fontWeight:'400',fontSize:fontPercentage(10),display:'flex',alignItems:'center',marginTop:4}}>영수증 인증</Text>
                         <Image source={require('../../assets/images/receipt.png')} style={{width:widthPercentage(20),height:heightPercentage(20),}}/>
                     </View>
+                    : <></>}
 
                     {/*정보 박스*/}
                     <View style={{paddingTop:20,flexDirection:'row'}}>
@@ -184,18 +198,18 @@ const NanumDetail=({route,navigation})=>{
                             <Row data={appointment} style={{padding:3}}/>
                          </Table>*/}
                         <Text style={{fontFamily:'Noto Sans KR',padding:5,fontSize:fontPercentage(11),fontWeight:'700',color:'#151515'}}>나눔 예약을 눌러 기타시간대도 요청해보세요!</Text>
-                        <View style={{flexDirection:'row'}}>
-                            {appointment.map(i=>(
-                                <View style={{width:widthPercentage(110),flexDirection:'row',paddingTop:5,paddingBottom:5}}>
+                            {content.sharingTimeZones != undefined && content.detailedLocation != undefined && content.globalLocation!=undefined? 
+                                content.sharingTimeZones.map(i=>(
+                                <View style={{flexDirection:'row',paddingTop:5,paddingBottom:5}}>
                                 <Image source={require('../../assets/images/location.png')} style={{width:widthPercentage(16),height:heightPercentage(17),marginTop:3}} />
-                                <Text style={{width:widthPercentage(90),paddingLeft:5,fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'400',color:'#151515'}}>{i}</Text>
+                                <Text style={{paddingLeft:5,fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'400',color:'#151515'}}>{i} &nbsp; { content.globalLocation} &nbsp;{content.detailedLocation}</Text>
                                 </View>
-                            ))}
-                        </View>
+                            )) : <></>
+                            }
                     </View>
     
-                    {/*조회수*/}
-                    <Text style={{width:widthPercentage(90),paddingLeft:5,paddingTop:10,fontFamily:'Noto Sans KR',fontSize:fontPercentage(10),fontWeight:'400',color:'#7D7D7D'}}>조회 {content.seenNumber}</Text> 
+                    {/*조회수
+                    <Text style={{width:widthPercentage(90),paddingLeft:5,paddingTop:10,fontFamily:'Noto Sans KR',fontSize:fontPercentage(10),fontWeight:'400',color:'#7D7D7D'}}>조회 {content.seenNumber}</Text> */}
                     
                     {/*나눔 추천*/}
                     <View style={{flexDirection:'row',paddingTop:60}}>
@@ -205,7 +219,7 @@ const NanumDetail=({route,navigation})=>{
                     <Text style={{borderTopWidth:1,borderRadius:0.5,marginTop:13, borderColor:'#D9D9D9'}}> &nbsp; </Text>
                 </View>
             </ScrollView>
-            <ChooseTime appointment={appointment} otherId={content.userIdx} title={content.title} />
+            <ChooseTime postIdx={content.postIdx} userIdx={userIdx} sharingTimeZones={content.sharingTimeZones} otherId={content.userIdx} title={content.title} detailedLocation={content.detailedLocation} globalLocation={content.globalLocation}/>
         </SafeAreaView>
     )
 }
