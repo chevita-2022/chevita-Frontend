@@ -1,14 +1,16 @@
 import React, { useState ,useEffect} from "react";
 import { SafeAreaView,Text,StyleSheet,Image,View,TouchableOpacity, Button,Pressable, KeyboardAvoidingView, Platform } from "react-native";
 import ImagePicker from "../../components/ImagePicker";
-import { NicknameInput } from "../../components/Input";
+import { NicknameInput, PlaceInput } from "../../components/Input";
 import { fontPercentage,widthPercentage,heightPercentage } from "../../ResponsiveSize";
 
-const Profile=({navigation})=>{
+const Profile=({navigation, route})=>{
 
     const [nickname,setNickname]=useState('');
     const [alert,setAlert]=useState('');
     const [isMounted, setIsMounted] = useState(false);
+
+    const [value, setValue] = useState()
 
     const handleChange = (value) => {
         setIsMounted(true);
@@ -18,6 +20,13 @@ const Profile=({navigation})=>{
     useEffect(() => {
         return () => setIsMounted(false);
     },[])
+
+    useEffect(()=>{
+        console.log(route.params)
+        if(route.params?.address && true){
+            setValue(route.params.address );
+        } 
+    },[route.params])
 
     return(
        <SafeAreaView style={{flex:1,backgroundColor:'#ffffff',paddingHorizontal:32,paddingTop:50}}>
@@ -37,6 +46,10 @@ const Profile=({navigation})=>{
 
             <Image source={require('../../assets/images/point.png')} style={styles.point} />
             <Text style={styles.question}>동네위치를 설정해주세요</Text>
+            <TouchableOpacity style={styles.btn.container} onPress={() => navigation.navigate('WriteAdress', {type: "profile"})}>
+                <Text style={styles.btn.text}>{value ? value : '눌러서 주소를 입력해 주세요.'}</Text>
+                <Image source={require('../../assets/images/search.png')} style={styles.btn.image}/>
+            </TouchableOpacity>
 
             <Text style={{color:'#7D7D7D',fontSize:fontPercentage(10),fontWeight:'400',fontFamily:'Noto Sans KR'}}>검색어에 아래와 같은 조합을 이용하시면 더욱 정확한 결과가 검색됩니다.</Text>
             <Text style={{color:'#7D7D7D',fontSize:fontPercentage(10),fontWeight:'bold',fontFamily:'Noto Sans KR',paddingTop:5}}>'도로명+건물번호', '지역명+지번', '지역명+건물명(아파트명)', {'\n'} '사서함명+번호'</Text>
@@ -67,13 +80,6 @@ const styles = StyleSheet.create({
         padding:5,
         color:'#151515',
         marginBottom:15,
-    }
-  })
-
-  const PlaceInputStyles = StyleSheet.create({
-    container:{
-        width: widthPercentage(317),
-        marginBottom: heightPercentage(22)
     },
     btn:{
         container:{
@@ -113,17 +119,6 @@ const styles = StyleSheet.create({
             resizeMode: 'stretch',
         }
     },
-    input:{
-        alignItems: 'center',
-        width: '100%',
-        height: heightPercentage(30),
-        paddingLeft: widthPercentage(15),
-        padding: 0,
-        margin:0,
-        borderBottomWidth: 2,
-        borderBottomColor: "#D9D9D9",
-        color: "#151515",
-    }
-})
+  })
 
 export default Profile;
