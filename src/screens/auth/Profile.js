@@ -6,6 +6,8 @@ import { fontPercentage,widthPercentage,heightPercentage } from "../../Responsiv
 
 const Profile=({navigation, route})=>{
 
+    const {userIdx} = route.params;
+
     const [nickname,setNickname]=useState('');
     const [alert,setAlert]=useState('');
     const [isMounted, setIsMounted] = useState(false);
@@ -27,6 +29,21 @@ const Profile=({navigation, route})=>{
             setValue(route.params.address );
         } 
     },[route.params])
+
+    const sendUserId=()=>{
+        fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user",{
+            method:"POST",
+            headers:{
+                'Content-Type':'application/json',
+            },
+            body:{
+                "profileImgUrl": null,
+                "userAddress": value,
+                "userIdx": userIdx,
+                "userNickName": nickname,
+            }
+        })
+    }
 
     return(
        <SafeAreaView style={{flex:1,backgroundColor:'#ffffff',paddingHorizontal:32,paddingTop:50}}>
