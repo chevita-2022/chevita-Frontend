@@ -6,12 +6,11 @@ const WriteAdress = (props) => {
 
     const {navigation, setAddress, route} = props;
 
-    console.log(route.params.type)
 
     const getAddressData = (data) => {
         let defaultAddress = ''; // 기본주소
         defaultAddress = data.address;
-        if(route.params.type == "profile"){
+        if(route.params?.type == "profile"){
             navigation.navigate('Nickname', {address: defaultAddress})    
         } else {
             navigation.navigate('WriteNanum2', {address: defaultAddress})

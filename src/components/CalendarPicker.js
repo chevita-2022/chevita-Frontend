@@ -10,12 +10,10 @@ const DayPicker = (props) => {
 
     const onPressDay = (day) => {
         setSelectedDate(day.dateString); 
-        console.log(selectedDate)
-        console.log(day)
-        const a = format(new Date(2022,9,3), 'yyyy-MM-dd')
-        console.log(a)
+        console.log(day.dateString)
+
         let temp = {
-            date: [day.year, day.month, day.day],
+            date: day.dateString,
             time: values[num]?.time
         }
         const newArr = (num == 0 ? {0:temp} : num == 1 ? {1:temp} : {2:temp})
@@ -61,34 +59,24 @@ const TimePicker = (props) => {
     const {num, values, setValues} = props;
     const arr = [...new Array(24)].map((_, i) => i+1);
 
-    const [selected, setSelected] = useState([...new Array(24)].fill(false));
+    const [selected, setSelected] = useState();
     
     const TimeItem = ({date}) => {
         const onPress = () => {
-            let temp = [...selected];
-            if(temp[date - 1]  == false) {
-                temp[date - 1] = true;
-            } else {
-                temp[date - 1] = false;
-            }
-            setSelected(temp)
-
-            temp = [...temp].map((item,i) => {
-                if(item == true) 
-                    return i + 1;
-            }).filter(notUndefined => notUndefined !== undefined)
-
+            setSelected(date);
             const arr = {
                 date: values[num].date,
-                time: [...temp]
+                time: ""+date
             }
+
             const newArr = (num == 0 ? {0:arr} : num == 1 ? {1:arr} : {2:arr})
     
             setValues({...values, ...newArr})
+            console.log(values)
         }
 
         return(
-            <TouchableOpacity style={TimePickerStyles(selected[date - 1]).item.container} onPress={onPress}>
+            <TouchableOpacity style={TimePickerStyles(selected == date).item.container} onPress={onPress}>
                 <Text style={TimePickerStyles().item.text}>
                     {date}
                 </Text>

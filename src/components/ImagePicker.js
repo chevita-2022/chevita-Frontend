@@ -6,8 +6,57 @@ import Modal from "react-native-modal";
 import { ProfileImage, ProfileImage1 } from "./ProfileImage";
 import { ImageBtn1, ImageBtn2 } from "./Button";
 
+import fs from 'react-native-fs';
+import {decode} from 'base64-arraybuffer';
+import AWS from 'aws-sdk';
+
 
 const ImagePicker = (props) => {
+
+  const uploadFileToS3 = async (file) => {
+
+    console.log(file)
+
+    const BUCKET_NAME = 'chevita-bucket';
+    const IAM_USER_KEY = 'AKIATKZDLSS4WWPLSIGT';
+    const IAM_USER_SECRET = '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';
+  
+    const s3bucket = new AWS.S3({
+      accessKeyId: IAM_USER_KEY,
+      secretAccessKey: IAM_USER_SECRET,
+      Bucket: BUCKET_NAME,
+    });
+  
+    const contentType = file.type;
+    const contentDeposition = `inline;filename="${file.name}"`;
+    const fPath = file.uri;
+    const base64 = await fs.readFile(fPath, 'base64');
+    const arrayBuffer = decode(base64);
+  
+    return new Promise((resolve, reject) => {
+      s3bucket.createBucket(() => {
+        const params = {
+          Bucket: BUCKET_NAME,
+          Key: file.name,
+          Body: arrayBuffer,
+          ContentDisposition: contentDeposition,
+          ContentType: contentType,
+        };
+        console.log(params)
+        s3bucket.upload(params, (error, data) => {
+          utils.stopLoader();
+          if (error) {
+            reject(getApiError(error));
+          } else {
+            console.log(JSON.stringify(data));
+            resolve(data);
+          }
+        });
+      });
+    });
+  };
+
+
   const {type} = props;
 
   const [offset, setOffset] = useState(0)
@@ -16,9 +65,9 @@ const ImagePicker = (props) => {
   const getImageByLibrary = () => {
     //launchImageLibrary : 사용자 앨범 접근
       launchImageLibrary({}, (res)=>{
-        alert(res.assets[0].uri)
         const formdata = new FormData()
-        formdata.append('file', res.assets[0].uri);
+        formdata.append('file', res.assets[0]?.uri);
+        
         console.log(res);
       })
       setModalVisible(false);
@@ -27,9 +76,10 @@ const ImagePicker = (props) => {
   const getImageByCamera = () =>{
         //launchImageLibrary : 사용자 앨범 접근
         launchCamera({}, (res)=>{
-          alert(res.assets[0].uri)
           const formdata = new FormData()
-          formdata.append('file', res.assets[0].uri);
+          formdata.append('file', res.assets[0]?.uri);
+          uploadFileToS3(formdata)
+          uploadFileToS3(res.assets[0])
           console.log(res);
         })
         setModalVisible(false);
@@ -49,6 +99,8 @@ const ImagePicker = (props) => {
         return <ProfileImage1/>;
     }
   }
+
+  
 
   return(
     <>

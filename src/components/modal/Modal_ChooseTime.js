@@ -57,7 +57,7 @@ const ChooseTime=({sharingTimeZones,otherId,title,globalLocation,detailedLocatio
             </TouchableOpacity>
 
             {/*모달창*/}
-            <Modal isVisible={ModalVisible1}  modalStyle={{borderRadius:12,backgroundColor:'#ffffff'}} useNativeDriver={true}>
+            <Modal isVisible={ModalVisible1}  modalStyle={{borderRadius:12,backgroundColor:'#ffffff'}} useNativeDriver={true} onBackdropPress={() => setModalVisible1(false)}>
                 <View style={{borderRadius:12,backgroundColor:'#ffffff',width:widthPercentage(334),height:heightPercentage(240),marginBottom:10}}>
                 <Text style={{padding:14,textAlign:'center',color:'#151515',fontWeight:'700',fontFamily:'Noto Sans KR',fontSize:fontPercentage(13)}}> 나눔 예약 시간대를 선택해주세요</Text>
                 <View>

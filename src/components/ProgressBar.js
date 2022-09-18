@@ -180,7 +180,7 @@ const barStyles = (current, top) => StyleSheet.create({
         },
         currentBar:{
             justifyContent:'center',
-            width: (current)+'%',
+            width: current ? (current)+'%' : '50%',
             height: heightPercentage(3),
             paddingTop: heightPercentage(3),
             borderRadius: 2,

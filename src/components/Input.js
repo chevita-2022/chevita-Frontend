@@ -285,26 +285,7 @@ const CalendarInput = (props) => {
             </View>
         )
     }
-
-    const [reset, setReset] = useState(false);
-    const AddAllTime = () => {
-
-        const onPress = () => {
-            if(reset == true){
-                setReset(false);
-            } else {
-                setReset(true);
-                setMore(0);
-                setValues({});
-            }
-        }
-
-        return(
-            <TouchableOpacity style={CalendarInputStyles(reset).reset.container} onPress={()=> onPress()}>
-                <Text style={CalendarInputStyles().reset.text}>시간대 상관없음</Text>
-            </TouchableOpacity>
-        )
-    }
+    
     return(
         <View style={CalendarInputStyles().container}>
             <Label label="나눔시간대 1" star={true} guide={guide} type={2}/>
@@ -325,7 +306,6 @@ const CalendarInput = (props) => {
                 </View>
             }
             { more !=2 && <AddTimeBtn/>}
-            <AddAllTime/>
         </View>
     )
 }

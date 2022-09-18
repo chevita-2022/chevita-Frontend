@@ -15,24 +15,33 @@ const NanumDetail=({route,navigation})=>{
 
     const [content,setContent]=useState([]);
     //상세 내용 서버 연결
+
     const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts/"+id;
-    fetch(path,{
-        headers:{
-            postid:id,
-        },
-    }).then(res=>res.json()).then(response=>setContent(response.data));
+    const path1="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user/"+content.userIdx;
+    
 
     const [userInfo,setUserInfo]=useState('');
-    if(id!=undefined) {
-        //작성자 정보 조회
-        const path1="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user/"+content.userIdx;
-        fetch(path1,{
+
+    useEffect(()=>{
+        fetch(path,{
             headers:{
-                userid:content.userIdx,
+                postid:id,
             },
-        }).then(res=>res.json())
-        .then(response=>{setUserInfo(response);}); 
-    }
+        }).then(res=>res.json()).then(response=>setContent(response.data));
+
+        if(id!=undefined) {
+            //작성자 정보 조회
+            
+            fetch(path1,{
+                headers:{
+                    userid:content.userIdx,
+                },
+            }).then(res=>res.json())
+            .then(response=>{setUserInfo(response);}); 
+        }
+
+
+    },[])
 
     //구매일자
     const unformatDate = "" + content.purchaseDate;
