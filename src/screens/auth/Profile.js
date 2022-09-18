@@ -1,18 +1,20 @@
 import React, { useState ,useEffect} from "react";
 import { SafeAreaView,Text,StyleSheet,Image,View,TouchableOpacity, Button,Pressable, KeyboardAvoidingView, Platform } from "react-native";
+import { setGestureState } from "react-native-reanimated/lib/reanimated2/NativeMethods";
 import ImagePicker from "../../components/ImagePicker";
 import { NicknameInput, PlaceInput } from "../../components/Input";
 import { fontPercentage,widthPercentage,heightPercentage } from "../../ResponsiveSize";
 
 const Profile=({navigation, route})=>{
 
-    const {userIdx} = route.params;
+    const {token} = route.params;
 
     const [nickname,setNickname]=useState('');
     const [alert,setAlert]=useState('');
     const [isMounted, setIsMounted] = useState(false);
-
-    const [value, setValue] = useState()
+    const [token1,setToken1]=useState();
+    const [value, setValue] = useState();
+    const [user,setUser]=useState();
 
     const handleChange = (value) => {
         setIsMounted(true);
@@ -25,6 +27,9 @@ const Profile=({navigation, route})=>{
 
     useEffect(()=>{
         console.log(route.params)
+        if(route.params?.token && true){
+            setToken1(token)
+        }
         if(route.params?.address && true){
             setValue(route.params.address );
         } 
@@ -36,14 +41,15 @@ const Profile=({navigation, route})=>{
             headers:{
                 'Content-Type':'application/json',
             },
-            body:{
-                "profileImgUrl": null,
+            body:JSON.stringify({
+                "profileImgUrl": "",
                 "userAddress": value,
-                "userIdx": userIdx,
+                "token": token1,
                 "userNickName": nickname,
-            }
-        })
+            })
+        }).then(res=>res.json()).then(res=>setUser(res))
     }
+
 
     return(
        <SafeAreaView style={{flex:1,backgroundColor:'#ffffff',paddingHorizontal:32,paddingTop:50}}>
@@ -71,7 +77,7 @@ const Profile=({navigation, route})=>{
             <Text style={{color:'#7D7D7D',fontSize:fontPercentage(10),fontWeight:'400',fontFamily:'Noto Sans KR'}}>검색어에 아래와 같은 조합을 이용하시면 더욱 정확한 결과가 검색됩니다.</Text>
             <Text style={{color:'#7D7D7D',fontSize:fontPercentage(10),fontWeight:'bold',fontFamily:'Noto Sans KR',paddingTop:5}}>'도로명+건물번호', '지역명+지번', '지역명+건물명(아파트명)', {'\n'} '사서함명+번호'</Text>
 
-            <Text style={{color:'#151515',fontSize:fontPercentage(12),fontWeight:'500',fontFamily:'Noto Sans KR',top:heightPercentage(100),left:widthPercentage(260)}} onPress={()=>navigation.navigate('MainScreen')}>가입 완료 {'>'}</Text>
+            <Text style={{color:'#151515',fontSize:fontPercentage(12),fontWeight:'500',fontFamily:'Noto Sans KR',top:heightPercentage(100),left:widthPercentage(260)}} onPress={()=>{navigation.navigate('MainScreen'); sendUserId();}}>가입 완료 {'>'}</Text>
         </SafeAreaView>
     )
 }

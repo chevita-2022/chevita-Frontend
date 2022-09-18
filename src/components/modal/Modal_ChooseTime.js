@@ -4,13 +4,15 @@ import { heightPercentage,fontPercentage,widthPercentage } from "../../Responsiv
 import Modal from "react-native-modal";
 
 //let roomId='',userId=2076232, chatTitle='',chatOtherId='';
+let userIdx1='';
 
 const ChooseTime=({sharingTimeZones,otherId,title,globalLocation,detailedLocation,postIdx,userIdx})=>{
 
    // chatTitle=title;
     //chatOtherId=1976255;
     
-    const [select,setSelect]=useState(4);
+    const [selectTime,setSelectTime]=useState(4);
+    const [selectPlace,setSelectPlace]=useState('');
     //const [chat,setChat]=useState(false);
 
     const [ModalVisible1,setModalVisible1]=useState(false);
@@ -36,15 +38,16 @@ const ChooseTime=({sharingTimeZones,otherId,title,globalLocation,detailedLocatio
                 'Content-Type':'application/json',
             },
             body:JSON.stringify({
-                "confirmedSharingTime": sharingTimeZones[num],
+                "confirmedSharingTime": selectTime[0]+selectTime[1],
                 "nanumStatus": "예약 요청",
                 "nanumiIdx": otherId,
                 "postIdx": postIdx,
                 "takerIdx": userIdx,
             })
-        })
+        }).then(res=>res.json()).then(res=>console.log(res));
     }
 
+    userIdx1=userIdx;
     return(
         <>
             {/* 나눔 예약 버튼 */}
@@ -63,9 +66,9 @@ const ChooseTime=({sharingTimeZones,otherId,title,globalLocation,detailedLocatio
                 <View>
                     {sharingTimeZones!=undefined ? 
                         sharingTimeZones.map((i)=>(
-                            <TouchableOpacity style={{width:widthPercentage(217),height:heightPercentage(34),margin:7,flexDirection:'row',paddingLeft:4,backgroundColor: select == i ?'#D9D9D9':'#ffffff',borderRadius:12,alignSelf:'center'}} onPress={()=>setSelect(i)} >
+                            <TouchableOpacity style={{width:widthPercentage(217),height:heightPercentage(34),margin:7,flexDirection:'row',paddingLeft:4,backgroundColor: selectTime == i ?'#D9D9D9':'#ffffff',borderRadius:12,alignSelf:'center'}} onPress={()=>{setSelectTime(i); setSelectPlace(detailedLocation); }} >
                                 <Image source={require('../../assets/images/location.png')} style={{width:widthPercentage(11),height:heightPercentage(12),}} />
-                                <Text style={{padding:5,color:'#374957',fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),right:2,top:-3,width:widthPercentage(217),lineHeight:12}}>{i} {'\n'} {globalLocation} &nbsp; {detailedLocation}</Text>
+                                <Text style={{padding:5,color:'#374957',fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),right:2,top:-3,width:widthPercentage(217),lineHeight:12}}>{i[0]}  {''} {i[1]}시 {'\n'} {globalLocation} &nbsp; {detailedLocation}</Text>
                             </TouchableOpacity>
                         ))
                         :<></>
@@ -73,7 +76,7 @@ const ChooseTime=({sharingTimeZones,otherId,title,globalLocation,detailedLocatio
                     </View>
                 </View>
                     <TouchableOpacity style={{marginBottom:13,flexDirection:'row',backgroundColor:'#FFF0A1',width:widthPercentage(142),height:heightPercentage(43),borderRadius:21.5,alignSelf:'center',
-                    ...Platform.select({android:{elevation:3}})}} onPress={()=>sendReserve(select)}>
+                    ...Platform.select({android:{elevation:3}})}} onPress={()=>{sendReserve(selectTime); setModalVisible2(true); setModalVisible1(false)}}>
                         <Image source={require('../../assets/images/calender.png')} style={{width:widthPercentage(20),height:heightPercentage(20),marginLeft:30,marginRight:-18,marginTop:10}} />
                         <Text style={textstyle.reserve}>예약하기</Text>
                     </TouchableOpacity>
@@ -85,7 +88,7 @@ const ChooseTime=({sharingTimeZones,otherId,title,globalLocation,detailedLocatio
                 {sharingTimeZones!=undefined?
                 <View style={{alignSelf:'center',flexDirection:'row'}}>
                 <Image source={require('../../assets/images/location.png')} style={{width:widthPercentage(11),height:heightPercentage(12),top:14}} />
-                <Text style={{textAlign:'center',padding:5,color:'#151515',fontFamily:'Noto Sans KR',fontSize:fontPercentage(12),right:2,top:7}}>{sharingTimeZones[select]}</Text>
+                <Text style={{textAlign:'center',padding:5,color:'#151515',fontFamily:'Noto Sans KR',fontSize:fontPercentage(12),right:2,top:7}}>{selectTime[0]} {''} {selectTime[1]}시 {'\n'} {selectPlace}</Text>
             </View>
             :<></>}
                 <Text style={{color:'#151515',fontFamily:'Noto Sans KR',fontWeight:'400',fontSize:fontPercentage(10),alignSelf:'center',padding:23,marginTop:20}}>예약 확정 유무가 채팅으로 전송되니 조금만 기다려주세요</Text>
@@ -123,4 +126,4 @@ const textstyle=StyleSheet.create({
     },
 })
 
-export {ChooseTime,/*roomId,userId,chatTitle,chatOtherId*/};
+export {ChooseTime,userIdx1/*roomId,userId,chatTitle,chatOtherId*/};
