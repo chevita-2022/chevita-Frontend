@@ -20,10 +20,12 @@ const NoticeRequest=(props)=>{
 
     const onPress = (type) =>{
         const requestOptions = {
-            method: 'POST',
+            method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(type == 1 ? data1 : data2)
         };
+
+        console.log(requestOptions)
 
         fetch(path, requestOptions)
         .then(response => response.json())

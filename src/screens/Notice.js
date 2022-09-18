@@ -10,10 +10,10 @@ const Notice=()=>{
 
     const userIdx = 2;
 
-    useEffect(()=> {
+
         console.log(path+userIdx)
         fetch(path+userIdx).then((res)=>res.json()).then((response)=> setList(response));
-    },[])
+
 
     useEffect(()=>{
         console.log(list)
