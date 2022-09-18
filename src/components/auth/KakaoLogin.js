@@ -45,7 +45,7 @@ const KakaoLogin = () => {
       existBool=res.existingUser;
 
       if(existBool===false){
-        navigation.navigate('Profile');
+        navigation.navigate('Nickname',{userIdx:res.userIdx});
         console.log('existBool is false')
       }
       else if (existBool===true) {
