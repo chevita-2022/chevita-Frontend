@@ -23,6 +23,7 @@ const KakaoLogin = () => {
   const navigation=useNavigation();
   const [result, setResult] = useState('');
   const [exist,setExist]=useState();
+  let existBool='';
 
   const signInWithKakao = async () => {
     const token = await login();
@@ -34,26 +35,35 @@ const KakaoLogin = () => {
     setResult(JSON.stringify(profile));
     console.log(profile.id);
 
-    let existingUser='';
-    const [userIdx,setUserIdx]=useState('');
   fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user/login",{
       method:"POST",
       headers:{
         'Content-Type':'application/json',
       },
       body:JSON.stringify({'token':profile.id})
-    }).then(response=>response.json()).then(res=> setExist(res)).catch()
+    }).then(response=>response.json()).then(res=> {
+      existBool=res.existingUser;
 
-   if(exist!=undefined) {
-    if(exist.existingUser===false && exist.existingUser!= null){
-      navigation.navigate('Profile');
-    }
-    else if (exist.existingUser===true) {
-      navigation.navigate('MainScreen');
-      console.log('true');
-    }
-  }
+      if(existBool===false){
+        navigation.navigate('Profile');
+        console.log('existBool is false')
+      }
+      else if (existBool===true) {
+        navigation.navigate('MainScreen');
+        console.log('existBool is true');
+      }
+      else {
+        console.log('error');
+      }
+     })
 
+    /*  if(exist.existingUser===false && exist.existingUser!= null){
+        navigation.navigate('Profile');
+      }
+      else if (exist.existingUser===true) {
+        navigation.navigate('MainScreen');
+        console.log('true');
+      }*/
   };
 
   const signOutWithKakao = async () => {
@@ -70,6 +80,7 @@ const KakaoLogin = () => {
           style={{width:widthPercentage(263),height:heightPercentage(40),top:470,alignSelf:'center' }} />
     </TouchableOpacity>
   );
-};
+
+}
 
 export default KakaoLogin;
