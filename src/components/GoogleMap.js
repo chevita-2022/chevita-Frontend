@@ -12,7 +12,7 @@ const GoogleMap = () => {
     
     const [arr, setArr] = useState([]);
 
-    const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
+    const path="http://52.78.161.124/posts";
     useEffect(()=>{
         fetch(path).then((res)=>res.json()).then((response)=>
             setArr(response.data)     

@@ -15,8 +15,8 @@ const NanumDetail=({route,navigation})=>{
 
     //상세 내용 서버 연결
 
-    const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts/"+id;
-    const path1="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user/"+content?.userIdx;
+    const path="http://52.78.161.124/posts/"+id;
+    const path1="http://52.78.161.124/user/"+content?.userIdx;
     
 
     const [userInfo,setUserInfo]=useState('');
