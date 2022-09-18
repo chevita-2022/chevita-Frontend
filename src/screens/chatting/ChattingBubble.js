@@ -16,7 +16,7 @@ const ChattingBubble = () => {
   /* 웹소켓 열기 */
   const ws=useRef(null);
   useEffect(()=>{
-    ws.current=new WebSocket(`ws://15.165.222.64/ws/chat`)
+    ws.current=new WebSocket(`ws://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/ws/chat`)
     console.log(ws.current);
 
     ws.current.onopen=()=>{

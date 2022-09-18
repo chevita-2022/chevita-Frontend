@@ -17,23 +17,16 @@ const GoogleMap = () => {
 
     Geocoder.init("AIzaSyBmMinPStpXNnPcWNefzg3T01Ktjm1bQA4");
 
-    const promise = new Promise;
-    const getData = () => {
-      promise.then((appData) => {
-          console.log(appData);
-        });
-    };
-
-
-    const convertAddressToCoordinates = (address) => {
-        const result = Geocoder.from(address)
+    const convertAddressToCoordinates = async(address) => {
+        let result = await Geocoder.from(address)
                 .then(json => {
                     var location = json.results[0].geometry.location;
                     console.log(location);
                     return location
                 })
                 .catch(error => console.warn(error));
-        return getData(result)
+        console.log()
+        return result
     }
 
     useEffect(()=>{
