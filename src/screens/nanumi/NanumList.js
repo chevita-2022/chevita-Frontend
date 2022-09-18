@@ -6,8 +6,10 @@ import { heightPercentage,widthPercentage,fontPercentage } from "../../Responsiv
 
 const NanumList = ({navigation}) => {
 
+    const userIdx=1;
+
     const [data,setData]=useState([]);
-    const path="http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/posts";
+    const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
     fetch(path).then((res)=>res.json()).then((response)=> setData(response.data));
 
     let item2=[...data];
@@ -65,7 +67,7 @@ const NanumList = ({navigation}) => {
                 { value==='popular' ?
                     <View> 
                         {item2.map(item=>(
-                            <Nanumitem postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
+                            <Nanumitem userIdx={userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
                         ))}
                     </View>
                 :
@@ -73,13 +75,13 @@ const NanumList = ({navigation}) => {
                     value==='lank' ?
                     <View>
                     {item3.map(item=>(
-                        <Nanumitem postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
+                        <Nanumitem userIdx={userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
                     ))}
                     </View>
                     :
                     <View> 
                     {data.reverse().map(item=>(
-                        <Nanumitem postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation}  imgUrl={item.imgUrls} />
+                        <Nanumitem userIdx={userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation}  imgUrl={item.imgUrls} />
                     ))}
                     </View>
                 )

@@ -18,6 +18,7 @@ import NanumRecord from './mypage/NanumRecord';
 import NanumReview from './mypage/NanumReview';
 import LikeList from './mypage/LikeList';
 import Search from './Search';
+import Notice from './Notice';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,6 +26,7 @@ const Stack = createNativeStackNavigator();
 const NanumiStack = createNativeStackNavigator();
 const MapStack = createNativeStackNavigator();
 const ChattingStack = createNativeStackNavigator();
+const NoticeStack = createNativeStackNavigator();
 const MyPageStack = createNativeStackNavigator();
 
 
@@ -68,6 +70,14 @@ const ChattingStackScreen = () => {
         <ChattingStack.Screen name="ChattingBubble" component={ChattingBubble} options={{header:()=>(<Header title='채팅창' shadow={true} type={4}/>)}} />
       </Stack.Navigator>
     );
+};
+
+const NoticeStackScreen = () => {
+  return (
+    <Stack.Navigator>
+      <NoticeStack.Screen name="Notice" component={Notice} options={{header:()=>(<Header title='알림' shadow={true} type={4}/>)}}/>
+    </Stack.Navigator>
+  );
 };
 
 const MyPageStackScreen = ({navigation}) => {
@@ -118,9 +128,9 @@ const MainScreen = () => {
       />
       <Tab.Screen
         name="ChattingStack"
-        component={ChattingStackScreen}
+        component={NoticeStackScreen}
         options={{
-          title: '채팅',
+          title: '알림',
           tabBarIcon: ({focused}) => (
             focused ? 
             <Image source={require('../assets/images/focused_chatting.png')} style={styles.tabBarIcon}/>

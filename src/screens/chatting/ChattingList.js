@@ -75,7 +75,7 @@ const List = [
 const ChattingList=({navigation})=>{
 
     const [chatRoom,setChatRoom]=useState([]);
-    fetch("http://chaevita0912-env.eba-2hjzekep.ap-northeast-2.elasticbeanstalk.com/chat/"+101).then(response=>response.json()).then(response=>setChatRoom(response))
+    fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/chat/"+101).then(response=>response.json()).then(response=>setChatRoom(response))
 
     return(
         <SafeAreaView style={{paddingTop:10,height:'100%',backgroundColor:'#FFFFFF'}}>
