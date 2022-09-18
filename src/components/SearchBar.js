@@ -8,7 +8,7 @@ const SearchBar=(props)=>{
 
     return(
             <View style={searchStyles.container}>
-                <Pressable style={searchStyles.btn} onPress={onPressSearch}>
+                <Pressable style={searchStyles.btn} onPress={()=> onPressSearch()}>
                     <Image source={require('../assets/images/search.png')} style={searchStyles.img}/>
                 </Pressable>
                 <TextInput style={searchStyles.input} placeholder={'검색어를 입력해주세요'} placeholderTextColor='#151515' value={value} onChangeText={(value) => setValue(value)}/>
@@ -20,6 +20,8 @@ const searchStyles = StyleSheet.create({
     container: {
         width:widthPercentage(337),
         height:heightPercentage(35),
+        marginTop: heightPercentage(15),
+        marginBottom: heightPercentage(15),
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius:12,

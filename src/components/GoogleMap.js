@@ -10,29 +10,48 @@ const GoogleMap = () => {
 
     const [currentLocation, setCurrentLocation] = useState({latitude: 37.4819682, longitude: 126.993978});
     
-    const arr = ["서울특별시 서초구 효령로 25길 20", "서울특별시 서초구 효령로 24길 20", "서울특별시 서초구 효령로 18길 21"]
+    const [arr, setArr] = useState([]);
+
+    const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
+    useEffect(()=>{
+        fetch(path).then((res)=>res.json()).then((response)=>
+            setArr(response.data)     
+        )
+        console.log(arr)
+    },[])
+
     const [distance, setDistance] = useState([]);
     const [coordinates, setCoordinates] = useState([]);
 
+    useEffect(()=>{
+        console.log(arr)
+    },[arr])
 
     Geocoder.init("AIzaSyBmMinPStpXNnPcWNefzg3T01Ktjm1bQA4");
 
     const convertAddressToCoordinates = async(address) => {
-        let result = await Geocoder.from(address)
+        if(arr.length != coordinates.length){
+            const result = await Geocoder.from(address)
                 .then(json => {
                     var location = json.results[0].geometry.location;
                     console.log(location);
                     return location
-                })
-                .catch(error => console.warn(error));
-        console.log()
-        return result
+                }).then((result) => {
+                    console.log(result);
+                    setCoordinates(coordinates.concat(result))
+                }).catch(error => console.warn(error));
+            console.log(coordinates)
+            return result
+        }
+        else {
+            return
+        }
     }
 
     useEffect(()=>{
-      setCoordinates(arr.map((item) => convertAddressToCoordinates(item)))
-      console.log(coordinates)
-    },[])
+        arr.map((item) => convertAddressToCoordinates(item.globalLocation))
+        console.log(coordinates)
+    },[coordinates])
 
     return(
             <MapView

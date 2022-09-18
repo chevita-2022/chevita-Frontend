@@ -58,19 +58,7 @@ const WriteNanum2 = ({navigation, route}) => {
             body: JSON.stringify(tempData)
         };
         console.log(tempData)
-        console.log(tempData)
-        console.log(tempData)
 
-        console.log(tempData)
-        console.log(tempData)
-        console.log(tempData)
-
-        console.log(tempData)
-        console.log(tempData)
-        console.log(tempData)
-        console.log(tempData)
-        console.log(tempData)
-        
 
         fetch('http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts', requestOptions)
             .then(response => response.json())

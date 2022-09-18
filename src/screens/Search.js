@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView ,Text, TextInput,StyleSheet ,View,Input,Pressable,Image} from "react-native";
+import { SafeAreaView ,Text, TextInput,StyleSheet ,View,Input,Pressable,Image, ScrollView} from "react-native";
 import SearchBar from "../components/SearchBar";
 import Nanumitem from "../components/NanumItem";
+import { widthPercentage } from "../ResponsiveSize";
 
 const Search=()=>{
 
@@ -11,17 +12,15 @@ const Search=()=>{
 
     const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
 
-    const onPressSearch = () => {
+    const onPressSearch = async() => {
         console.log(value)
-        fetch(path).then((res)=>res.json()).then((response)=>
+        await fetch(path).then((res)=>res.json()).then((response)=>
             setData(response.data)     
-        );
-
-        let item = [...data]
-        console.log(item)
-        item.map((item) => console.log(item.title))
+        )
         
-        setArr(item.filter((item) => item?.title?.includes(value) || item?.content?.includes(value)))
+        let item = [...data];
+
+        await setArr(item.filter((item) => item?.title?.includes(value) || item?.content?.includes(value)))
         console.log(arr)
 
     }
@@ -29,13 +28,15 @@ const Search=()=>{
     
 
     return(
-        <SafeAreaView style={{backgroundColor:'#ffffff', flex:1, alignItems: 'center'}}>
+        <SafeAreaView style={{backgroundColor:'#ffffff', flex:1}}>
+            <ScrollView contentContainerStyle={{alignItems: 'center', backgroundColor: '#ffffff',}}>
             <SearchBar value={value} setValue={setValue} onPressSearch={onPressSearch}/>
-            <View> 
+            <View style={{width: '100%'}}> 
                 {arr.map(item=>(
                     <Nanumitem userIdx={item.userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
                 ))}
             </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }
