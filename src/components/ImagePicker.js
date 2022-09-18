@@ -25,6 +25,7 @@ const ImagePicker = (props) => {
       accessKeyId: IAM_USER_KEY,
       secretAccessKey: IAM_USER_SECRET,
       Bucket: BUCKET_NAME,
+      signatureVersion: 'v4',
     });
   
     const contentType = file.type;
@@ -77,9 +78,9 @@ const ImagePicker = (props) => {
         //launchImageLibrary : 사용자 앨범 접근
         launchCamera({}, (res)=>{
           const formdata = new FormData()
-          formdata.append('file', res.assets[0]?.uri);
+
           uploadFileToS3(formdata)
-          uploadFileToS3(res.assets[0])
+          uploadFileToS3(res.assets[0]?.uri)
           console.log(res);
         })
         setModalVisible(false);

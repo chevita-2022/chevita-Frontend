@@ -3,22 +3,15 @@ import { Text, StyleSheet, ScrollView, SafeAreaView,View, Pressable, Button, Ima
 import GoogleMap from "../components/GoogleMap";
 import Geocoder from 'react-native-geocoding';
 import { getDistance } from 'geolib';
-import Nanumitem from "../components/NanumItem";
 import { fontPercentage, heightPercentage, widthPercentage } from "../ResponsiveSize";
+import Nanumitem from "../components/NanumItem";
 
 const Map = () => {
 
-    const item =
-        {
-            postId:1,
-            title:'세척 당근 반토막 나눔해요',
-            location: '서대문구 연희동',
-            createdAt:'15분전',
-            hastag:'#채소류 #당근',
-            time:'8월 26일 7,8,18시',
-            totalHearts:31,
-            expirationDate:2,
-        }
+    //const [item,setData]=useState([]);
+    const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
+
+
 
     const [searchWord, SetSearchWord] = useState('');
     const [searching, setSearching] = useState(false);
@@ -29,15 +22,17 @@ const Map = () => {
             <View style={styles.modal.container}>
                 <View style={styles.modal.line}></View>
                 <View style={styles.modal.searchBox.container}>
+                    <Pressable onPress={() => setSearching(true)}>
                     <Image source={require('../assets/images/search.png')} style={styles.modal.searchBox.image}/>
+                    </Pressable>
                     {searching ?
                     <Text style={styles.modal.searchBox.input}>내 주변 #{searchWord} 키워드 검색 결과</Text>
                     :
                     <TextInput style={styles.modal.searchBox.input} placeholder={"내 주변 #키워드 를 검색해보세요."} placeholderTextColor='#151515' value={searchWord} onChange={(value)=> SetSearchWord(value)}/>
                     }
                 </View>
-                {searchWord != "" && <Text style={styles.modal.guide}>서대문구 연희동 근처 당근 관련 글을 {1}건 찾았어요!</Text>}
-                {/*<Nanumitem userIdx={item.userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />*/}
+                {searching && <Text style={styles.modal.guide}>서대문구 연희동 근처 당근 관련 글을 {1}건 찾았어요!</Text>}
+                {true && <Nanumitem userIdx={2} postId={item.postIdx} title={item.title} createdTime={item?.createdAt} hastag={item.hastag}  d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls}/>}
             </View>
         )
     }
@@ -45,7 +40,7 @@ const Map = () => {
 
     return(
         <SafeAreaView style={styles.container}>
-            <GoogleMap/>
+            <GoogleMap setSelectedItem={setSelectedItem}/>
             <SearchModal/>
         </SafeAreaView>
     )

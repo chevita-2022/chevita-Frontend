@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Image, TouchableOpacity, StyleSheet, View, Text} from 'react-native';
 import { widthPercentage, heightPercentage, fontPercentage } from '../ResponsiveSize';
 
@@ -39,12 +39,17 @@ const HeartBtn = ({full}) => {
 }
 
 const ImageBtn1 = (props) => {
-  const {type} = props;
+  const {type, uri} = props;
+  useEffect(()=>{
+    console.log(uri)
+  },[])
   const label = type == "major" ? '대표사진' : '상세사진'
   return(
     <View style={styles.imageBtn1.container}>
-      <Text style={styles.imageBtn1.text}>{label}</Text>
-      <Text style={styles.imageBtn1.plus}>+</Text>
+      {uri != '' ?
+      <Image source={uri}/>
+      :<><Text style={styles.imageBtn1.text}>{label}</Text>
+      <Text style={styles.imageBtn1.plus}>+</Text></>}
     </View>
   )
 }

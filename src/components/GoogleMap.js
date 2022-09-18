@@ -1,24 +1,28 @@
 import React, {useEffect, useState} from "react";
 import { Text, StyleSheet, ScrollView, SafeAreaView,View, Pressable} from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";	
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";	
 import { Platform, PermissionsAndroid } from "react-native";
 import Geolocation from "react-native-geolocation-service";
 import Geocoder from 'react-native-geocoding';
 import { getDistance } from 'geolib'
 
-const GoogleMap = () => {
-
+const GoogleMap = (props) => {
+    const {setSelectedItem} = props;
     const [currentLocation, setCurrentLocation] = useState({latitude: 37.4819682, longitude: 126.993978});
     
-    const [arr, setArr] = useState([]);
+    //const [arr, setArr] = useState([]);
 
-    const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
+    const arr = [{latitude: 37.4819782, longitude: 126.993978}, {latitude: 37.4819692, longitude: 126.993978}]
+
+    /*const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
     useEffect(()=>{
         fetch(path).then((res)=>res.json()).then((response)=>
             setArr(response.data)     
+        ).then(
+            arr.map((item) => convertAddressToCoordinates(item.globalLocation))
         )
         console.log(arr)
-    },[])
+    },[])*/
 
     const [distance, setDistance] = useState([]);
     const [coordinates, setCoordinates] = useState([]);
@@ -48,10 +52,23 @@ const GoogleMap = () => {
         }
     }
 
-    useEffect(()=>{
-        arr.map((item) => convertAddressToCoordinates(item.globalLocation))
-        console.log(coordinates)
-    },[coordinates])
+    /*useEffect(()=>{
+        if(arr.length != coordinates.length){
+        arr.map((item) => convertAddressToCoordinates(item))
+        console.log(coordinates)}
+    },[{coordinates}])*/
+
+    const Mark = (location) => {
+        return(
+            <Marker coordinate={location} onPress={()=> setSelectedItem(true)}/>
+        )
+    }
+
+    const MarkerList = () => {
+        return(
+            arr.map((location) => <Mark location={location}></Mark>)
+        )
+    }
 
     return(
             <MapView
@@ -62,8 +79,9 @@ const GoogleMap = () => {
                     longitude: currentLocation.longitude,
                     latitudeDelta: 0.005,
                     longitudeDelta: 0.005,
-                }}
-            />
+                }}>
+                {<MarkerList/>}
+            </MapView>
     )
 }
 
