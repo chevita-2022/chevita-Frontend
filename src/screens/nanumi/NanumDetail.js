@@ -13,14 +13,14 @@ const NanumDetail=({route,navigation})=>{
     const {id,day,hour,min,day_hour,d_day,userIdx} = route.params;
     const goBackNanumi = () => navigation.navigate('Nanumi');
 
-    const [content,setContent]=useState([]);
     //상세 내용 서버 연결
 
     const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts/"+id;
-    const path1="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user/"+content.userIdx;
+    const path1="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user/"+content?.userIdx;
     
 
     const [userInfo,setUserInfo]=useState('');
+    const [content,setContent]=useState('');
 
     useEffect(()=>{
         fetch(path,{
@@ -39,7 +39,6 @@ const NanumDetail=({route,navigation})=>{
             }).then(res=>res.json())
             .then(response=>{setUserInfo(response);}); 
         }
-
 
     },[])
 
@@ -61,7 +60,7 @@ const NanumDetail=({route,navigation})=>{
     const col3=['유통기한','보관방식'];
     const col4=[shelf, content.storageMethod ];
 
-    const [full,setFull]=useState(false);
+    const [full,setFull]=useState(false); //찜
     let type1=content.category;
 
     let userAddressArr=[];
@@ -211,7 +210,7 @@ const NanumDetail=({route,navigation})=>{
                                 content.sharingTimeZones.map(i=>(
                                 <View style={{flexDirection:'row',paddingTop:5,paddingBottom:5}}>
                                 <Image source={require('../../assets/images/location.png')} style={{width:widthPercentage(16),height:heightPercentage(17),marginTop:3}} />
-                                <Text style={{paddingLeft:5,fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'400',color:'#151515'}}>{i} &nbsp; { content.globalLocation} &nbsp;{content.detailedLocation}</Text>
+                                <Text style={{paddingLeft:5,fontFamily:'Noto Sans KR',fontSize:fontPercentage(11),fontWeight:'400',color:'#151515'}}>{i} {'\n'} { content.globalLocation} &nbsp;{content.detailedLocation}</Text>
                                 </View>
                             )) : <></>
                             }
@@ -246,15 +245,6 @@ const BoxStyle=StyleSheet.create({
         borderRadius: 15,
         flexDirection:'row',
         ...Platform.select({
-            ios: {
-                shadowColor: "#000000",
-                shadowOffset: {
-                    width: 1,
-                    height: 1,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 6,
-            },
             android: {
                 elevation: 3,
             },

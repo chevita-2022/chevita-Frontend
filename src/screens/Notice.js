@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { userIdx1 } from "../components/modal/Modal_ChooseTime";
 import {NoticeConfirmation, NoticeRequest} from "../components/NoticeItem";
 import { widthPercentage, heightPercentage, fontPercentage } from "../ResponsiveSize";
 
@@ -31,6 +32,12 @@ const Notice=()=>{
         )
     }
 
+    console.log(userIdx1);
+
+    useEffect(()=>{
+        fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/nanumingList/"+userIdx1)
+        .then(res=>res.json()).then(res=>console.log(res));
+    })
     return(
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
