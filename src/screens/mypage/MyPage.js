@@ -31,16 +31,6 @@ const MyPage = ({navigation}) => {
         )
     }
 
-    const ModifyProfile = () => {
-        return(
-            <View style={styles.profile.modify.container}>
-                <Image source={require('../../assets/images/pencil.png')} style={styles.profile.modify.pencil}/>
-                <Text style={styles.profile.modify.text}>프로필 수정하기</Text>
-                <Image source={require('../../assets/images/arrow.png')} style={styles.profile.modify.arrow} />
-            </View>
-        )
-    }
-
     const ShowRecord = () => {
         return(
             <TouchableOpacity style={styles.recordButton.container} onPress={() => navigation.navigate('NanumRecord')}>
@@ -91,7 +81,6 @@ const MyPage = ({navigation}) => {
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <Profile/>
-                <ModifyProfile/>
                 <ShowRecord/>
                 <ReviewBox type={1}/>
                 <ReviewPreview />

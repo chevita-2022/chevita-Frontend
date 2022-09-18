@@ -42,18 +42,15 @@ const KakaoLogin = () => {
       },
       body:JSON.stringify({'token':profile.id})
     }).then(response=>response.json()).then(res=> {
-      existBool=res.existingUser;
+      console.log(res);
 
-      if(existBool===false){
-        navigation.navigate('Profile');
+      if(res===0){
+        navigation.navigate('Nickname',{token:profile.id});
         console.log('existBool is false')
       }
-      else if (existBool===true) {
+      else  {
         navigation.navigate('MainScreen');
         console.log('existBool is true');
-      }
-      else {
-        console.log('error');
       }
      })
 

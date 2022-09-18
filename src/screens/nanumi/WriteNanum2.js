@@ -58,19 +58,7 @@ const WriteNanum2 = ({navigation, route}) => {
             body: JSON.stringify(tempData)
         };
         console.log(tempData)
-        console.log(tempData)
-        console.log(tempData)
 
-        console.log(tempData)
-        console.log(tempData)
-        console.log(tempData)
-
-        console.log(tempData)
-        console.log(tempData)
-        console.log(tempData)
-        console.log(tempData)
-        console.log(tempData)
-        
 
         fetch('http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts', requestOptions)
             .then(response => response.json())
@@ -87,7 +75,7 @@ const WriteNanum2 = ({navigation, route}) => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
-                {/*<CalendarInput name="nanumDate" guide="나눔이 가능한 시간대를 모두 선택해주세요." value={values.nanumDate} handleChange={handleChange}/>*/}
+                <CalendarInput name="nanumDate" guide="나눔이 가능한 시간대를 모두 선택해주세요." value={values.nanumDate} handleChange={handleChange}/>
                 <PlaceInput name="detailedLocation" label="나눔 위치" value={values.globalLocation} value2={values.detailedLocation} handleChange={handleChange} star={true} navigation={navigation}/>
                 <Pressable style={styles.finishBtn.container} onPress={()=> createPost()}>
                     <Text style={styles.finishBtn.text}>글 작성 완료</Text>

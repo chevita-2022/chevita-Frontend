@@ -37,7 +37,7 @@ const Map = () => {
                     }
                 </View>
                 {searchWord != "" && <Text style={styles.modal.guide}>서대문구 연희동 근처 당근 관련 글을 {1}건 찾았어요!</Text>}
-                <Nanumitem postId={item.postId} title={item.title} place={item.location} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate}/>
+                {/*<Nanumitem userIdx={item.userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />*/}
             </View>
         )
     }
