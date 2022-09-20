@@ -12,7 +12,10 @@ const ProfileImage = () => {
     )
 }
 
-const ProfileImage1 = () => {
+const ProfileImage1 = (props) => {
+    const {image} = props;
+
+    const uri = image ? {uri: image} : require('../assets/images/profile2.png')
 
     return(/*
         <>
@@ -22,7 +25,7 @@ const ProfileImage1 = () => {
                     </View>
         </>*/
         <View style={{padding:15}}>
-            <Image source={require('../assets/images/profile2.png')} style={{alignSelf:'center',width:widthPercentage(126),height:heightPercentage(129)}} />
+            <Image source={uri} style={{alignSelf:'center',width:widthPercentage(126),height:heightPercentage(129), borderRadius: 90, resizeMode: 'stretch'}} />
         </View>
     )
 }

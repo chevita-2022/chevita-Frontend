@@ -63,13 +63,17 @@ const ImagePicker = (props) => {
   const [offset, setOffset] = useState(0)
   const [modalVisible, setModalVisible] = useState(false);
 
+  const [image, setImage] = useState();
+
+
   const getImageByLibrary = () => {
     //launchImageLibrary : 사용자 앨범 접근
       launchImageLibrary({}, (res)=>{
+        console.log(res)
         const formdata = new FormData()
         formdata.append('file', res.assets[0]?.uri);
-        
-        console.log(res);
+        setImage(res.assets[0]?.uri)
+      
       })
       setModalVisible(false);
   }
@@ -78,9 +82,9 @@ const ImagePicker = (props) => {
         //launchImageLibrary : 사용자 앨범 접근
         launchCamera({}, (res)=>{
           const formdata = new FormData()
-
           uploadFileToS3(formdata)
           uploadFileToS3(res.assets[0]?.uri)
+          setImage(res.assets[0]?.uri)
           console.log(res);
         })
         setModalVisible(false);
@@ -97,7 +101,7 @@ const ImagePicker = (props) => {
       case "receipt":
         return <ImageBtn2/>;
       case "profile2":
-        return <ProfileImage1/>;
+        return <ProfileImage1 image={image}/>;
     }
   }
 
