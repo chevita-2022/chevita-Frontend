@@ -21,13 +21,33 @@ const initials = Platform.OS === 'ios' ? iosKeys : androidKeys;
 const Naver_Login = () => {
   const [naverToken, setNaverToken] = React.useState(null);
 
-  const getUserProfile = async () => {
+  const setUserProfile = async () => {
     const profileResult = await getProfile(naverToken.accessToken);
     if (profileResult.resultcode === '024') {
       Alert.alert('로그인 실패', profileResult.message);
       return;
     }
     console.log('profileResult', profileResult);
+    const userId = await setUserId(profileResult.response.id);
+
+    fetch("http://52.78.161.124/user/login",{
+        method:"POST",
+        headers:{
+          'Content-Type':'application/json',
+        },
+        body:JSON.stringify({'token':userId})
+    }).then(response=>response.json()).then(res=> {
+        console.log(res)
+        if(res == 0){
+          navigation.navigate('Nickname',{token:userId});
+          console.log('existBool is false')
+        }
+        else  {
+          navigation.navigate('MainScreen');
+          console.log('existBool is true');
+        }
+    })
+
   };
 
     const naverLogin = props => {
@@ -35,7 +55,6 @@ const Naver_Login = () => {
         NaverLogin.login(props, (err, token) => {
           console.log(`\n\n  Token is fetched  :: ${token} \n\n`);
           setNaverToken(token);
-          getUserProfile();
           console.log("navertoken: "+ JSON.stringify(token))
           if (err) {
             reject(err);
@@ -45,14 +64,19 @@ const Naver_Login = () => {
         });
       });
     };
+
+    const signInWithNaver = async() => {
+      await naverLogin(initials);
+      setUserProfile();
+    }
   
 
     return(
       <View>
-        <TouchableOpacity onPress={()=>{naverLogin(initials)}}>
+        <TouchableOpacity onPress={()=>{signInWithNaver()}}>
           <Image source={require('../../assets/images/auth/NaverLogin.png')}
                   style={{width:widthPercentage(253),height:heightPercentage(40),top:482,alignSelf:'center'}} />
-        </TouchableOpacity>
+        </TouchableOpacity>r
       </View>
     )
 }

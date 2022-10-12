@@ -10,6 +10,7 @@ const Profile=({navigation, route})=>{
     const {token} = route.params;
 
     const [nickname,setNickname]=useState('');
+    const [image, setImage] = useState('');
     const [alert,setAlert]=useState('');
     const [isMounted, setIsMounted] = useState(false);
     const [token1,setToken1]=useState();
@@ -42,7 +43,7 @@ const Profile=({navigation, route})=>{
                 'Content-Type':'application/json',
             },
             body:JSON.stringify({
-                "profileImgUrl": "",
+                "profileImgUrl": image,
                 "userAddress": value,
                 "token": token1,
                 "userNickName": nickname,
@@ -58,7 +59,7 @@ const Profile=({navigation, route})=>{
 
             <Image source={require('../../assets/images/point.png')} style={styles.point} />
             <Text style={styles.question}>프로필 사진을 설정해주세요</Text>
-            <ImagePicker type="profile2" />
+            <ImagePicker type="profile2" values={image} setValues={setImage}/>
 
             <Image source={require('../../assets/images/point.png')} style={styles.point} />
             <Text style={styles.question}>닉네임을 설정해주세요</Text>

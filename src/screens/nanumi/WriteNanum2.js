@@ -70,6 +70,9 @@ const WriteNanum2 = ({navigation, route}) => {
 
         console.log(tempData)
         setModalVisible(true);
+
+        window.setTimeout(()=>{navigation.navigate('Nanumi')}, 2000)
+
     }
 
     return (

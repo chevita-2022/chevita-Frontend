@@ -7,7 +7,7 @@ import { heightPercentage,widthPercentage,fontPercentage } from "../../Responsiv
 const NanumList = ({navigation}) => {
 
     const [data,setData]=useState([]);
-    const path="http://52.78.161.124posts";
+    const path="http://52.78.161.124/posts";
     fetch(path).then((res)=>res.json()).then((response)=> setData(response.data));
     const userIdx = 1;
 

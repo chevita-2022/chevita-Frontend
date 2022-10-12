@@ -111,7 +111,7 @@ const NanumDetail=({route,navigation})=>{
                     {/* 게시자 정보 */}
                     <View style={{flexDirection:'row'}}>
                         <View style={{...Platform.select({android:{elevation:3}}),borderRadius:100}}>
-                            {userInfo.profileImgUrl !=undefined ?
+                            {userInfo.profileImgUrl != undefined ?
                             <Image source={{uri:userInfo.profileImgUrl}} style={{width:widthPercentage(40),height:heightPercentage(40),borderRadius:100}} />
                             :
                             <Image source={require('../../assets/images/profile.png')} style={{width:widthPercentage(40),height:heightPercentage(40),borderRadius:100}} /> }

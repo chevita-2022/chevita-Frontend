@@ -13,6 +13,9 @@ import AWS from 'aws-sdk';
 
 const ImagePicker = (props) => {
 
+  const {type, num, values, setValues} = props;
+
+  //upload image to s3
   const uploadFileToS3 = async (file) => {
 
     console.log(file)
@@ -29,7 +32,7 @@ const ImagePicker = (props) => {
     });
   
     const contentType = file.type;
-    const contentDeposition = `inline;filename="${file.name}"`;
+    const contentDeposition = file.fileName;
     const fPath = file.uri;
     const base64 = await fs.readFile(fPath, 'base64');
     const arrayBuffer = decode(base64);
@@ -38,14 +41,14 @@ const ImagePicker = (props) => {
       s3bucket.createBucket(() => {
         const params = {
           Bucket: BUCKET_NAME,
-          Key: file.name,
+          Key: file.fileName,
           Body: arrayBuffer,
           ContentDisposition: contentDeposition,
           ContentType: contentType,
         };
         console.log(params)
         s3bucket.upload(params, (error, data) => {
-          utils.stopLoader();
+          //utils.stopLoader();
           if (error) {
             reject(getApiError(error));
           } else {
@@ -58,50 +61,73 @@ const ImagePicker = (props) => {
   };
 
 
-  const {type} = props;
-
+  //modal
   const [offset, setOffset] = useState(0)
   const [modalVisible, setModalVisible] = useState(false);
 
-  const [image, setImage] = useState();
+  //
+  const setImage = (file) =>{
+
+    if(type == "major") {
+      const temp = [...values];
+      temp[0] = file;
+      setValues(temp)
+    } else if(type == "detail"){
+      const temp = [...values];
+      temp[num] = file;
+      setValues(temp)
+    } else {
+      setValues(file)
+    }
+    setModalVisible(false)
+
+    console.log(values)
+  }
 
 
   const getImageByLibrary = () => {
+    if(type == "detail" && values.length == 0){
+      alert('대표사진을 먼저 첨부해주세요')
+      return
+    } else if (type == "detail" && values.length < num) {
+      alert('사진을 순서대로 첨부해주세요')
+      return;
+    }
     //launchImageLibrary : 사용자 앨범 접근
       launchImageLibrary({}, (res)=>{
         console.log(res)
-        const formdata = new FormData()
-        formdata.append('file', res.assets[0]?.uri);
-        setImage(res.assets[0]?.uri)
+        uploadFileToS3(res.assets[0])
+        setImage(res.assets[0])
       
       })
-      setModalVisible(false);
   }
 
   const getImageByCamera = () =>{
-        //launchImageLibrary : 사용자 앨범 접근
-        launchCamera({}, (res)=>{
-          const formdata = new FormData()
-          uploadFileToS3(formdata)
-          uploadFileToS3(res.assets[0]?.uri)
-          setImage(res.assets[0]?.uri)
-          console.log(res);
-        })
-        setModalVisible(false);
+    if(type == "detail" && values.length == 0){
+      alert('대표사진을 먼저 첨부해주세요')
+      return
+    } else if (type == "detail" && values.length < num) {
+      alert('사진을 순서대로 첨부해주세요')
+      return;
+    }
+    //launchImageLibrary : 사용자 앨범 접근
+    launchCamera({}, (res)=>{
+      console.log(res)
+      uploadFileToS3(res.assets[0])
+      setImage(res.assets[0])
+    })
   }
 
   const ModalTrigger = () => {
     switch(type){
-      case "profile":
-        return <ProfileImage/>;
       case "major":
-        return <ImageBtn1 type={type}/>;
+        return <ImageBtn1 type={type} image={values[0] ? values[0].uri: undefined}/>;
       case "detail":
-        return <ImageBtn1 type={type}/>;
+        return <ImageBtn1 type={type} image={values[num] ? values[num].uri: undefined}/>;
       case "receipt":
-        return <ImageBtn2/>;
+        return <ImageBtn2 image={values ? values.uri : undefined}/>;
       case "profile2":
-        return <ProfileImage1 image={image}/>;
+        return <ProfileImage1 image={values ? values.uri : undefined}/>;
     }
   }
 
