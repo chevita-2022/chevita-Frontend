@@ -78,7 +78,7 @@ const Profile=({navigation, route})=>{
             <Text style={{color:'#7D7D7D',fontSize:fontPercentage(10),fontWeight:'400',fontFamily:'Noto Sans KR'}}>검색어에 아래와 같은 조합을 이용하시면 더욱 정확한 결과가 검색됩니다.</Text>
             <Text style={{color:'#7D7D7D',fontSize:fontPercentage(10),fontWeight:'bold',fontFamily:'Noto Sans KR',paddingTop:5}}>'도로명+건물번호', '지역명+지번', '지역명+건물명(아파트명)', {'\n'} '사서함명+번호'</Text>
 
-            <Text style={{color:'#151515',fontSize:fontPercentage(12),fontWeight:'500',fontFamily:'Noto Sans KR',top:heightPercentage(100),left:widthPercentage(260)}} onPress={()=>{navigation.navigate('MainScreen'); sendUserId();}}>가입 완료 {'>'}</Text>
+            <Text style={{color:'#151515',fontSize:fontPercentage(12),fontWeight:'500',fontFamily:'Noto Sans KR',top:heightPercentage(100),left:widthPercentage(260)}} onPress={()=>{sendUserId(); navigation.navigate('MainScreen'); }}>가입 완료 {'>'}</Text>
         </SafeAreaView>
     )
 }
