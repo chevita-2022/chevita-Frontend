@@ -18,8 +18,9 @@ const androidKeys = {
   
 const initials = Platform.OS === 'ios' ? iosKeys : androidKeys;
 
-const Naver_Login = () => {
+const Naver_Login = ({navigation}) => {
   const [naverToken, setNaverToken] = React.useState(null);
+  const [userId, setUserId] = useState()
 
   const setUserProfile = async () => {
     const profileResult = await getProfile(naverToken.accessToken);
@@ -28,28 +29,33 @@ const Naver_Login = () => {
       return;
     }
     console.log('profileResult', profileResult);
-    const userId = await setUserId(profileResult.response.id);
 
-    fetch("http://52.78.161.124/user/login",{
-        method:"POST",
-        headers:{
-          'Content-Type':'application/json',
-        },
-        body:JSON.stringify({'token':userId})
-    }).then(response=>response.json()).then(res=> {
-        console.log(res)
-        if(res == 0){
-          navigation.navigate('Nickname',{token:userId});
-          console.log('existBool is false')
-        }
-        else  {
-          navigation.navigate('MainScreen');
-          console.log('existBool is true');
-        }
-    })
+    await fetch("http://52.78.161.124/user/login",{
+      method:"POST",
+      headers:{
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify({'token':profileResult.response.id})
+      }).then(response=>response.json()).then(res=> {
+          console.log(res)
+          if(res == 0){
+            navigation.navigate('Nickname',{token:profileResult.response.id});
+            console.log('existBool is false')
+          }
+          else  {
+            navigation.navigate('MainScreen');
+            console.log('existBool is true');
+          }
+      })
 
   };
 
+  
+  useEffect(()=>{
+    if(naverToken){
+      setUserProfile();
+    }
+  },[naverToken])
     const naverLogin = props => {
       return new Promise((resolve, reject) => {
         NaverLogin.login(props, (err, token) => {
@@ -65,18 +71,12 @@ const Naver_Login = () => {
       });
     };
 
-    const signInWithNaver = async() => {
-      await naverLogin(initials);
-      setUserProfile();
-    }
-  
-
     return(
       <View>
-        <TouchableOpacity onPress={()=>{signInWithNaver()}}>
+        <TouchableOpacity onPress={()=>naverLogin(initials)}>
           <Image source={require('../../assets/images/auth/NaverLogin.png')}
                   style={{width:widthPercentage(253),height:heightPercentage(40),top:482,alignSelf:'center'}} />
-        </TouchableOpacity>r
+        </TouchableOpacity>
       </View>
     )
 }

@@ -11,7 +11,7 @@ const InitalScreen=({navigation})=>{
             <Text style={{color:'rgba(0, 0, 0, 0.8)',fontSize:fontPercentage(12),fontWeight:'400',top:170,alignSelf:'center'}}>냉장고 속 잠자는 식재료를 일깨워줄</Text>
             <Text style={{fontSize:fontPercentage(36),alignSelf:'center',color:'#151515',top:160,fontFamily: 'Alata-Regular'}}>chevita</Text>
             <KakaoLogin/>
-            <Naver_Login/>
+            <Naver_Login navigation={navigation}/>
         </SafeAreaView>
     )
 }

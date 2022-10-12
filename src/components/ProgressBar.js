@@ -116,7 +116,22 @@ const barStyles = (current, top) => StyleSheet.create({
             width: widthPercentage(12),
             height: heightPercentage(12),
             backgroundColor: '#374957',
-            borderRadius: 90
+            borderRadius: 90,
+            zIndex: 3,
+            ...Platform.select({
+                ios: {
+                    shadowColor: "#000000",
+                    shadowOffset: {
+                        width: 1,
+                        height: 1,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 6,
+                },
+                android: {
+                    elevation: 5,
+                },
+            }),
         },
         textBallon:{
             container:{
@@ -193,6 +208,7 @@ const barStyles = (current, top) => StyleSheet.create({
             height: heightPercentage(9),
             backgroundColor: '#FFD600',
             borderRadius: 90,
+            zIndex: 3,
             ...Platform.select({
                 ios: {
                     shadowColor: "#000000",
