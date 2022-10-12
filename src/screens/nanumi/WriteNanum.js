@@ -18,7 +18,7 @@ const WriteNanum = ({navigation}) => {
         purchaseAt: '',
         storageMethod: '상온 보관',
         //hashTag: '',
-        imgUrls: ["220902.jpg"],
+        imgUrls: [],
         receiptImgUrl: '',
         content: '',
     });

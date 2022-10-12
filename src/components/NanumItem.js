@@ -23,7 +23,8 @@ const YMDFormatter= (num) => {
     return formatNum;
 }
 
-const Nanumitem=({title,createdTime,hastag,like,d_day,postId,locate,imgUrl,userIdx})=>{
+const Nanumitem=(props)=>{
+    const {title,createdTime,hastag,like,d_day,postId,locate,imgUrl,userIdx} = props;
 
     const [jjim,setJjim]=useState(false);
     const navigation = useNavigation(); 

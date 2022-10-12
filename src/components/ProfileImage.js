@@ -2,17 +2,22 @@ import React from "react";
 import { Image, StyleSheet, View, Text, Button, TouchableOpacity, Platform } from "react-native";
 import { heightPercentage, widthPercentage } from "../ResponsiveSize";
 
-const ProfileImage = () => {
-
+const ProfileImage = (props) => {
+    const {image} = props;
+    
+    const uri = image ? {uri: image} : require('../assets/images/profile.png')
+    
     return(
         <View style={styles.container}>
-                <Image source={require('../assets/images/profile.png')} style={styles.profile}/>
-                <Image source={require('../assets/images/camera.png')} style={styles.camera}/>
+                <Image source={uri} style={styles.profile}/>
         </View>
     )
 }
 
-const ProfileImage1 = () => {
+const ProfileImage1 = (props) => {
+    const {image} = props;
+
+    const uri = image ? {uri: image} : require('../assets/images/profile2.png')
 
     return(/*
         <>
@@ -22,7 +27,7 @@ const ProfileImage1 = () => {
                     </View>
         </>*/
         <View style={{padding:15}}>
-            <Image source={require('../assets/images/profile2.png')} style={{alignSelf:'center',width:widthPercentage(126),height:heightPercentage(129)}} />
+            <Image source={uri} style={{alignSelf:'center',width:widthPercentage(126),height:heightPercentage(129), borderRadius: 90, resizeMode: 'stretch'}} />
         </View>
     )
 }
@@ -31,22 +36,14 @@ const ProfileImage1 = () => {
 const styles = StyleSheet.create({
     container:{
         width: widthPercentage(74),
-        height: heightPercentage(93),
+        height: heightPercentage(94),
         paddingTop: heightPercentage(15),
     },
     profile:{
-        width: widthPercentage(70),
-        height: heightPercentage(71),
+        width: widthPercentage(74),
+        height: heightPercentage(74),
         resizeMode: 'stretch'
     },
-    camera:{
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
-        width: widthPercentage(23),
-        height: heightPercentage(23),
-        resizeMode: 'stretch'
-    }
 })
 
 export {ProfileImage, ProfileImage1};

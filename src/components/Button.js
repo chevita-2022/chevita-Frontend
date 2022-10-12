@@ -5,7 +5,8 @@ import { widthPercentage, heightPercentage, fontPercentage } from '../Responsive
 
 const BackBtn = ({goBack, color}) => {
   const image = (color === 'navy' ? require('../assets/images/back-btn-navy.png') : require('../assets/images/back-btn-white.png'))
-    return (
+    
+  return (
       <TouchableOpacity style={styles.backBtn.container} onPress={() => goBack()}>
         <Image source={image} style={styles.backBtn.image}/>
       </TouchableOpacity>
@@ -39,26 +40,30 @@ const HeartBtn = ({full}) => {
 }
 
 const ImageBtn1 = (props) => {
-  const {type, uri} = props;
-  useEffect(()=>{
-    console.log(uri)
-  },[])
+  const {type, image} = props;
   const label = type == "major" ? '대표사진' : '상세사진'
   return(
     <View style={styles.imageBtn1.container}>
-      {uri != '' ?
-      <Image source={uri}/>
+      {image ?
+      <Image source={{uri: image}} style={styles.imageBtn1.image}/>
       :<><Text style={styles.imageBtn1.text}>{label}</Text>
       <Text style={styles.imageBtn1.plus}>+</Text></>}
     </View>
   )
 }
 
-const ImageBtn2 = () => {
+const ImageBtn2 = (props) => {
+  const {image} = props;
   return(
     <View style={styles.imageBtn2.container} onPress={() => ImagePicker()}>
-      <Text style={styles.imageBtn2.text}>영수증 사진</Text>
-      <Text style={styles.imageBtn2.plus}>+</Text>
+      {image ?
+        <Image source={{uri: image}} style={styles.imageBtn2.image}/>
+      :
+        <>
+          <Text style={styles.imageBtn2.text}>영수증 사진</Text>
+          <Text style={styles.imageBtn2.plus}>+</Text>
+        </>
+      }
     </View>
   )
 }
@@ -142,6 +147,12 @@ const styles = StyleSheet.create({
           },
       }),
   },
+  image:{
+    width: '100%',
+    height: '100%',
+    resizeMode: 'stretch',
+    borderRadius: 12,
+  },
   text:{
       fontSize: fontPercentage(12),
       color: '#374957',
@@ -175,6 +186,11 @@ const styles = StyleSheet.create({
               elevation: 3,
           },
       }),
+    },
+    image:{
+      width: '100%',
+      height: '100%',
+      borderRadius: 12,
     },
     text:{
         fontSize: fontPercentage(12),

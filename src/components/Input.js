@@ -194,16 +194,25 @@ const DropDownInput = (props) => {
 const ImageInput1 = (props) => {
     const {name, label, placeholder, value, handleChange, star, guide} = props;
 
+    const [values, setValues] = useState([]);
     const [more, setMore] = useState(0);
+
+    useEffect(()=>{
+        const data =  values.map((item) => item.fileName)
+        console.log(data)
+        handleChange(name, data);
+        console.log(values)
+    },[values])
+
     return(
         <View style={ImageInput1Styles.container}>
             <Label label={label} star={star} guide={guide} type={2}/>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={ImageInput1Styles.inputs.container}>
-                <ImagePicker type="major"/>
-                <ImagePicker type="detail"/>
-                <ImagePicker type="detail"/>
-                { more > 0 && <ImagePicker type="detail"/>}
-                { more > 1 && <ImagePicker type="detail"/>}
+                <ImagePicker type="major" values={values} setValues={setValues}/>
+                <ImagePicker type="detail" num={1} values={values} setValues={setValues}/>
+                <ImagePicker type="detail" num={2} values={values} setValues={setValues}/>
+                { more > 0 && <ImagePicker type="detail" num={3}values={values} setValues={setValues}/>}
+                { more > 1 && <ImagePicker type="detail" num={4} values={values} setValues={setValues}/>}
                 { more != 2 &&
                     <Pressable style={ImageInput1Styles.inputs.more.container} onPress={()=> setMore(more + 1)}>
                         <Text style={ImageInput1Styles.inputs.more.text}>추가</Text>
@@ -217,10 +226,17 @@ const ImageInput1 = (props) => {
 
 const ImageInput2 = (props) => {
     const {name, label, placeholder, value, handleChange, star, guide} = props;
+
+    const [values, setValues] = useState();
+
+    useEffect(()=>{
+        handleChange(name, values?.fileName);
+    },[values])
+
     return(
         <View style={ImageInput2Styles.container}>
-            <Label label={label} star={star} guide={guide} type={2}/>
-            <ImagePicker type="receipt"/>
+            <Label label={label} star={star} guide={guide} type={2} />
+            <ImagePicker type="receipt" values={values} setValues={setValues}/>
         </View>
     )
 }
