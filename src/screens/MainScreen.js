@@ -94,6 +94,7 @@ const MyPageStackScreen = ({navigation}) => {
 
 const MainScreen = (props) => {
   const hide = props.routeName == "WriteNanum" || props.routeName == "WriteNanum2"
+  console.log(hide)
   return (
     <Tab.Navigator
       initialRouteName="NanumiStack"
@@ -112,7 +113,6 @@ const MainScreen = (props) => {
             : 
             <Image source={require('../assets/images/nanumi.png')} style={styles.tabBarIcon}/>
           ),
-          tabBarStyle: { display: hide ? "none" : "flex" }
         }}
       />
       <Tab.Screen

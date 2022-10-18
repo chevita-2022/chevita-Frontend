@@ -10,6 +10,7 @@ import {
 } from "@react-native-seoul/kakao-login";
 import { fontPercentage, heightPercentage, widthPercentage } from "../../ResponsiveSize";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userID } from "../../recoil/recoil";
 import { useRecoilState } from "recoil";
 
@@ -53,6 +54,9 @@ const KakaoLogin = () => {
         console.log('existBool is false')
       }
       else  {
+        AsyncStorage.setItem(
+          'userData',JSON.stringify({'id': profile.id, 'token': JSON.stringify(token)})
+        );
         navigation.navigate('MainScreen');
         console.log('existBool is true');
       }
