@@ -24,7 +24,7 @@ const YMDFormatter= (num) => {
 }
 
 const Nanumitem=(props)=>{
-    const {title,createdTime,hastag,like,d_day,postId,locate,imgUrl,userIdx} = props;
+    const {title,createdTime,hastag,like,d_day,postId,locate,imgUrl} = props;
 
     const [jjim,setJjim]=useState(false);
     const navigation = useNavigation(); 
@@ -56,7 +56,7 @@ const Nanumitem=(props)=>{
                     <View style={{flexDirection:'row'}}>
 
                     {/* 게시물 제목 */}
-                    <Pressable onPress={()=>navigation.navigate('NanumDetail',{id:postId, day:day, day_hour:day_hour,hour:hour,min:min,d_day:result,userIdx:userIdx})}>
+                    <Pressable onPress={()=>navigation.navigate('NanumDetail',{id:postId, day:day, day_hour:day_hour,hour:hour,min:min,d_day:result})}>
                         <Text style={styles.title}>
                             {title}
                         </Text>
