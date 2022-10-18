@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable, Button, TouchableOpacity,Image} from "react-native";
 import { NaverLogin, getProfile } from "@react-native-seoul/naver-login";
 import { heightPercentage, widthPercentage } from "../../ResponsiveSize";
+import { useRecoilState } from "recoil";
+import { userID } from "../../recoil/recoil";
 
 const iosKeys = {
     kConsumerKey: "DHjT1zinlPR3aGq0LB1c",
@@ -20,7 +22,7 @@ const initials = Platform.OS === 'ios' ? iosKeys : androidKeys;
 
 const Naver_Login = ({navigation}) => {
   const [naverToken, setNaverToken] = React.useState(null);
-  const [userId, setUserId] = useState()
+  const [userId,setUserId] = useRecoilState(userID);
 
   const getUserProfile = async () => {
     const profileResult = await getProfile(naverToken.accessToken);
@@ -29,6 +31,7 @@ const Naver_Login = ({navigation}) => {
       return;
     }
     console.log('profileResult', profileResult);
+
     fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user/login",{
       method:"POST",
       headers:{
@@ -37,6 +40,7 @@ const Naver_Login = ({navigation}) => {
       body:JSON.stringify({'token':profileResult.response.id})
       }).then(response=>response.json()).then(res=> {
           console.log(res)
+          setUserId(res);
           if(res == 0){
             navigation.navigate('Nickname',{token:profileResult.response.id});
             console.log('existBool is false')
@@ -69,13 +73,9 @@ const Naver_Login = ({navigation}) => {
       }
     },[naverToken])
 
-    const signInWithNaver = async() => {
-      await naverLogin(initials);
-    }
-
     return(
       <View>
-        <TouchableOpacity onPress={()=>signInWithNaver()}>
+        <TouchableOpacity onPress={()=>naverLogin(initials)}>
           <Image source={require('../../assets/images/auth/NaverLogin.png')}
                   style={{width:widthPercentage(263),height:heightPercentage(40),top:482,alignSelf:'center'}} />
         </TouchableOpacity>

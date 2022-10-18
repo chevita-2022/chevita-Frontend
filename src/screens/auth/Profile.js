@@ -50,6 +50,8 @@ const Profile=({navigation, route})=>{
         }).then(res=>res.json()).then(res=>setUser(res))
     }
 
+    console.log(user);
+
 
     return(
        <SafeAreaView style={{flex:1,backgroundColor:'#ffffff',paddingHorizontal:32,paddingTop:50}}>

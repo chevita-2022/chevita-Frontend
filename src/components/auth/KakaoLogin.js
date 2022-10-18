@@ -10,6 +10,8 @@ import {
 } from "@react-native-seoul/kakao-login";
 import { fontPercentage, heightPercentage, widthPercentage } from "../../ResponsiveSize";
 import { useNavigation } from "@react-navigation/native";
+import { userID } from "../../recoil/recoil";
+import { useRecoilState } from "recoil";
 
 export const SIGN_WITH_KAKAO = async () => {
   const token = await login();
@@ -19,6 +21,8 @@ export const SIGN_WITH_KAKAO = async () => {
 };
 
 const KakaoLogin = () => {
+
+  const [userId,setUserId]=useRecoilState(userID);
 
   const navigation=useNavigation();
   const [result, setResult] = useState('');
@@ -42,7 +46,7 @@ const KakaoLogin = () => {
       },
       body:JSON.stringify({'token':profile.id})
     }).then(response=>response.json()).then(res=> {
-      console.log(res);
+      setUserId(res);
 
       if(res===0){
         navigation.navigate('Nickname',{token:profile.id});
