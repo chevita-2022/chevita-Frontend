@@ -10,7 +10,7 @@ const Search=()=>{
     const [data, setData] = useState([]);
     const [arr, setArr] = useState([])
 
-    const path="http://52.78.161.124/posts";
+    const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
 
     const onPressSearch = async() => {
         console.log(value)

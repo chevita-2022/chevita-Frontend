@@ -32,7 +32,7 @@ const Map = () => {
                     }
                 </View>
                 {searching && <Text style={styles.modal.guide}>서대문구 연희동 근처 당근 관련 글을 {1}건 찾았어요!</Text>}
-                {true && <Nanumitem userIdx={2} postId={item.postIdx} title={item.title} createdTime={item?.createdAt} hastag={item.hastag}  d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls}/>}
+                {/*true && <Nanumitem userIdx={2} postId={item.postIdx} title={item.title} createdTime={item?.createdAt} hastag={item.hastag}  d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls}/>*/}
             </View>
         )
     }

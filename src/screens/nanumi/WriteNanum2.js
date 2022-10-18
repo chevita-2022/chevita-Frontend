@@ -3,7 +3,6 @@ import { Text, StyleSheet, ScrollView, SafeAreaView, View, Pressable, Button} fr
 import { CalendarInput, InputType1, InputType2, InputType3, InputType4, PlaceInput } from "../../components/Input";
 import { fontPercentage, heightPercentage, widthPercentage } from "../../ResponsiveSize";
 import Modal from "react-native-modal";
-import { RotateInUpLeft } from "react-native-reanimated";
 
 const WriteNanum2 = ({navigation, route}) => {
 
@@ -60,7 +59,7 @@ const WriteNanum2 = ({navigation, route}) => {
         console.log(tempData)
 
 
-        fetch('http://52.78.161.124/posts', requestOptions)
+        fetch('http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts', requestOptions)
             .then(response => response.json())
             .then(data => console.log(data))
             .catch(error => {

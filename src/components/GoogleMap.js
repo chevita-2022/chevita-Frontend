@@ -16,7 +16,7 @@ const GoogleMap = (props) => {
 
     /*const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
 =======
-    const path="http://52.78.161.124/posts";
+    const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
 >>>>>>> bdc43d32950cfa43c9c2ceed7147ff7d9296e20c
     useEffect(()=>{
         fetch(path).then((res)=>res.json()).then((response)=>
@@ -61,17 +61,7 @@ const GoogleMap = (props) => {
         console.log(coordinates)}
     },[{coordinates}])*/
 
-    const Mark = (location) => {
-        return(
-            <Marker coordinate={location} onPress={()=> setSelectedItem(true)}/>
-        )
-    }
 
-    const MarkerList = () => {
-        return(
-            arr.map((location) => <Mark location={location}></Mark>)
-        )
-    }
 
     return(
             <MapView
@@ -83,7 +73,6 @@ const GoogleMap = (props) => {
                     latitudeDelta: 0.005,
                     longitudeDelta: 0.005,
                 }}>
-                {<MarkerList/>}
             </MapView>
     )
 }

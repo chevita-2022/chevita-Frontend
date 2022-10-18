@@ -4,7 +4,7 @@ import { fontPercentage, heightPercentage, widthPercentage } from "../Responsive
 import { ReviewInput } from '../components/Input';
 import Modal from "react-native-modal";
 
-const path = "http://52.78.161.124/posts/reservation";
+const path = "http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts/reservation";
 
 const NoticeRequest=(props)=>{
     const {item} = props;
