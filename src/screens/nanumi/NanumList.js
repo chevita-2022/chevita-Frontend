@@ -13,7 +13,6 @@ const NanumList = ({navigation}) => {
     const [data,setData]=useState([]);
     const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
     fetch(path).then((res)=>res.json()).then((response)=> setData(response.data));
-    const userIdx = 1;
 
     let item2=[...data];
     let item3=[...data];
@@ -70,7 +69,7 @@ const NanumList = ({navigation}) => {
                 { value==='popular' ?
                     <View> 
                         {item2.map(item=>(
-                            <Nanumitem userIdx={userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
+                            <Nanumitem postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
                         ))}
                     </View>
                 :
@@ -78,13 +77,13 @@ const NanumList = ({navigation}) => {
                     value==='lank' ?
                     <View>
                     {item3.map(item=>(
-                        <Nanumitem userIdx={userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
+                        <Nanumitem postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag}  like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
                     ))}
                     </View>
                     :
                     <View> 
                     {data.reverse().map(item=>(
-                        <Nanumitem userIdx={userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation}  imgUrl={item.imgUrls} />
+                        <Nanumitem postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation}  imgUrl={item.imgUrls} />
                     ))}
                     </View>
                 )
