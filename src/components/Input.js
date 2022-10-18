@@ -87,7 +87,7 @@ const InputType2 = (props) => {
         const {name, obj} = props;
         const imageUrl = '../assets/images/' + obj.type + '.png'
         return(
-            <TouchableOpacity style={InputType2Styles(focused === obj.type).item} activeOpacity={0.6} onPress={() => onChangeType(name, obj.type)}>
+            <TouchableOpacity style={InputType2Styles(focused === obj.type).item} activeOpacity={0.6} onPress={() => onChangeType(name, obj.label)}>
                 <Image source={obj.img} style={InputType2Styles("diary" === obj.type).image}/>
                 <Text style={InputType2Styles().text}>{obj.label}</Text>
             </TouchableOpacity>

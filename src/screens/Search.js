@@ -12,27 +12,23 @@ const Search=()=>{
 
     const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
 
-    const onPressSearch = async() => {
-        console.log(value)
-        await fetch(path).then((res)=>res.json()).then((response)=>
+    useEffect(()=>{
+        fetch(path).then((res)=>res.json()).then((response)=>
             setData(response.data)     
         )
-        
-        let item = [...data];
+    },[])
 
-        await setArr(item.filter((item) => item?.title?.includes(value) || item?.content?.includes(value)))
+    const onPressSearch = () => {
+        setArr([...data].filter((item) => item?.title?.includes(value) || item?.content?.includes(value)))
         console.log(arr)
-
     }
-
-    
 
     return(
         <SafeAreaView style={{backgroundColor:'#ffffff', flex:1}}>
             <ScrollView contentContainerStyle={{alignItems: 'center', backgroundColor: '#ffffff',}}>
             <SearchBar value={value} setValue={setValue} onPressSearch={onPressSearch}/>
             <View style={{width: '100%'}}> 
-                {arr.map(item=>(
+                {arr.reverse().map(item=>(
                     <Nanumitem userIdx={item.userIdx} postId={item.postIdx} title={item.title} createdTime={item.createdAt} hastag={item.hastag} like={item.totalHearts} d_day={item.expirationDate} locate={item.globalLocation} imgUrl={item.imgUrls} />
                 ))}
             </View>

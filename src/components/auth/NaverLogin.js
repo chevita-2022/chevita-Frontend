@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable, Button, TouchableOpacity,Image} from "react-native";
 import { NaverLogin, getProfile } from "@react-native-seoul/naver-login";
 import { heightPercentage, widthPercentage } from "../../ResponsiveSize";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRecoilState } from "recoil";
 import { userID } from "../../recoil/recoil";
 
@@ -41,11 +42,15 @@ const Naver_Login = ({navigation}) => {
       }).then(response=>response.json()).then(res=> {
           console.log(res)
           setUserId(res);
+
           if(res == 0){
             navigation.navigate('Nickname',{token:profileResult.response.id});
             console.log('existBool is false')
           }
           else  {
+            AsyncStorage.setItem(
+              'userData',JSON.stringify({'id': profileResult.response.id, 'token': naverToken})
+            );
             navigation.navigate('MainScreen');
             console.log('existBool is true');
           }
