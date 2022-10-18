@@ -131,8 +131,6 @@ const ImagePicker = (props) => {
     }
   }
 
-  
-
   return(
     <>
     <Pressable style={styles.trigger} onPress={() => setModalVisible(true)}>

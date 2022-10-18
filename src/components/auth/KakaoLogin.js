@@ -35,7 +35,7 @@ const KakaoLogin = () => {
     setResult(JSON.stringify(profile));
     console.log(profile.id);
 
-  fetch("http://52.78.161.124/user/login",{
+  fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user/login",{
       method:"POST",
       headers:{
         'Content-Type':'application/json',

@@ -29,7 +29,23 @@ const Naver_Login = ({navigation}) => {
       return;
     }
     console.log('profileResult', profileResult);
-    return profileResult.response.id;
+    fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user/login",{
+      method:"POST",
+      headers:{
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify({'token':profileResult.response.id})
+      }).then(response=>response.json()).then(res=> {
+          console.log(res)
+          if(res == 0){
+            navigation.navigate('Nickname',{token:profileResult.response.id});
+            console.log('existBool is false')
+          }
+          else  {
+            navigation.navigate('MainScreen');
+            console.log('existBool is true');
+          }
+      })
   };
 
     const naverLogin = props => {
@@ -47,37 +63,21 @@ const Naver_Login = ({navigation}) => {
       });
     };
 
+    useEffect(()=>{
+      if(naverToken){
+        getUserProfile();
+      }
+    },[naverToken])
+
     const signInWithNaver = async() => {
-      const result = await naverLogin(initials);
-
-      const id = await getUserProfile(); 
-
-      fetch("http://52.78.161.124/user/login",{
-      method:"POST",
-      headers:{
-        'Content-Type':'application/json',
-      },
-      body:JSON.stringify({'token':id})
-      }).then(response=>response.json()).then(res=> {
-          console.log(res)
-          if(res == 0){
-            navigation.navigate('Nickname',{token:id});
-            console.log('existBool is false')
-          }
-          else  {
-            navigation.navigate('MainScreen');
-            console.log('existBool is true');
-          }
-      })
-
-  
+      await naverLogin(initials);
     }
 
     return(
       <View>
         <TouchableOpacity onPress={()=>signInWithNaver()}>
           <Image source={require('../../assets/images/auth/NaverLogin.png')}
-                  style={{width:widthPercentage(253),height:heightPercentage(40),top:482,alignSelf:'center'}} />
+                  style={{width:widthPercentage(263),height:heightPercentage(40),top:482,alignSelf:'center'}} />
         </TouchableOpacity>
       </View>
     )
@@ -101,13 +101,9 @@ const NaverLogout = () => {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'space-evenly',
-      alignItems: 'center',
+      width: widthPercentage(263),
+      height: heightPercentage(40),
     },
-    button: {
-      backgroundColor: 'red',
-    }
 });
 
 export {Naver_Login, NaverLogout, };

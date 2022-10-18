@@ -21,7 +21,7 @@ const MyPage = ({navigation}) => {
     const Profile = () => {
         return(
             <>
-                <ImagePicker type="profile"/>
+                <Image source={require('../../assets/images/profile.png')} style={styles.profile.image} />
                 <Text style={styles.profile.name}>{test.name}</Text>
                 <Text style={styles.profile.place}>{test.place}</Text>
                 <View style={styles.profile.flexBox.container}>
@@ -106,6 +106,14 @@ const styles = StyleSheet.create({
         paddingBottom: heightPercentage(70)
     },
     profile:{
+        image:{
+            alignSelf:'center',
+            width:widthPercentage(70),
+            height:heightPercentage(71), 
+            marginTop: heightPercentage(26), 
+            borderRadius: 90, 
+            resizeMode: 'stretch'
+        },
         name:{
             marginTop: heightPercentage(2),
             fontSize: fontPercentage(16),

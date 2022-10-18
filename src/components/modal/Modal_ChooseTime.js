@@ -32,7 +32,7 @@ const ChooseTime=({sharingTimeZones,otherId,title,globalLocation,detailedLocatio
     }*/
 
     const sendReserve=(num)=>{
-        fetch("http://52.78.161.124/posts/reservation",{
+        fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts/reservation",{
             method:"POST",
             headers:{
                 'Content-Type':'application/json',

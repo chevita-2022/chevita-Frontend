@@ -1,6 +1,5 @@
 import React, { useState ,useEffect} from "react";
 import { SafeAreaView,Text,StyleSheet,Image,View,TouchableOpacity, Button,Pressable, KeyboardAvoidingView, Platform } from "react-native";
-import { setGestureState } from "react-native-reanimated/lib/reanimated2/NativeMethods";
 import ImagePicker from "../../components/ImagePicker";
 import { NicknameInput, PlaceInput } from "../../components/Input";
 import { fontPercentage,widthPercentage,heightPercentage } from "../../ResponsiveSize";
@@ -37,7 +36,7 @@ const Profile=({navigation, route})=>{
     },[route.params])
 
     const sendUserId=()=>{
-        fetch("http://52.78.161.124/user",{
+        fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user",{
             method:"POST",
             headers:{
                 'Content-Type':'application/json',
