@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable, Button, TouchableOpacity,Image} from "react-native";
 import { NaverLogin, getProfile } from "@react-native-seoul/naver-login";
 import { heightPercentage, widthPercentage } from "../../ResponsiveSize";
+import { useRecoilState } from "recoil";
+import { userID } from "../../recoil/recoil";
 
 const iosKeys = {
     kConsumerKey: "DHjT1zinlPR3aGq0LB1c",
@@ -20,7 +22,7 @@ const initials = Platform.OS === 'ios' ? iosKeys : androidKeys;
 
 const Naver_Login = ({navigation}) => {
   const [naverToken, setNaverToken] = React.useState(null);
-  const [userId, setUserId] = useState()
+  const [userId,setUserId]=useRecoilState(userID);
 
   const getUserProfile = async () => {
     const profileResult = await getProfile(naverToken.accessToken);
@@ -52,14 +54,15 @@ const Naver_Login = ({navigation}) => {
 
       const id = await getUserProfile(); 
 
-      fetch("http://52.78.161.124/user/login",{
+      fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user/login",{
       method:"POST",
       headers:{
         'Content-Type':'application/json',
       },
       body:JSON.stringify({'token':id})
       }).then(response=>response.json()).then(res=> {
-          console.log(res)
+          setUserId(res);
+          
           if(res == 0){
             navigation.navigate('Nickname',{token:id});
             console.log('existBool is false')

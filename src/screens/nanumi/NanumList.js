@@ -3,11 +3,15 @@ import { Text,StyleSheet, ScrollView, SafeAreaView,View, Pressable,Image, Platfo
 import Nanumitem from "../../components/NanumItem";
 import DropDownPicker from 'react-native-dropdown-picker';
 import { heightPercentage,widthPercentage,fontPercentage } from "../../ResponsiveSize";
+import { userID } from "../../recoil/recoil";
+import { useRecoilState } from "recoil";
 
 const NanumList = ({navigation}) => {
 
+    const[userId,setUserId]=useRecoilState(userID);
+
     const [data,setData]=useState([]);
-    const path="http://52.78.161.124/posts";
+    const path="http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/posts";
     fetch(path).then((res)=>res.json()).then((response)=> setData(response.data));
     const userIdx = 1;
 

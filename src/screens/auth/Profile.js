@@ -37,7 +37,7 @@ const Profile=({navigation, route})=>{
     },[route.params])
 
     const sendUserId=()=>{
-        fetch("http://52.78.161.124/user",{
+        fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user",{
             method:"POST",
             headers:{
                 'Content-Type':'application/json',
@@ -50,6 +50,8 @@ const Profile=({navigation, route})=>{
             })
         }).then(res=>res.json()).then(res=>setUser(res))
     }
+
+    console.log(user);
 
 
     return(

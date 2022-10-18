@@ -7,7 +7,7 @@ import { widthPercentage, heightPercentage, fontPercentage } from "../Responsive
 const Notice=()=>{
 
     const [list, setList] = useState([]);
-    const path = "http://52.78.161.124/nanumingList/"
+    const path = "http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/nanumingList/"
 
     const userIdx = 2;
     //console.log(path+userIdx)
@@ -38,7 +38,7 @@ const Notice=()=>{
    // console.log(userIdx1);
 
     useEffect(()=>{
-        fetch("http://52.78.161.124/nanumingList/"+userIdx1)
+        fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/nanumingList/"+userIdx1)
         .then(res=>res.json())//.then(res=>console.log(res));
     })
     return(

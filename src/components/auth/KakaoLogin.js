@@ -10,6 +10,8 @@ import {
 } from "@react-native-seoul/kakao-login";
 import { fontPercentage, heightPercentage, widthPercentage } from "../../ResponsiveSize";
 import { useNavigation } from "@react-navigation/native";
+import { userID } from "../../recoil/recoil";
+import { useRecoilState } from "recoil";
 
 export const SIGN_WITH_KAKAO = async () => {
   const token = await login();
@@ -19,6 +21,8 @@ export const SIGN_WITH_KAKAO = async () => {
 };
 
 const KakaoLogin = () => {
+
+  const [userId,setUserId]=useRecoilState(userID);
 
   const navigation=useNavigation();
   const [result, setResult] = useState('');
@@ -35,14 +39,14 @@ const KakaoLogin = () => {
     setResult(JSON.stringify(profile));
     console.log(profile.id);
 
-  fetch("http://52.78.161.124/user/login",{
+  fetch("http://chevita-env.eba-i8jmx3zw.ap-northeast-2.elasticbeanstalk.com/user/login",{
       method:"POST",
       headers:{
         'Content-Type':'application/json',
       },
       body:JSON.stringify({'token':profile.id})
     }).then(response=>response.json()).then(res=> {
-      console.log(res);
+      setUserId(res);
 
       if(res===0){
         navigation.navigate('Nickname',{token:profile.id});
